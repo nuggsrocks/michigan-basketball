@@ -2,7 +2,7 @@ import React from "react";
 import {Carousel, Button, Card, Accordion, Table} from 'react-bootstrap';
 import {Link, Route} from 'react-router-dom';
 import {players} from '../../data/data';
-import {findPerGame, findFieldGoalPercentage, findPer40Mins, findMedian} from '../../stats-functions';
+import {findPerGame, findFieldGoalPercentage, findPer40Mins, findMedian} from '../stats-functions';
 
 // sorting constants
 const GAMES = 'games';

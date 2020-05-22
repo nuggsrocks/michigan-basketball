@@ -1,7 +1,7 @@
 import React from "react";
 import {players, schedule} from '../../data/data';
 import {Table} from 'reactstrap';
-import {findPerGame, findFieldGoalPercentage} from '../../stats-functions';
+import {findPerGame, findFieldGoalPercentage} from '../stats-functions';
 
 const playerArr = [...players];
 
