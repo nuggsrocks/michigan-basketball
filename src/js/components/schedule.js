@@ -1,14 +1,9 @@
 import React from "react";
-import {players, schedule} from '../data/data';
+import {players, schedule} from '../../data/data';
 import {Table} from 'reactstrap';
 import {findPerGame, findFieldGoalPercentage} from '../stats-functions';
-import {Player} from '../data/data';
 
 const playerArr = [...players];
-
-const Simpson = new Player('Zavier Simpson', 3, 'Guard', 'Senior');
-Simpson.addGameStats(1, 6, 8, 6, 2, 8, 28);
-Simpson.addGameStats(2, 17, 3, 9, 7, 11, 34);
 
 
 class Standings extends React.Component {
@@ -80,12 +75,11 @@ class Standings extends React.Component {
                     {this.state.wins + ' - ' + this.state.losses + ' (' +
                     this.state.confWins + ' - ' + this.state.confLosses + ' Big Ten)'}
                 </h3>
-                <h3></h3>
                 <h4>Big Ten Standings</h4>
                 <Table size={'sm'} borderless>
                     <tbody>
                     {standingsArr.map(({name, record}, index) => (
-                        <tr>
+                        <tr key={index}>
                             <th>{index + 1}</th>
                             <td>{name}</td>
                             <td>{record[0] + ' - ' + record[1]}</td>
@@ -112,7 +106,7 @@ const ScheduleList = (props) => {
                 </thead>
                 <tbody>
                 {schedule.map(({opp, date, result, link}) => (
-                    <tr>
+                    <tr key={opp}>
                         <td>{opp}</td>
                         <td>{date}</td>
                         <td>
@@ -137,14 +131,13 @@ class StatLeaders extends React.Component {
             <div className={this.props.className}>
                 <h3>Stat Leaders</h3>
                 <h6>Points</h6>
-                <h3>{Simpson.getPointsPerGame()}</h3>
                 <Table size={'sm'} borderless>
                     <tbody>
                     {playerArr.sort((a, b) =>
                         findPerGame(b.stats.map(({points}) => points)) - findPerGame(a.stats.map(({points}) => points)))
                         .slice(0, 5)
                         .map(({name, num, stats}) => (
-                            <tr>
+                            <tr key={name}>
                                 <th>{name}</th>
                                 <th>#{num}</th>
                                 <td>
@@ -161,7 +154,7 @@ class StatLeaders extends React.Component {
                         findPerGame(b.stats.map(({assists}) => assists)) - findPerGame(a.stats.map(({assists}) => assists)))
                         .slice(0, 5)
                         .map(({name, num, stats}) => (
-                            <tr>
+                            <tr key={name}>
                                 <th>{name}</th>
                                 <th>#{num}</th>
                                 <td>
@@ -178,7 +171,7 @@ class StatLeaders extends React.Component {
                         findPerGame(b.stats.map(({rebounds}) => rebounds)) - findPerGame(a.stats.map(({rebounds}) => rebounds)))
                         .slice(0, 5)
                         .map(({name, num, stats}) =>
-                            <tr>
+                            <tr key={name}>
                                 <th>{name}</th>
                                 <th>#{num}</th>
                                 <td>
@@ -198,7 +191,7 @@ class StatLeaders extends React.Component {
                         .filter((player) => player.stats.map(({fga}) => fga).reduce((a, b) => a + b) > 50)
                         .slice(0, 5)
                         .map(({name, num, stats}) =>
-                            <tr>
+                            <tr key={name}>
                                 <th>{name}</th>
                                 <th>#{num}</th>
                                 <td>
@@ -216,7 +209,7 @@ class StatLeaders extends React.Component {
                         findPerGame(b.stats.map(({mins}) => mins)) - findPerGame(a.stats.map(({mins}) => mins)))
                         .slice(0, 5)
                         .map(({name, num, stats}) =>
-                            <tr>
+                            <tr key={name}>
                                 <th>{name}</th>
                                 <th>#{num}</th>
                                 <td>

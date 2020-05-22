@@ -2,11 +2,9 @@ import React from 'react';
 import {Link, BrowserRouter, Route, Redirect} from "react-router-dom";
 import {CSSTransition} from "react-transition-group";
 import {Navbar, Nav, Container} from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '@fortawesome/fontawesome-free/css/all.css';
-import {Schedule} from "./components/schedule";
-import {Roster} from "./components/roster";
-import './App.scss';
+import {Schedule} from "./schedule";
+import {Roster} from "./roster";
+import '../../scss/index.scss';
 
 const routes = [
     {path: '/schedule', name: 'Schedule', Component: Schedule},
@@ -35,7 +33,7 @@ const Navigation = () => {
                         />
                     </Navbar.Brand>
                     {routes.map(({path, name}) => (
-                        <Nav.Item className={''}>
+                        <Nav.Item className={''} key={name}>
                             <Nav.Link as={Link} to={path}>
                                 {name}
                             </Nav.Link>
@@ -51,8 +49,9 @@ const Main = () => {
             <div id={'component-div'}>
                 {routes.map(({path, Component}) => (
                     <Route key={path} path={path}>
-                        {({match}) => (
+                        {({match}, index) => (
                             <CSSTransition
+                                key={index}
                                 in={match != null}
                                 timeout={500}
                                 classNames={'route-transition'}
