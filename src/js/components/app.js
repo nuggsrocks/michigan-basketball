@@ -33,7 +33,7 @@ const Navigation = () => {
                         />
                     </Navbar.Brand>
                     {routes.map(({path, name}) => (
-                        <Nav.Item className={''}>
+                        <Nav.Item className={''} key={name}>
                             <Nav.Link as={Link} to={path}>
                                 {name}
                             </Nav.Link>
@@ -49,8 +49,9 @@ const Main = () => {
             <div id={'component-div'}>
                 {routes.map(({path, Component}) => (
                     <Route key={path} path={path}>
-                        {({match}) => (
+                        {({match}, index) => (
                             <CSSTransition
+                                key={index}
                                 in={match != null}
                                 timeout={500}
                                 classNames={'route-transition'}
