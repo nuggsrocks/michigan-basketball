@@ -1,23 +1,3 @@
-let injured = 'INJURED';
-
-export class Player {
-    constructor(name, number, position, year) {
-        this.name = name;
-        this.number = number;
-        this.position = position;
-        this.year = year;
-        this.stats = [];
-    }
-
-    addGameStats(opponent, points, rebounds, assists, fgm, fga, minutes) {
-        this.stats.push({opponent, points, rebounds, assists, fgm, fga, minutes});
-    }
-
-    getPointsPerGame() {
-        return this.stats.reduce((a, b) => a.points + b.points) / this.stats.length;
-    }
-}
-
 export const players = [
     {name: 'Zavier_Simpson', num: 3, pos: 'Guard', year: 'Senior', path: '/roster/zavier-simpson',
         stats: [

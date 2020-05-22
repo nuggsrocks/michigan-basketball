@@ -76,7 +76,7 @@ const UpperComponent = (props) => {
                 <Route exact path={path} key={key + 1} className={`player-div ${key + 1}`}>
                     <Carousel id={'carousel'}>
                         {pics.map((img) =>
-                            <Carousel.Item>
+                            <Carousel.Item key={img}>
                                 <img
                                     className={'d-block w-100'}
                                     src={img}
@@ -249,7 +249,7 @@ const LowerComponent = (props) => {
                                     <tbody>
                                     {playerArr.map(({name, num, pos, year,
                                                         path, injured, stats}, index) => (
-                                        <tr>
+                                        <tr key={index}>
                                             <th>
                                                 <Link to={path}>
                                                     {name}
@@ -314,7 +314,7 @@ const LowerComponent = (props) => {
                                     <tbody>
                                     {playerArr.map(({name, num, pos, year,
                                                         path, injured, stats}, index) => (
-                                        <tr>
+                                        <tr key={index}>
                                             <th>
                                                 <Link to={path}>
                                                     {name}
@@ -369,7 +369,7 @@ const LowerComponent = (props) => {
                                     <tbody>
                                     {playerArr.map(({name, num, pos, year,
                                                         path, injured, stats}, index) =>
-                                        <tr>
+                                        <tr key={index}>
                                             <th>
                                                 <Link to={path}>
                                                     {name}
@@ -406,7 +406,7 @@ const LowerComponent = (props) => {
                 </div>
             </Route>
             {playerArr.map(({name, path, stats}) =>
-                <Route exact path={path}>
+                <Route exact path={path} key={path}>
                     <div className={'p-3'}>
                         <Button as={Link} to={'/roster'} onClick={props.sortByGames}>Back</Button>
                         <h4>{name}</h4>
@@ -425,7 +425,7 @@ const LowerComponent = (props) => {
                             </thead>
                             <tbody>
                             {stats.map(({opp, points, rebounds, assists, fgm, fga, mins}) =>
-                                <tr>
+                                <tr key={opp}>
                                     <td>{opp[1]}</td>
                                     <td>{opp[0]}</td>
                                     <td>{points}</td>
