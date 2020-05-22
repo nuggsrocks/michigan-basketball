@@ -2,8 +2,6 @@ import React from 'react';
 import {Link, BrowserRouter, Route, Redirect} from "react-router-dom";
 import {CSSTransition} from "react-transition-group";
 import {Navbar, Nav, Container} from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '@fortawesome/fontawesome-free/css/all.css';
 import {Schedule} from "./schedule";
 import {Roster} from "./roster";
 import '../../scss/index.scss';
