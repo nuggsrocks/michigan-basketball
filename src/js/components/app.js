@@ -4,9 +4,9 @@ import {CSSTransition} from "react-transition-group";
 import {Navbar, Nav, Container} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
-import {Schedule} from "./components/schedule";
-import {Roster} from "./components/roster";
-import './App.scss';
+import {Schedule} from "./schedule";
+import {Roster} from "./roster";
+import '../../scss/index.scss';
 
 const routes = [
     {path: '/schedule', name: 'Schedule', Component: Schedule},

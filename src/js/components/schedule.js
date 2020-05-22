@@ -1,14 +1,9 @@
 import React from "react";
-import {players, schedule} from '../data/data';
+import {players, schedule} from '../../data/data';
 import {Table} from 'reactstrap';
-import {findPerGame, findFieldGoalPercentage} from '../stats-functions';
-import {Player} from '../data/data';
+import {findPerGame, findFieldGoalPercentage} from '../../stats-functions';
 
 const playerArr = [...players];
-
-const Simpson = new Player('Zavier Simpson', 3, 'Guard', 'Senior');
-Simpson.addGameStats(1, 6, 8, 6, 2, 8, 28);
-Simpson.addGameStats(2, 17, 3, 9, 7, 11, 34);
 
 
 class Standings extends React.Component {
@@ -80,7 +75,6 @@ class Standings extends React.Component {
                     {this.state.wins + ' - ' + this.state.losses + ' (' +
                     this.state.confWins + ' - ' + this.state.confLosses + ' Big Ten)'}
                 </h3>
-                <h3></h3>
                 <h4>Big Ten Standings</h4>
                 <Table size={'sm'} borderless>
                     <tbody>
@@ -137,7 +131,6 @@ class StatLeaders extends React.Component {
             <div className={this.props.className}>
                 <h3>Stat Leaders</h3>
                 <h6>Points</h6>
-                <h3>{Simpson.getPointsPerGame()}</h3>
                 <Table size={'sm'} borderless>
                     <tbody>
                     {playerArr.sort((a, b) =>
