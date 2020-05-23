@@ -8,7 +8,7 @@ module.exports = (env, argv) => {
         },
         output: {
             path: __dirname + '/dist',
-            publicPath: '/michigan-basketball/',
+            publicPath: '/',
             filename: '[name].js'
         },
         target: 'node',

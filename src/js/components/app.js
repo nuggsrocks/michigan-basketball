@@ -13,7 +13,7 @@ const routes = [
 
 const App = () => {
         return (
-            <BrowserRouter>
+            <BrowserRouter basename={'/michigan-basketball'}>
                 <Navigation />
                 <Main />
             </BrowserRouter>

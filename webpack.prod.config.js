@@ -9,7 +9,7 @@ module.exports = {
     },
     output: {
         path: __dirname + '/dist',
-        publicPath: '/michigan-basketball/',
+        publicPath: '/michigan-basketball',
         filename: '[name].js'
     },
     target: 'web',
