@@ -1,5 +1,5 @@
 export const players = [
-    {name: 'Zavier_Simpson', num: 3, pos: 'Guard', year: 'Senior', path: '/roster/zavier-simpson',
+    {name: 'Zavier Simpson', num: 3, pos: 'Guard', year: 'Senior', path: '/roster/zavier-simpson',
         stats: [
             {opp: ['App State', 1], points: 6, rebounds: 8, assists: 6, fgm: 2, fga: 8, mins: 28},
             {opp: ['Creighton', 2], points: 17, rebounds: 3, assists: 9, fgm: 7, fga: 11, mins: 34},
@@ -50,7 +50,7 @@ export const players = [
             {opp: ['UMass Lowell', 13], points: , rebounds: , assists: , fgm: , fga: }
     ]} */
 
-    {name: 'Eli_Brooks', num: 55, pos: 'Guard', year: 'Junior', path: '/roster/eli-brooks', stats: [
+    {name: 'Eli Brooks', num: 55, pos: 'Guard', year: 'Junior', path: '/roster/eli-brooks', stats: [
             {opp: ['App State', 1], points: 24, rebounds: 2, assists: 3, fgm: 7, fga: 15, mins: 37},
             {opp: ['Creighton', 2], points: 7, rebounds: 1, assists: 4, fgm: 3, fga: 7, mins: 34},
             {opp: ['Elon', 3], points: 10, rebounds: 1, assists: 1, fgm: 4, fga: 7, mins: 29},
@@ -85,7 +85,7 @@ export const players = [
             'https://www.gannett-cdn.com/presto/2019/12/07/PDTN/2d03b434-e224-4ef8-b10e-5f7c6ca9abb6-2019-1206-rb-sp-michigan-iowa517.jpg?crop=2454,1381,x0,y170&width=1600&height=800&fit=bounds',
             'https://images.saymedia-content.com/.image/MTY5NDkzMTk1MDAzMDEyMzg1/img_9351.jpg']},
 
-    {name: 'David_DeJulius', num: 0, pos: 'Guard', year: 'Sophomore', path: '/roster/david-dejulius', stats: [
+    {name: 'David DeJulius', num: 0, pos: 'Guard', year: 'Sophomore', path: '/roster/david-dejulius', stats: [
             {opp: ['App State', 1], points: 0, rebounds: 2, assists: 3, fgm: 0, fga: 3, mins: 28},
             {opp: ['Creighton', 2], points: 9, rebounds: 7, assists: 1, fgm: 2, fga: 4, mins: 28},
             {opp: ['Elon', 3], points: 10, rebounds: 8, assists: 0, fgm: 4, fga: 6, mins: 25},
@@ -120,7 +120,7 @@ export const players = [
         ], pics: ['https://www.gannett-cdn.com/presto/2019/12/04/PDTN/6237c424-2a3a-43d5-a57a-67a2f7b8e0ab-michnotes-1203.jpg?crop=3469,1951,x1,y30&width=1600&height=800&fit=bounds',
             'https://www.gannett-cdn.com/presto/2020/01/03/PDTN/ef22b633-c596-43d9-9b60-d3ec36d1808f-DD.jpg?crop=2855,1606,x1,y168&width=1600&height=800&fit=bounds']},
 
-    {name: 'Adrien_Nunez', num: 5, pos: 'Guard', year: 'Sophomore', path: '/roster/adrien-nunez', stats: [
+    {name: 'Adrien Nunez', num: 5, pos: 'Guard', year: 'Sophomore', path: '/roster/adrien-nunez', stats: [
             {opp: ['App State', 1], points: 5, rebounds: 0, assists: 0, fgm: 2, fga: 3, mins: 13},
             {opp: ['Creighton', 2], points: 3, rebounds: 0, assists: 0, fgm: 1, fga: 3, mins: 11},
             {opp: ['Elon', 3], points: 5, rebounds: 0, assists: 0, fgm: 2, fga: 6, mins: 17},
@@ -145,7 +145,7 @@ export const players = [
     ], pics: ['https://www.gannett-cdn.com/presto/2018/12/01/PDTF/1a24dea8-069c-4263-811f-7ae643f38b6a-12012018_mbball_2ndhalf-7.jpg?crop=2399,1349,x0,y0&width=1600&height=800&fit=bounds']},
 
 
-    {name: 'Franz_Wagner', num: 21, pos: 'Forward', year: 'Freshman', path: '/roster/franz-wagner', stats: [
+    {name: 'Franz Wagner', num: 21, pos: 'Forward', year: 'Freshman', path: '/roster/franz-wagner', stats: [
             {opp: ['Iowa State', 1], points: 6, rebounds: 3, assists: 1, fgm: 2, fga: 5, mins: 23},
             {opp: ['North Carolina', 2], points: 3, rebounds: 5, assists: 3, fgm: 1, fga: 6, mins: 33},
             {opp: ['Gonzaga', 3], points: 10, rebounds: 4, assists: 0, fgm: 4, fga: 8, mins: 25},
@@ -224,7 +224,7 @@ export const players = [
             {opp: ['UMass Lowell', 13], points: , rebounds: , assists: , fgm: , fga: }
     ]},
     */
-    {name: 'Colin_Castleton', num: 11, pos: 'Center', year: 'Sophomore', path: '/roster/colin-castleton', stats: [
+    {name: 'Colin Castleton', num: 11, pos: 'Center', year: 'Sophomore', path: '/roster/colin-castleton', stats: [
             {opp: ['App State', 1], points: 8, rebounds: 2, assists: 0, fgm: 3, fga: 5, mins: 12},
             {opp: ['Creighton', 2], points: 2, rebounds: 1, assists: 1, fgm: 1, fga: 2, mins: 7},
             {opp: ['Elon', 3], points: 2, rebounds: 8, assists: 1, fgm: 1, fga: 2, mins: 12},
@@ -288,7 +288,7 @@ export const players = [
     ]},
     */
 
-    {name: 'Brandon_Johns_Jr', num: 23, pos: 'Forward', year: 'Sophomore', path: '/roster/brandon-johns-jr', stats: [
+    {name: 'Brandon Johns Jr', num: 23, pos: 'Forward', year: 'Sophomore', path: '/roster/brandon-johns-jr', stats: [
             {opp: ['App State', 1], points: 5, rebounds: 3, assists: 1, fgm: 2, fga: 4, mins: 19},
             {opp: ['Creighton', 2], points: 2, rebounds: 1, assists: 0, fgm: 1, fga: 2, mins: 16},
             {opp: ['Elon', 3], points: 5, rebounds: 4, assists: 0, fgm: 2, fga: 5, mins: 16},
@@ -322,7 +322,7 @@ export const players = [
     ], pics: ['https://www.gannett-cdn.com/presto/2019/12/29/PDTF/cf9d2322-2652-495c-9ace-8676a161193c-AP_UMass_Lowell_Michigan_Bas_3.jpg?crop=4628,2603,x0,y0&width=3200&height=1680&fit=bounds',
             'https://www.gannett-cdn.com/presto/2019/01/07/PDTF/b6a1c96e-4055-4ee7-a5ec-f4ea6bacb5b1-Michigan_Indiana_010619_kd1_23.jpg?crop=1498,843,x0,y216&width=1600&height=800&fit=bounds',
             'https://mgoblue.com/images/2019/12/7/BKM20_Iowa_gal28_.jpg']},
-    {name: 'Isaiah_Livers', num: 2, pos: 'Forward', year: 'Junior', path: '/roster/isaiah-livers', stats: [
+    {name: 'Isaiah Livers', num: 2, pos: 'Forward', year: 'Junior', path: '/roster/isaiah-livers', stats: [
             {opp: ['App State', 1], points: 14, rebounds: 2, assists: 1, fgm: 6, fga: 11, mins: 31},
             {opp: ['Creighton', 2], points: 22, rebounds: 4, assists: 0, fgm: 8, fga: 12, mins: 38},
             {opp: ['Elon', 3], points: 9, rebounds: 5, assists: 1, fgm: 4, fga: 10, mins: 34},
@@ -348,7 +348,7 @@ export const players = [
             'https://www.gannett-cdn.com/presto/2019/12/21/PDTF/7bff3a4c-6470-48a0-a293-296d72a1a110-SI_20191221_lbm_ro_037.jpg?crop=1599,900,x0,y600&width=1600&height=800&fit=bounds',
             'https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2019%2F1128%2Fr634555_1296x729_16%2D9.jpg']},
 
-    {name: 'Jon_Teske', num: 15, pos: 'Center', year: 'Senior', path: '/roster/jon-teske', stats: [
+    {name: 'Jon Teske', num: 15, pos: 'Center', year: 'Senior', path: '/roster/jon-teske', stats: [
             {opp: ['App State', 1], points: 17, rebounds: 13, assists: 1, fgm: 7, fga: 12, mins: 32},
             {opp: ['Creighton', 2], points: 17, rebounds: 7, assists: 1, fgm: 7, fga: 12, mins: 32},
             {opp: ['Elon', 3], points: 16, rebounds: 7, assists: 2, fgm: 5, fga: 10, mins: 29},
