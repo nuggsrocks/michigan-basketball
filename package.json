@@ -55,6 +55,7 @@
     "start": "pm2 start ecosystem.config.js",
     "build:dev": "rm -rf dist && webpack --mode development --config webpack.dev.config.js && webpack --mode development --config webpack.server.config.js",
     "build:prod": "rm -rf dist && webpack --mode production --config webpack.prod.config.js && webpack --mode production --config webpack.server.config.js",
+    "deploy": "pm2 start ecosystem.config.js --env deploy",
     "stop": "pm2 delete m-basketball"
   },
   "eslintConfig": {
