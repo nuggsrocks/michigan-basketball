@@ -219,15 +219,44 @@ const LowerComponent = (props) => {
         )
     }
 
+	const dataTypes = [
+		{name: 'Per Game', sortingFunctions: [
+			{name: 'PPG', func: props.sortByPpg}, 
+			{name: 'RPG', func: props.sortByRpg}, 
+			{name: 'APG', func: props.sortByApg},
+			{name: 'FG%', func: props.sortByFgPer},
+			{name: 'FGM/G', func: props.sortByFgmPerGame},
+			{name: 'FGA/G', func: props.sortByFgaPerGame},
+			{name: 'MPG', func: props.sortByMpg}
+		]},
+		{name: 'Per 40 Mins', sortingFunctions: [
+			{name: 'Points/40Mins', func: props.sortByPP40},
+			{name: 'Rebs/40Mins', func: props.sortByRP40},
+			{name: 'Assists/40Mins', func: props.sortByAP40},
+			{name: 'FGM/40Mins', func: props.sortByFGM40},
+			{name: 'FGA/40Mins', func: props.sortByFGA40}
+		]},
+		{name: 'Median Stats', sortingFunctions: [
+			{name: 'Median Points', func: props.sortByMedianPts},
+			{name: 'Median Rebounds', func: props.sortByMedianRebs},
+			{name: 'Median Assists', func: props.sortByMedianAsts},
+			{name: 'Median FGM', func: props.sortByMedianFgm},
+			{name: 'Median FGA', func: props.sortByMedianFga}
+		]}
+	];
+
     return (
         <div className={props.className}>
             <Route exact path={'/roster'}>
                 <div className={'text-center'}>
                     <Accordion defaultActiveKey={'0'} as={Card} bg={'black'}>
-                        <Accordion.Toggle eventKey={'0'} as={Button} variant={'secondary'} className={'clickable'}>
-                            Per Game
+	                {
+				dataTypes.map(({name, sortingFunctions}, index) =>
+		<div key={name}>
+			<Accordion.Toggle eventKey={index.toString()} as={Button} variant={'secondary'} className={'clickable'}>
+				{name}
                         </Accordion.Toggle>
-                        <Accordion.Collapse eventKey={'0'}>
+                        <Accordion.Collapse eventKey={index.toString()}>
                             <Card.Body>
                                 <h3>Roster</h3>
                                 <Table size={'md'} bordered>
@@ -237,13 +266,11 @@ const LowerComponent = (props) => {
                                         <th className={'clickable'} onClick={props.sortByNumber}>Number</th>
                                         <th className={'clickable'} onClick={props.sortByPos}>Position</th>
                                         <th className={'clickable'} onClick={props.sortByYear}>Class</th>
-                                        <th className={'clickable'} onClick={props.sortByPpg}>PPG</th>
-                                        <th className={'clickable'} onClick={props.sortByRpg}>RPG</th>
-                                        <th className={'clickable'} onClick={props.sortByApg}>APG</th>
-                                        <th className={'clickable'} onClick={props.sortByFgPer}>FG%</th>
-                                        <th className={'clickable'} onClick={props.sortByFgmPerGame}>FGM/G</th>
-                                        <th className={'clickable'} onClick={props.sortByFgaPerGame}>FGA/G</th>
-                                        <th className={'clickable'} onClick={props.sortByMpg}>MPG</th>
+					{
+						sortingFunctions.map(({name, func}, index) =>
+							<th key={index} className={'clickable'} onClick={func}>{name}</th>
+						)
+					}
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -291,6 +318,10 @@ const LowerComponent = (props) => {
 
                             </Card.Body>
                         </Accordion.Collapse>
+					</div>
+				)
+			}
+	    {/*
                         <Accordion.Toggle eventKey={'1'} as={Button} variant={'secondary'} className={'clickable'}>
                             Per 40 Mins
                         </Accordion.Toggle>
@@ -401,6 +432,7 @@ const LowerComponent = (props) => {
                                 </Table>
                             </Card.Body>
                         </Accordion.Collapse>
+			*/}
                     </Accordion>
 
                 </div>
