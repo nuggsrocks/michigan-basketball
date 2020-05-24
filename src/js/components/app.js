@@ -13,7 +13,7 @@ const routes = [
 
 const App = () => {
         return (
-            <BrowserRouter basename={'/michigan-basketball'}>
+            <BrowserRouter basename={'/'}>
                 <Navigation />
                 <Main />
             </BrowserRouter>
@@ -27,8 +27,7 @@ const Navigation = () => {
                     <Navbar.Brand>
                         <img
                             id={'menu-logo'}
-                            src={'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Michigan' +
-                            '_Wolverines_logo.svg/2000px-Michigan_Wolverines_logo.svg.png'}
+                            src={'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Michigan_Wolverines_logo.svg/2000px-Michigan_Wolverines_logo.svg.png'}
                             alt={'mich'}
                         />
                     </Navbar.Brand>
