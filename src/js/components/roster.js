@@ -275,21 +275,19 @@ const LowerComponent = (props) => {
                                     </thead>
                                     <tbody>
                                     {playerArr.map(({name, num, pos, year,
-                                                        path, injured, stats}, index) => (
+                                                        path}, index) => (
                                         <tr key={index}>
-                                            <th>
-                                                <Link to={path}>
-                                                    {name}
-                                                    {Object.values(playerArr[index]).indexOf(injured) !== -1 ?
-                                                        <span>
-                                            &nbsp;&nbsp;
-                                                            <span className={'fas fa-briefcase-medical text-danger'} title={'Injured'}/>
-                                        </span> : ''}
-                                                </Link>
-                                            </th>
-                                            <td>#{num}</td>
-                                            <td>{pos}</td>
-                                            <td>{year}</td>
+                                        	<th>
+                                                	<Link to={path}>
+                                                    		{name}
+							</Link>
+                                        	</th>
+                                        	<td>#{num}</td>
+                                         	<td>{pos}</td>
+                                        	<td>{year}</td>
+
+
+								{/*
                                             <td>
                                                 {findPerGame(stats.map(({points}) => points))}
                                             </td>
@@ -310,7 +308,7 @@ const LowerComponent = (props) => {
                                             </td>
                                             <td>
                                                 {findPerGame(stats.map(({mins}) => mins))}
-                                            </td>
+                                            </td> */}
                                         </tr>
                                     ))}
                                     </tbody>

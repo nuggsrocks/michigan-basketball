@@ -1,5 +1,5 @@
 export const players = [
-    {name: 'Zavier Simpson', num: 3, pos: 'Guard', year: 'Senior', path: '/roster/zavier-simpson',
+	{name: 'Zavier Simpson', num: 3, pos: 'Guard', year: 'Senior', path: '/roster/zavier-simpson',
         stats: [
             {opp: ['App State', 1], points: 6, rebounds: 8, assists: 6, fgm: 2, fga: 8, mins: 28},
             {opp: ['Creighton', 2], points: 17, rebounds: 3, assists: 9, fgm: 7, fga: 11, mins: 34},
