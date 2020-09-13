@@ -1,0 +1,81 @@
+$mich-maize: #FECA04;
+$mich-blue: #00274C;
+
+
+body {
+	background-color: $mich-blue;
+}
+
+header {
+	height: 10vh;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+
+	img {
+		height: 80%;
+		margin: 0 20px;
+	}
+
+	nav {
+		a {
+			text-decoration: none;
+			color: $mich-maize;
+			margin-right: 20px;
+		}
+	}
+}
+
+main {
+	color: $mich-maize;
+	section {
+		display: flex;
+		flex-flow: row wrap;
+		
+		> div {
+			flex: 1;
+			text-align: center;
+
+			h1, h2, h3 {
+				margin: 0;
+			}
+
+			h1 {
+				font-size: 3rem;
+				line-height: 3rem;
+			}
+
+			h2 {
+				font-size: 2rem;
+				line-height: 3rem;
+			}
+
+			table {
+				width: 100%;
+				margin-top: 30px;
+				td, th {
+					text-align: center;
+					font-size: 1.25rem;
+					line-height: 2.5rem;
+					width: calc(100% / 3);
+
+					a {
+						text-decoration: none;
+						color: $mich-maize;
+
+						span {
+							font-weight: bolder;
+							&.win {
+								color: green;
+							}
+							&.loss {
+								color: red;
+							}
+						}
+
+					}
+				}
+			}
+		}
+	}
+}
