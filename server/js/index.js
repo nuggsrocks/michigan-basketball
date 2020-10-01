@@ -1,14 +1,15 @@
-const express = require('express');
+import express from 'express';
+import path from 'path';
 const app = express();
 
 const port = process.env.PORT || 8080;
 
 const host = process.env.HOST || 'localhost';
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname));
 
 app.get('/*', (req, res) => {
-	res.sendFile(__dirname + '/public/index.html');
+	res.sendFile(path.join(__dirname + 'index.html'));
 });
 
 app.listen(port, host, () => console.log('************'));

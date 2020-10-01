@@ -143,8 +143,9 @@ class StatLeaders extends React.Component {
 					</thead>
 					<tbody>
 					{
-						playerArr.sort((a, b) =>
-							findPerGame(b.stats.map(({points}) => points)) - findPerGame(a.stats.map(({points}) => points)))
+						playerArr.sort((a, b) => {
+								return findPerGame(b.stats.map(({points}) => points)) - findPerGame(a.stats.map(({points}) => points))
+							})
 							.slice(0, 5)
 							.map(({name, num, stats}) => (
 								<tr key={name}>
