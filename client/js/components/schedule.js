@@ -97,6 +97,7 @@ class Standings extends React.Component {
 }
 
 const ScheduleList = (props) => {
+	fetch('http://localhost:8080/server/schedule').then(res => res.json()).then(data => console.log(data));
 	return (
 		<div className={props.className}>
 			<h1>Schedule</h1>
