@@ -223,37 +223,7 @@ export const players = [
 	    {opp: ['Presbyterian', 12], points: , rebounds: , assists: , fgm: , fga: },
 	    {opp: ['UMass Lowell', 13], points: , rebounds: , assists: , fgm: , fga: }
     ]},
-    */
-	{name: 'Colin Castleton', num: 11, pos: 'Center', year: 'Sophomore', path: '/roster/colin-castleton', stats: [
-		{opp: ['App State', 1], points: 8, rebounds: 2, assists: 0, fgm: 3, fga: 5, mins: 12},
-		{opp: ['Creighton', 2], points: 2, rebounds: 1, assists: 1, fgm: 1, fga: 2, mins: 7},
-		{opp: ['Elon', 3], points: 2, rebounds: 8, assists: 1, fgm: 1, fga: 2, mins: 12},
-		{opp: ['HBU', 4], points: 14, rebounds: 3, assists: 0, fgm: 6, fga: 7, mins: 14},
-		{opp: ['Iowa State', 5], points: 10, rebounds: 2, assists: 0, fgm: 5, fga: 7, mins: 17},
-		{opp: ['North Carolina', 6], points: 4, rebounds: 3, assists: 0, fgm: 1, fga: 1, mins: 7},
-		{opp: ['Gonzaga', 7], points: 0, rebounds: 3, assists: 0, fgm: 0, fga: 2, mins: 8},
-		{opp: ['Louisville', 8], points: 2, rebounds: 3, assists: 0, fgm: 1, fga: 1, mins: 9},
-		{opp: ['Iowa', 9], points: 4, rebounds: 1, assists: 0, fgm: 1, fga: 1, mins: 7},
-		{opp: ['Illinois', 10], points: 0, rebounds: 1, assists: 0, fgm: 0, fga: 0, mins: 9},
-		{opp: ['Oregon', 11], points: 0, rebounds: 0, assists: 0, fgm: 0, fga: 0, mins: 3},
-		{opp: ['Presbyterian', 12], points: 6, rebounds: 7, assists: 1, fgm: 0, fga: 2, mins: 22},
-		{opp: ['UMass Lowell', 13], points: 4, rebounds: 9, assists: 3, fgm: 2, fga: 6, mins: 13},
-		{opp: ['Michigan State', 14], points: 0, rebounds: 0, assists: 2, fgm: 0, fga: 4, mins: 6},
-		{opp: ['Purdue', 15], points: 2, rebounds: 4, assists: 0, fgm: 1, fga: 1, mins: 8},
-		{opp: ['Minnesota', 16], points: 0, rebounds: 2, assists: 0, fgm: 0, fga: 1, mins: 9},
-		{opp: ['Iowa', 17], points: 0, rebounds: 2, assists: 0, fgm: 0, fga: 1, mins: 3},
-		{opp: ['Illinois', 18], points: 1, rebounds: 0, assists: 0, fgm: 0, fga: 0, mins: 3},
-		{opp: ['Nebraska', 19], points: 5, rebounds: 0, assists: 0, fgm: 2, fga: 2, mins: 4},
-		{opp: ['Ohio State', 20], points: 0, rebounds: 1, assists: 0, fgm: 0, fga: 1, mins: 5},
-		{opp: ['Northwestern', 21], points: 5, rebounds: 3, assists: 0, fgm: 2, fga: 2, mins: 3},
-		{opp: ['Indiana', 22], points: 2, rebounds: 0, assists: 0, fgm: 0, fga: 0, mins: 2},
-		{opp: ['Rutgers', 23], points: 5, rebounds: 4, assists: 0, fgm: 1, fga: 1, mins: 10},
-		{opp: ['Ohio State', 24], points: 2, rebounds: 0, assists: 0, fgm: 0, fga: 1, mins: 2},
-		{opp: ['Nebraska', 25], points: 0, rebounds: 1, assists: 0, fgm: 0, fga: 0, mins: 2}
-	], pics: ['https://arc-anglerfish-arc2-prod-advancelocal.s3.amazonaws.com/public/YFDOAKBOOREJ3FTIG5JB7JGEUQ.JPG',
-		'https://images.saymedia-content.com/.image/MTY4ODIxNjI4MDExMDMwMjg5/img_7347.jpg',
-		'https://www.gannett-cdn.com/presto/2019/12/26/PDTN/0d639d02-b41d-47a5-86a4-d0b24a393a41-TeskeCastleton.jpg?crop=3989,2244,x0,y124&width=3200&height=1680&fit=bounds']},
-	/*
+    
     {name: 'Austin Davis', num: 51, pos: 'Center', year: 'Senior', data: [
 	    {opp: ['App State', 1], points: , rebounds: , assists: , fgm: , fga: },
 	    {opp: ['Creighton', 2], points: , rebounds: , assists: , fgm: , fga: },
@@ -346,43 +316,7 @@ export const players = [
 		{opp: ['Maryland', 21], points: 6, rebounds: 3, assists: 1, fgm: 2, fga: 8, mins: 33}
 	], pics: ['https://s3media.247sports.com/Uploads/Assets/356/787/7787356.jpg',
 		'https://www.gannett-cdn.com/presto/2019/12/21/PDTF/7bff3a4c-6470-48a0-a293-296d72a1a110-SI_20191221_lbm_ro_037.jpg?crop=1599,900,x0,y600&width=1600&height=800&fit=bounds',
-		'https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2019%2F1128%2Fr634555_1296x729_16%2D9.jpg']},
-
-	{name: 'Jon Teske', num: 15, pos: 'Center', year: 'Senior', path: '/roster/jon-teske', stats: [
-		{opp: ['App State', 1], points: 17, rebounds: 13, assists: 1, fgm: 7, fga: 12, mins: 32},
-		{opp: ['Creighton', 2], points: 17, rebounds: 7, assists: 1, fgm: 7, fga: 12, mins: 32},
-		{opp: ['Elon', 3], points: 16, rebounds: 7, assists: 2, fgm: 5, fga: 10, mins: 29},
-		{opp: ['HBU', 4], points: 3, rebounds: 12, assists: 2, fgm: 1, fga: 3, mins: 19},
-		{opp: ['Iowa State', 5], points: 11, rebounds: 6, assists: 1, fgm: 4, fga: 6, mins: 16},
-		{opp: ['North Carolina', 6], points: 10, rebounds: 8, assists: 1, fgm: 4, fga: 8, mins: 33},
-		{opp: ['Gonzaga', 7], points: 19, rebounds: 15, assists: 0, fgm: 9, fga: 15, mins: 31},
-		{opp: ['Louisville', 8], points: 18, rebounds: 10, assists: 0, fgm: 6, fga: 18, mins: 31},
-		{opp: ['Iowa', 9], points: 16, rebounds: 5, assists: 3, fgm: 7, fga: 9, mins: 23},
-		{opp: ['Illinois', 10], points: 16, rebounds: 7, assists: 0, fgm: 7, fga: 11, mins: 31},
-		{opp: ['Oregon', 11], points: 4, rebounds: 4, assists: 0, fgm: 1, fga: 3, mins: 24},
-		{opp: ['Presbyterian', 12], points: 15, rebounds: 7, assists: 0, fgm: 6, fga: 9, mins: 20},
-		{opp: ['UMass Lowell', 13], points: 25, rebounds: 8, assists: 0, fgm: 11, fga: 14, mins: 25},
-		{opp: ['Michigan State', 14], points: 15, rebounds: 5, assists: 0, fgm: 6, fga: 12, mins: 24},
-		{opp: ['Purdue', 15], points: 18, rebounds: 9, assists: 0, fgm: 6, fga: 13, mins: 39},
-		{opp: ['Minnesota', 16], points: 9, rebounds: 4, assists: 3, fgm: 3, fga: 8, mins: 31},
-		{opp: ['Iowa', 17], points: 14, rebounds: 2, assists: 7, fgm: 5, fga: 8, mins: 34},
-		{opp: ['Penn State', 18], points: 9, rebounds: 11, assists: 0, fgm: 4, fga: 10, mins: 31},
-		{opp: ['Illinois', 19], points: 12, rebounds: 5, assists: 0, fgm: 4, fga: 14, mins: 29},
-		{opp: ['Nebraska', 20], points: 9, rebounds: 8, assists: 3, fgm: 4, fga: 7, mins: 32},
-		{opp: ['Rutgers', 21], points: 13, rebounds: 7, assists: 1, fgm: 4, fga: 8, mins: 28},
-		{opp: ['Ohio State', 22], points: 3, rebounds: 6, assists: 1, fgm: 1, fga: 7, mins: 35},
-		{opp: ['Michigan State', 23], points: 7, rebounds: 8, assists: 0, fgm: 2, fga: 8, mins: 28},
-		{opp: ['Northwestern', 24], points: 6, rebounds: 8, assists: 2, fgm: 3, fga: 14, mins: 25},
-		{opp: ['Indiana', 25], points: 6, rebounds: 7, assists: 1, fgm: 2, fga: 5, mins: 25},
-		{opp: ['Rutgers', 26], points: 5, rebounds: 4, assists: 0, fgm: 2, fga: 5, mins: 27},
-		{opp: ['Purdue', 27], points: 11, rebounds: 5, assists: 4, fgm: 5, fga: 13, mins: 26},
-		{opp: ['Wisconsin', 28], points: 7, rebounds: 2, assists: 1, fgm: 3, fga: 5, mins: 23},
-		{opp: ['Ohio State', 29], points: 8, rebounds: 1, assists: 0, fgm: 3, fga: 8, mins: 25},
-		{opp: ['Nebraska', 30], points: 12, rebounds: 5, assists: 1, fgm: 5, fga: 11, mins: 28},
-		{opp: ['Maryland', 31], points: 8, rebounds: 3, assists: 0, fgm: 2, fga: 5, mins: 29}
-	], pics: ['https://arc-anglerfish-arc2-prod-advancelocal.s3.amazonaws.com/public/GEYKP66KMZBYRII3RVRDQDUOE4.JPG',
-		'https://arc-anglerfish-arc2-prod-advancelocal.s3.amazonaws.com/public/FS7CC3QAAJAKBN73344WO2CKKY.JPG',
-		'https://www.michigandaily.com/sites/default/files/190312/nat.BKC_.MichiganvsMichiganState.3.9.19.0008-copy.jpg']}
+		'https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2019%2F1128%2Fr634555_1296x729_16%2D9.jpg']}
 ];
 
 

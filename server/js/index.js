@@ -30,9 +30,9 @@ async function chooseDatabase (session, databaseName) {
 	}
 }
 
-async function chooseTable (database) {
+async function chooseTable (database, tableName) {
 	try {
-		return await database.getTable('Games');
+		return await database.getTable(tableName);
 	} catch(e) {
 		// statements
 		console.log(e);
@@ -61,9 +61,19 @@ app.use(express.static(__dirname));
 app.get('/server/schedule', (req, res) => {
 	connectToSession().then(session => {
 		chooseDatabase(session, 'Basketball').then(database => {
-			chooseTable(database).then(table => {
+			chooseTable(database, 'Games').then(table => {
 				selectDocs(table).then(docs => res.send(docs));
 			})
+		});
+	});
+});
+
+app.get('/server/roster', (req, res) => {
+	connectToSession().then(session => {
+		chooseDatabase(session, 'Basketball').then(database => {
+			chooseTable(database, 'Players').then(table => {
+				selectDocs(table).then(docs => res.send(docs));
+			});
 		});
 	});
 });

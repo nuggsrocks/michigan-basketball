@@ -1,9 +1,4 @@
 import React from "react";
-import {players, schedule} from '../../data/data';
-import {findPerGame, findFieldGoalPercentage} from '../stats-functions';
-
-const playerArr = [...players];
-
 
 const Standings = (props) => {
 
@@ -15,29 +10,39 @@ const Standings = (props) => {
 		);
 	return (
 		<div>
-			<h2>
-			{props.data.wins + ' - ' + props.data.losses + ' (' +
-			props.data.confWins + ' - ' + props.data.confLosses + ' Big Ten)'}
-			</h2>
 
-			<table>
-				<thead>
-					<tr>
-						<th colSpan='3'>Big Ten Standings</th>
-					</tr>
-				</thead>
-				<tbody>
-				{
-					standingsArr.map(({name, record}, index) => (
-						<tr key={index}>
-							<th>{index + 1}</th>
-							<td>{name}</td>
-							<td>{record[0] + ' - ' + record[1]}</td>
-						</tr>
-						))
-				}
-				</tbody>
-			</table>
+			{standingsArr.length === 0 && <div className='loadingIcon'/>}
+			
+			{
+				props.data.wins !== null &&
+					<h2>{`${props.data.wins} - ${props.data.losses} (${props.data.confWins} - ${props.data.confLosses} Big Ten)`}</h2>
+			}
+			
+
+
+			
+			{
+				standingsArr.length > 0 &&				
+					<table>
+						<thead>
+							<tr>
+								<th colSpan='3'>Big Ten Standings</th>
+							</tr>
+						</thead>
+						<tbody>
+						
+						{
+							standingsArr.map(({name, record}, index) => (
+								<tr key={index}>
+									<th>{index + 1}</th>
+									<td>{name}</td>
+									<td>{record[0] + ' - ' + record[1]}</td>
+								</tr>
+								))
+						}
+						</tbody>
+					</table>
+			}
 		</div>
 		)
 	
@@ -48,176 +53,71 @@ const ScheduleList = (props) => {
 	return (
 		<div>
 			<h1>Schedule</h1>
-			<table>
-				<thead>
-				<tr>
-					<th>Opponent</th>
-					<th>Date</th>
-					<th>Result</th>
-				</tr>
-				</thead>
-				<tbody>
-				{
-					schedule.map(game => (
-						<tr key={game[0]}>
-							<td>{game[1]}</td>
-							<td>{game[2]}</td>
-							<td>
-								<a href='#'>
-									{`${game[3]} - ${game[4]}`}
-									&nbsp;
-									<span className={game[3] > game[4] ? 'win' : 'loss'}>
-										{game[3] > game[4] ? 'W ' : game[3] < game[4] ? 'L ' : ''}
-									</span>
-								</a>
-							</td>
-						</tr>
-					))
-				}
-				</tbody>
-			</table>
+			{
+				schedule === null ? 
+					<div className='loadingIcon'/>
+					:
+					schedule.length === 0 ? 
+						<h2>TBA</h2>
+						:
+						<table>
+							<thead>
+							<tr>
+								<th>Opponent</th>
+								<th>Date</th>
+								<th>Result</th>
+							</tr>
+							</thead>
+							<tbody>
+
+							{
+								schedule.length > 0 &&
+									schedule.map(game => (
+										<tr key={game[0]}>
+											<td>{game[1]}</td>
+											<td>{game[2]}</td>
+											<td>
+												<a href='#'>
+													{`${game[3]} - ${game[4]}`}
+													&nbsp;
+													<span className={game[3] > game[4] ? 'win' : 'loss'}>
+														{game[3] > game[4] ? 'W ' : game[3] < game[4] ? 'L ' : ''}
+													</span>
+												</a>
+											</td>
+										</tr>
+									))
+							}
+							</tbody>
+						</table>
+
+			}
+
 		</div>
 	)
 };
 
-class StatLeaders extends React.Component {
-	render() {
-		return (
-			<div className={this.props.className}>
-				<h2>Stat Leaders</h2>
-				
-				<table>
-					<thead>
-					<tr>
-						<th colSpan='3'>Points</th>
-					</tr>
-					</thead>
-					<tbody>
-					{
-						playerArr.sort((a, b) => {
-								return findPerGame(b.stats.map(({points}) => points)) - findPerGame(a.stats.map(({points}) => points))
-							})
-							.slice(0, 5)
-							.map(({name, num, stats}) => (
-								<tr key={name}>
-									<th>{name}</th>
-									<th>#{num}</th>
-									<td>
-										{findPerGame(stats.map(({points}) => points)) + ' PPG'}
-									</td>
-								</tr>
-							))
-					}
-					</tbody>
-				</table>
+const StatLeaders = (props) => {
 
-				<table>
-					<thead>
-					<tr>
-						<th colSpan='3'>Assists</th>
-					</tr>
-					</thead>
-					<tbody>
-					{playerArr.sort((a, b) =>
-						findPerGame(b.stats.map(({assists}) => assists)) - findPerGame(a.stats.map(({assists}) => assists)))
-						.slice(0, 5)
-						.map(({name, num, stats}) => (
-							<tr key={name}>
-								<th>{name}</th>
-								<th>#{num}</th>
-								<td>
-									{findPerGame(stats.map(({assists}) => assists)) + ' APG'}
-								</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
-				
-				<table>
-					<thead>
-					<tr>
-						<th colSpan='3'>Rebounds</th>
-					</tr>
-					</thead>
-					<tbody>
-					{playerArr.sort((a, b) =>
-						findPerGame(b.stats.map(({rebounds}) => rebounds)) - findPerGame(a.stats.map(({rebounds}) => rebounds)))
-						.slice(0, 5)
-						.map(({name, num, stats}) =>
-							<tr key={name}>
-								<th>{name}</th>
-								<th>#{num}</th>
-								<td>
-									{findPerGame(stats.map(({rebounds}) => rebounds)) + ' RPG'}
-								</td>
-							</tr>
-						)
-					}
-					</tbody>
-				</table>
 
-				<table>
-					<thead>
-					<tr>
-						<th colSpan='3'>Field Goals</th>
-					</tr>
-					</thead>
-					<tbody>
-					{playerArr.sort((a, b) =>
-						findFieldGoalPercentage(b.stats.map(({fgm}) => fgm), b.stats.map(({fga}) => fga)) -
-						findFieldGoalPercentage(a.stats.map(({fgm}) => fgm), a.stats.map(({fga}) => fga)))
-						.filter((player) => player.stats.map(({fga}) => fga).reduce((a, b) => a + b) > 50)
-						.slice(0, 5)
-						.map(({name, num, stats}) =>
-							<tr key={name}>
-								<th>{name}</th>
-								<th>#{num}</th>
-								<td>
-									{findFieldGoalPercentage(stats.map(({fgm}) => fgm), stats.map(({fga}) => fga)) + '%'}
-								</td>
-							</tr>
-						)
-					}
-					</tbody>
-				</table>
-				
-				<table>
-					<thead>
-					<tr>
-						<th colSpan='3'>Minutes</th>
-					</tr>
-					</thead>
-					<tbody>
-					{playerArr.sort((a, b) =>
-						findPerGame(b.stats.map(({mins}) => mins)) - findPerGame(a.stats.map(({mins}) => mins)))
-						.slice(0, 5)
-						.map(({name, num, stats}) =>
-							<tr key={name}>
-								<th>{name}</th>
-								<th>#{num}</th>
-								<td>
-									{findPerGame(stats.map(({mins}) => mins)) + ' MPG'}
-								</td>
-							</tr>
-						)
-					}
-					</tbody>
-				</table>
-			</div>
-		)
-	}
+
+	return (
+		<div>
+			
+		</div>
+	)
 }
 
 export class Schedule extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			wins: 0,
-			losses: 0,
-			confWins: 0,
-			confLosses: 0,
+			wins: null,
+			losses: null,
+			confWins: null,
+			confLosses: null,
 			teams: [],
-			schedule: []
+			schedule: null
 		};
 	}
 
@@ -277,7 +177,7 @@ export class Schedule extends React.Component {
 	render() {
 		return (
 			<section>
-				<StatLeaders/>
+				<StatLeaders data={this.state}/>
 				<ScheduleList data={this.state}/>
 				<Standings data={this.state}/>
 			</section>
