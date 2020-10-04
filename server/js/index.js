@@ -43,7 +43,7 @@ async function selectDocs (table) {
 	try {
 		let selection = await table.select().execute();
 
-		return await selection.toArray();
+		return await selection.fetchAll();
 	} catch(e) {
 		// statements
 		console.log(e);
@@ -68,7 +68,7 @@ app.get('/server/schedule', (req, res) => {
 	});
 });
 
-app.get('/', (req, res) => {
+app.get('/*', (req, res) => {
 	res.sendFile(__dirname + '/index.html');
 });
 
