@@ -9,7 +9,7 @@ const Standings = (props) => {
 		((b.record[0]) / ((b.record[0]) + (b.record[1]))) - ((a.record[0]) / ((a.record[0]) + (a.record[1])))
 		);
 	return (
-		<div>
+		<article>
 
 			{standingsArr.length === 0 && <div className='loadingIcon'/>}
 			
@@ -43,7 +43,7 @@ const Standings = (props) => {
 						</tbody>
 					</table>
 			}
-		</div>
+		</article>
 		)
 	
 }
@@ -51,14 +51,14 @@ const Standings = (props) => {
 const ScheduleList = (props) => {
 	let schedule = props.data.schedule;
 	return (
-		<div>
+		<article>
 			<h1>Schedule</h1>
 			{
 				schedule === null ? 
 					<div className='loadingIcon'/>
 					:
 					schedule.length === 0 ? 
-						<h2>TBA</h2>
+						<h2>TBD</h2>
 						:
 						<table>
 							<thead>
@@ -93,7 +93,7 @@ const ScheduleList = (props) => {
 
 			}
 
-		</div>
+		</article>
 	)
 };
 
@@ -102,9 +102,9 @@ const StatLeaders = (props) => {
 
 
 	return (
-		<div>
+		<article>
 			
-		</div>
+		</article>
 	)
 }
 
@@ -169,8 +169,10 @@ export class Schedule extends React.Component {
 						this.setState({
 							schedule: data
 						});
-					});
-			});
+					})
+					.catch(e => console.error(e));
+			})
+			.catch(e => console.error(e));
 
 	}
 
