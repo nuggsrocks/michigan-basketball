@@ -7,43 +7,42 @@ export class Roster extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			roster: null
+			stats: null,
+			stats: null
 		};
 	}
 
 	componentDidMount() {
-		
+		fetch('http://localhost:8080/fetch/stats')
+			.then(res => res.json())
+			.then(stats => this.setState({stats}))
+			.catch(e => console.error(e));
+
 	}
 
 	render() {
+		let stats = this.state.stats;
 		return (
 			<section>
 				
-				{
-					this.state.roster !== null &&
-						<table>
-							<thead>
-								<tr>
-									<th>Name</th>
-									<th>Number</th>
-									<th>Position</th>
-									<th>Year</th>
-								</tr>
-							</thead>
-							<tbody>
-								{
-									this.state.roster.map(player => 
-										<tr>
-											<td>{player[1]}</td>
-											<td>{player[2]}</td>
-											<td>{player[3]}</td>
-											<td>{player[4]}</td>
-										</tr>
-									)
-								}
-							</tbody>
-						</table>
-				}
+			<table>
+			<tbody>
+			{
+				stats !== null &&
+				stats.map(({name, position, data}, index) => 
+					<tr key={index}>
+						<td>{name}</td>
+						<td>{position}</td>
+						{
+							Object.values(data).map((stat, index) => 
+								<td key={index}>{stat}</td>
+							)
+						}
+					</tr>
+				)
+			}
+			</tbody>
+			</table>
 			
 			</section>
 		)

@@ -18,17 +18,17 @@ function findRecords (data) {
 
 	let doc = dom.window.document;
 
-	let dataRows = doc.querySelectorAll('div.standings__table table tbody tr');
+	let tableRows = doc.querySelectorAll('div.standings__table table tbody tr');
 
 	let records = [];
 
-	for (let i = 0; i < dataRows.length; i++) {
-		let dataIndex = dataRows[i].attributes['data-idx'].value;
+	for (let i = 0; i < tableRows.length; i++) {
+		let dataIndex = tableRows[i].attributes['data-idx'].value;
 
 		if (i < 14) {
-			records[dataIndex] = {name: dataRows[i].querySelector('div.team-link span.hide-mobile').textContent};
+			records[dataIndex] = {name: tableRows[i].querySelector('div.team-link span.hide-mobile').textContent};
 		} else {
-			records[dataIndex].record = dataRows[i].querySelectorAll('td')[0].textContent;
+			records[dataIndex].record = tableRows[i].querySelectorAll('td')[0].textContent;
 		}
 	}
 
@@ -41,9 +41,55 @@ function findStats (data) {
 
 	let doc = dom.window.document;
 
-	let dataRows = doc.querySelector('section.Card');
+	let tableRows = doc.querySelectorAll('section.Card div.mt5 table tbody tr');
 
-	return dataRows.textContent;
+	let tableData = [];
+
+	tableRows.forEach(element => tableData.push(element.textContent));
+
+	let tableHeaders = doc.querySelectorAll('section.Card div.mt5 table thead tr th');
+
+	let statHeaders = [];
+
+	for (let i = 1; i < (tableHeaders.length / 2) - 2; i++) {
+		statHeaders.push(tableHeaders[i].textContent);
+	}
+
+	let stats = [];
+
+	for (let i in tableData) {
+		let numOfPlayers = tableData.findIndex(text => text === 'Total');
+		
+		
+		if (i < numOfPlayers) {
+
+			let name = tableData[i].split(' ').filter((data, index) => index < 2).join(' ');
+
+			let position = tableData[i].split(' ').filter(data => data.length === 1)[0];
+
+			stats.push({name, position});
+
+		} else if (i > numOfPlayers && i < (numOfPlayers * 2) + 1) {
+			let index = i - numOfPlayers - 1;
+			let playerStatColumns = tableRows[i].querySelectorAll('td');
+
+
+			
+			let playerStats = {};
+			
+			for (let i = 0; i < playerStatColumns.length; i++) {
+
+				playerStats[statHeaders[i]] = playerStatColumns[i].textContent;
+				
+			};
+
+
+
+			stats[index].data = playerStats;
+		}
+	}
+
+	return stats;
 }
 
 

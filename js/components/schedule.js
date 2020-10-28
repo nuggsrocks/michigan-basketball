@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Standings = (props) => {
-
+	let standings = props.standings;
 
 	return (
 		<article>
@@ -11,8 +11,8 @@ const Standings = (props) => {
 			<table>
 				<tbody>
 					{
-						props.standings !== null &&
-						props.standings.sort((a, b) => b.record.split('-')[0] - a.record.split('-')[0]).map(({name, record}, index) => 
+						standings !== null &&
+						standings.sort((a, b) => b.record.split('-')[0] - a.record.split('-')[0]).map(({name, record}, index) => 
 							<tr key={index}>
 								<th>{index + 1}</th>
 								<td>{name}</td>
@@ -29,7 +29,7 @@ const Standings = (props) => {
 }
 
 const ScheduleList = (props) => {
-	let schedule = props.data.schedule;
+	let schedule = props.schedule;
 	return (
 		<article>
 			<h1>Schedule</h1>
@@ -41,14 +41,14 @@ const ScheduleList = (props) => {
 
 const StatLeaders = (props) => {
 
-
+	let stats = props.stats;
 
 	return (
 		<article>
 
 			<h2>Stat Leaders</h2>
 
-
+			
 
 			
 		</article>
@@ -71,18 +71,12 @@ export class Schedule extends React.Component {
 			.then(standings => this.setState({standings}))
 			.catch(e => console.error(e));
 
-
-		fetch('http://localhost:8080/fetch/stats')
-			.then(res => res.text())
-			.then(stats => console.log(stats))
-			.catch(e => console.error(e));
-
 	}
 
 	render() {
 		return (
 			<div>
-				<StatLeaders data={this.state}/>
+				<StatLeaders stats={this.state.stats}/>
 				<ScheduleList data={this.state}/>
 				<Standings standings={this.state.standings}/>
 			</div>
