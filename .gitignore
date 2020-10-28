@@ -1,2 +1,7 @@
 node_modules/**
 public/**
+
+.env.dev
+.env.test
+
+ecosystem.config.js

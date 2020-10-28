@@ -20,7 +20,7 @@ module.exports = env => {
 
     return {
         mode: 'development',
-        entry: './client/js/index.js',
+        entry: './js/index.js',
         output: {
             path: __dirname + '/public',
             filename: 'bundle.js'
@@ -55,9 +55,8 @@ module.exports = env => {
         watch: true,
         plugins: [
             new HtmlWebpackPlugin({
-                template: 'client/index.html',
+                template: './index.html',
                 filename: 'index.html',
-                title: 'Michigan Basketball',
                 meta: {
                     charset: 'utf-8',
                     viewport: 'width=device-width,initial-scale=1.0'

@@ -12,9 +12,7 @@ export class Roster extends React.Component {
 	}
 
 	componentDidMount() {
-		fetch('http://localhost:8080/server/roster')
-			.then(res => res.json())
-			.then(data => this.setState({roster: data}));
+		
 	}
 
 	render() {

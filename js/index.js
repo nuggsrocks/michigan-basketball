@@ -12,7 +12,7 @@ const routes = [
 
 const App = () => {
 	  return (
-		<BrowserRouter basename={'/'}>
+		<BrowserRouter basename='/'>
 		    <Navigation />
 		    <Main />
 		</BrowserRouter>
@@ -25,9 +25,9 @@ const Navigation = () => {
 			
 				
 			<img
-				id={'menu-logo'}
-				src={'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Michigan_Wolverines_logo.svg/2000px-Michigan_Wolverines_logo.svg.png'}
-				alt={'Michigan Block M'}
+				id='menu-logo'
+				src='https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Michigan_Wolverines_logo.svg/2000px-Michigan_Wolverines_logo.svg.png'
+				alt='Michigan Block M'
 			/>
 				
 			
@@ -55,7 +55,6 @@ const Main = () => {
 					<Component/>
 				</Route>
 			))}
-		    <Redirect to={'/schedule'}/>
 		</main>
 	  )
 };
