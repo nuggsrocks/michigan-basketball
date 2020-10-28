@@ -36,14 +36,33 @@ function findRecords (data) {
 	return records;
 }
 
+function findStats (data) {
+	let dom = new jsdom.JSDOM(data);
 
-app.get('/standings', (req, res) => {
+	let doc = dom.window.document;
+
+	let dataRows = doc.querySelector('section.Card');
+
+	return dataRows.textContent;
+}
+
+
+app.get('/fetch/standings', (req, res) => {
 	axios.get('https://www.espn.com/mens-college-basketball/standings/_/group/7', {responseType: 'text'})
 			.then(response => {
 				res.send(findRecords(response.data));
 			})
 			.catch(e => console.error(e));
 });
+
+app.get('/fetch/stats', (req, res) => {
+	axios.get('https://www.espn.com/mens-college-basketball/team/stats/_/id/130', {responseType: 'text'})
+		.then(response => {
+			res.send(findStats(response.data));
+		})
+		.catch(e => console.error(e));
+});
+
 
 app.get('/*', (req, res) => res.sendFile(__dirname + '/public/index.html'));
 

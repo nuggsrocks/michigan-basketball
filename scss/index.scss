@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text&family=Source+Sans+Pro&display=swap');
+
 $mich-maize: #FECA04;
 $mich-blue: #00274C;
 
@@ -5,32 +7,67 @@ $mich-blue: #00274C;
 body {
 	background-color: $mich-blue;
 	color: $mich-maize;
-}
+	font-family: 'Source Sans Pro', sans-serif;
 
-header {
-	height: 10vh;
-	display: flex;
-	flex-flow: row nowrap;
-	align-items: center;
-
-	img {
-		height: 80%;
-		margin: 0 20px;
+	h1, h2, h3, h4, h5, h6 {
+		font-family: 'Crimson Text', serif;
 	}
 
-	nav {
-		a {
-			text-decoration: none;
-			color: $mich-maize;
-			margin-right: 20px;
+
+	div#root {
+		display: flex;
+		flex-flow: row wrap;
+
+		header {
+			height: 10vh;
+			flex: 0 1 100vw;
+
+			display: flex;
+			flex-flow: row nowrap;
+			align-items: center;
+
+			img {
+				height: 100%;
+				margin: 0 20px;
+			}
+
+			button {
+				margin: 0 20px;
+				background-color: transparent;
+				border: none;
+
+				transition: all 200ms;
+				a {
+					text-decoration: none;
+					color: $mich-maize;
+					font-family: 'Crimson Text', serif;
+					font-size: 1.5rem;
+					
+				}
+
+				&:hover {
+					transform: scale(1.2);
+				}
+			}
+		}
+
+
+		main {
+			flex: 0 1 100vw;
+
+			div {
+				display: flex;
+				flex-flow: row nowrap;
+
+				article {
+					flex: 1;
+				}
+			}
 		}
 	}
 }
 
-main {
 
-	
-}
 
 div.loadingIcon {
 	display: inline-block;

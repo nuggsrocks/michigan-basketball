@@ -34,10 +34,11 @@ const Navigation = () => {
 			<nav>
 				{
 					routes.map(({path, name}) => 
-					
-						<Link to={path} key={path}>
-							{name}
-						</Link>
+						<button key={path}>
+							<Link to={path}>
+								{name}
+							</Link>
+						</button>
 						
 					)
 				}
@@ -55,6 +56,9 @@ const Main = () => {
 					<Component/>
 				</Route>
 			))}
+			<Route exact path='/'>
+				<Redirect to='/schedule'/>
+			</Route>
 		</main>
 	  )
 };

@@ -60,25 +60,32 @@ export class Schedule extends React.Component {
 		super(props);
 		this.state = {
 			standings: null,
-			schedule: null
+			schedule: null,
+			stats: null
 		};
 	}
 
 	componentDidMount() {
-		fetch('http://localhost:8080/standings')
+		fetch('http://localhost:8080/fetch/standings')
 			.then(res => res.json())
 			.then(standings => this.setState({standings}))
+			.catch(e => console.error(e));
+
+
+		fetch('http://localhost:8080/fetch/stats')
+			.then(res => res.text())
+			.then(stats => console.log(stats))
 			.catch(e => console.error(e));
 
 	}
 
 	render() {
 		return (
-			<section>
+			<div>
 				<StatLeaders data={this.state}/>
 				<ScheduleList data={this.state}/>
 				<Standings standings={this.state.standings}/>
-			</section>
+			</div>
 		);
 	}
 }
