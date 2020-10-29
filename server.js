@@ -57,7 +57,7 @@ function findStats (data) {
 	}
 
 
-	statHeaders = statHeaders.slice(statHeaders.lastIndexOf('Name') + 1);
+	statHeaders = [statHeaders[1], ...statHeaders.slice(statHeaders.lastIndexOf('Name') + 1)];
 
 	let stats = [];
 
@@ -77,7 +77,12 @@ function findStats (data) {
 
 		} else if (i < numOfPlayers * 2) {
 
-			let playerStatColumns = tableRows[i + (numOfPlayers * 2) + 3].querySelectorAll('td');
+			let playerStatColumns = [
+				tableRows[i + 1].querySelectorAll('td')[0]
+			];
+
+			tableRows[i + (numOfPlayers * 2) + 3].querySelectorAll('td').forEach(column => playerStatColumns.push(column));
+
 
 			let playerStats = {};
 			
@@ -89,7 +94,6 @@ function findStats (data) {
 
 		}
 	}
-
 
 	return stats;
 }

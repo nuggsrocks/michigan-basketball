@@ -63,9 +63,17 @@ body {
 					flex: 1;
 
 					text-align: center;
-					table {
-						width: 100%;
-						text-align: center;
+
+					section {
+						
+						display: flex;
+						flex-flow: row wrap;
+						justify-content: center;
+
+
+						table {
+							flex: 1 0 100%;
+						}			
 					}
 				}
 			}
