@@ -48,19 +48,48 @@ const Navigation = () => {
 	  )
 };
 
-const Main = () => {
-	  return (
-		<main>
-			{routes.map(({path, Component}) => (
-				<Route key={path} path={path}>
-					<Component/>
+class Main extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			standings: [],
+			schedule: [],
+			stats: []
+		};
+
+
+	}
+
+	componentDidMount() {
+		fetch('http://localhost:8080/fetch/standings')
+			.then(res => res.json())
+			.then(standings => this.setState({standings}))
+			.catch(e => console.error(e));
+
+		fetch('http://localhost:8080/fetch/stats')
+			.then(res => res.json())
+			.then(stats => this.setState({stats}))
+			.catch(e => console.error(e));
+
+	}
+
+	render () {
+	  	return (
+			<main>
+				{
+					routes.map(({path, Component}) => 
+						<Route key={path} path={path}>
+							<Component data={this.state}/>
+						</Route>
+					)
+				}
+				<Route exact path='/'>
+					<Redirect to='/schedule'/>
 				</Route>
-			))}
-			<Route exact path='/'>
-				<Redirect to='/schedule'/>
-			</Route>
-		</main>
-	  )
+			</main>
+		)
+	}
 };
 
 ReactDOM.render(<App/>, document.querySelector('#root'));

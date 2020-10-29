@@ -11,7 +11,6 @@ const Standings = (props) => {
 			<table>
 				<tbody>
 					{
-						standings !== null &&
 						standings.sort((a, b) => b.record.split('-')[0] - a.record.split('-')[0]).map(({name, record}, index) => 
 							<tr key={index}>
 								<th>{index + 1}</th>
@@ -29,7 +28,6 @@ const Standings = (props) => {
 }
 
 const ScheduleList = (props) => {
-	let schedule = props.schedule;
 	return (
 		<article>
 			<h1>Schedule</h1>
@@ -40,46 +38,55 @@ const ScheduleList = (props) => {
 };
 
 const StatLeaders = (props) => {
-
 	let stats = props.stats;
 
+	const displayStatLeaders = () => {
+		let statCategories = stats.length > 0 ? Object.keys(stats[0].data) : [];
+
+		let statLeaders = [];
+
+		statCategories.forEach(statName => {
+			statLeaders.push(stats.sort((a, b) => b.data[statName] - a.data[statName]).slice(0, 5).map(({name, data}, index) =>
+				<tr key={index}>
+					<th>{index + 1}</th>
+					<td>{name}</td>
+					<td>{data[statName]}</td>
+				</tr>
+			))
+		});
+		
+		return statLeaders.map((statTable, index) => 
+			<section>
+				<h3>{statCategories[index]}</h3>
+				<table>
+					<tbody>
+						{statTable}
+					</tbody>
+				</table>
+			</section>
+		)
+	};
+
+	
 	return (
 		<article>
 
 			<h2>Stat Leaders</h2>
 
-			
-
-			
+			{
+				displayStatLeaders()
+			}
 		</article>
 	)
 }
 
-export class Schedule extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			standings: null,
-			schedule: null,
-			stats: null
-		};
-	}
-
-	componentDidMount() {
-		fetch('http://localhost:8080/fetch/standings')
-			.then(res => res.json())
-			.then(standings => this.setState({standings}))
-			.catch(e => console.error(e));
-
-	}
-
-	render() {
-		return (
-			<div>
-				<StatLeaders stats={this.state.stats}/>
-				<ScheduleList data={this.state}/>
-				<Standings standings={this.state.standings}/>
-			</div>
-		);
-	}
+export const Schedule = (props) => {
+	
+	return (
+		<div>
+			<StatLeaders stats={props.data.stats}/>
+			<ScheduleList />
+			<Standings standings={props.data.standings}/>
+		</div>
+	);
 }
