@@ -51,16 +51,22 @@ function findStats (data) {
 
 	let statHeaders = [];
 
-	for (let i = 1; i < (tableHeaders.length / 2) - 2; i++) {
+
+	for (let i = 0; i < tableHeaders.length; i++) {
 		statHeaders.push(tableHeaders[i].textContent);
 	}
 
+
+	statHeaders = statHeaders.slice(statHeaders.lastIndexOf('Name') + 1);
+
 	let stats = [];
 
-	for (let i in tableData) {
+	
+
+	for (let i = 0; i < tableData.length; i++) {
+
 		let numOfPlayers = tableData.findIndex(text => text === 'Total');
-		
-		
+
 		if (i < numOfPlayers) {
 
 			let name = tableData[i].split(' ').filter((data, index) => index < 2).join(' ');
@@ -69,25 +75,21 @@ function findStats (data) {
 
 			stats.push({name, position});
 
-		} else if (i > numOfPlayers && i < (numOfPlayers * 2) + 1) {
-			let index = i - numOfPlayers - 1;
-			let playerStatColumns = tableRows[i].querySelectorAll('td');
+		} else if (i < numOfPlayers * 2) {
 
+			let playerStatColumns = tableRows[i + (numOfPlayers * 2) + 3].querySelectorAll('td');
 
-			
 			let playerStats = {};
 			
-			for (let i = 0; i < playerStatColumns.length; i++) {
+			for (let j = 0; j < playerStatColumns.length; j++) {
+				playerStats[statHeaders[j]] = playerStatColumns[j].textContent;
+			}
 
-				playerStats[statHeaders[i]] = playerStatColumns[i].textContent;
-				
-			};
+			stats[i - numOfPlayers].data = playerStats;
 
-
-
-			stats[index].data = playerStats;
 		}
 	}
+
 
 	return stats;
 }

@@ -56,7 +56,7 @@ const StatLeaders = (props) => {
 		});
 		
 		return statLeaders.map((statTable, index) => 
-			<section>
+			<section key={index}>
 				<h3>{statCategories[index]}</h3>
 				<table>
 					<tbody>
