@@ -71,7 +71,6 @@ const StatLeaders = (props) => {
 					statValue = data[statName] / data['GP'];
 				}
 				return <tr key={index}>
-					<th>{index + 1}</th>
 					<td>{name}</td>
 					<td>{Math.round(statValue * 10) / 10}</td>
 				</tr>
@@ -82,8 +81,12 @@ const StatLeaders = (props) => {
 		
 		return statKeys.map((key, index) => 
 			<section key={index}>
-				<h3>{key}</h3>
 				<table>
+					<thead>
+						<tr>
+							<th colSpan='3'>{key}</th>
+						</tr>
+					</thead>
 					<tbody>
 						{statLeaders[key]}
 					</tbody>

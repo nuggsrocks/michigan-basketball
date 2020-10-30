@@ -59,22 +59,42 @@ body {
 				display: flex;
 				flex-flow: row nowrap;
 
-				article {
-					flex: 1;
+			}
 
-					text-align: center;
+			article {
+				flex: 1;
 
-					section {
-						
-						display: flex;
-						flex-flow: row wrap;
-						justify-content: center;
+				text-align: center;
+
+				section {
+					
+					display: flex;
+					flex-flow: row wrap;
+					justify-content: center;
 
 
-						table {
-							flex: 1 0 100%;
-						}			
+					table, td, th {
+						border: 1px solid $mich-maize;
 					}
+
+					table {
+						flex: 1 0 100%;
+
+						
+						border-collapse: collapse;
+
+						margin: 20px 0;
+
+
+						td {
+							font-size: 1.5rem;
+						}
+
+						th {
+							font-size: 1.75rem;
+							font-family: 'Crimson Text', serif;
+						}
+					}			
 				}
 			}
 		}
