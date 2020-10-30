@@ -55,6 +55,8 @@ body {
 		main {
 			flex: 0 1 100vw;
 
+			margin: 20px;
+
 			div {
 				display: flex;
 				flex-flow: row nowrap;
@@ -73,26 +75,48 @@ body {
 					justify-content: center;
 
 
-					table, td, th {
-						border: 1px solid $mich-maize;
+					h3 {
+						font-size: 1.75rem;
+						text-decoration: underline;
+						margin: 10px 0 0 0;
 					}
-
 					table {
 						flex: 1 0 100%;
 
-						
+						margin: 20px 0;
 						border-collapse: collapse;
 
-						margin: 20px 0;
 
+
+						tr {
+							border-bottom: 1px solid darken(white, 50%);
+
+							&:nth-last-child(1) {
+								border: none;
+							}
+						}
 
 						td {
 							font-size: 1.5rem;
+
+							
 						}
 
 						th {
 							font-size: 1.75rem;
 							font-family: 'Crimson Text', serif;
+						}
+
+						&.schedulePage {
+							td {
+								&:nth-child(1) {
+									text-align: left;
+								}
+
+								&:nth-last-child(1) {
+									text-align: right;
+								}
+							}
 						}
 					}			
 				}

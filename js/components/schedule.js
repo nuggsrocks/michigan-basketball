@@ -9,7 +9,7 @@ const Standings = (props) => {
 			<section>
 				<h2>Big Ten Standings</h2>
 
-				<table>
+				<table className='schedulePage'>
 					<tbody>
 						{
 							standings.sort((a, b) => b.record.split('-')[0] - a.record.split('-')[0]).map(({name, record}, index) => 
@@ -81,12 +81,8 @@ const StatLeaders = (props) => {
 		
 		return statKeys.map((key, index) => 
 			<section key={index}>
-				<table>
-					<thead>
-						<tr>
-							<th colSpan='3'>{key}</th>
-						</tr>
-					</thead>
+				<h3>{key}</h3>
+				<table className='schedulePage'>
 					<tbody>
 						{statLeaders[key]}
 					</tbody>
