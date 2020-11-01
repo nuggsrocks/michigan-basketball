@@ -1,7 +1,6 @@
-node_modules/**
-public/**
+node_modules/
+public/
 
-.env.dev
-.env.test
+.env*
 
 ecosystem.config.js
