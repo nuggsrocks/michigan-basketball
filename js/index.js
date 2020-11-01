@@ -5,6 +5,8 @@ import {Schedule} from './components/schedule';
 import {Roster} from './components/roster';
 import '../scss/index.scss';
 
+import michLogo from '../img/logo.png';
+
 const routes = [
     {path: '/schedule', name: 'Schedule', Component: Schedule},
     {path: '/roster', name: 'Roster', Component: Roster}            
@@ -26,7 +28,7 @@ const Navigation = () => {
 				
 			<img
 				id='menu-logo'
-				src='https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Michigan_Wolverines_logo.svg/2000px-Michigan_Wolverines_logo.svg.png'
+				src={michLogo}
 				alt='Michigan Block M'
 			/>
 				

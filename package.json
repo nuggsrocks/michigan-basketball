@@ -2,11 +2,12 @@
   "name": "michigan-basketball",
   "version": "1.0.1",
   "engines": {
-    "npm": "6.14.5",
+    "npm": "6.14.8",
     "node": "12.16.2"
   },
   "scripts": {
     "build:dev": "rm -rf public; webpack --config webpack.dev.js",
+    "build:prod": "rm -rf public;webpack --config webpack.prod.js",
     "start:dev": "pm2 start ecosystem.config.js --env=dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

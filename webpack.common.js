@@ -19,19 +19,18 @@ module.exports = {
 			},
 			
 			{
-				test: /\.(jpe?g|png|gif|wav|mp3)/,
-				loader: 'file-loader'
+				test: /\.(jpe?g|png|gif|svg|ico|wav|mp3)/,
+				loader: 'file-loader',
+				options: {
+					name: '[name].[ext]'
+				}
 			}
 		]
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: 'index.html',
-			filename: 'index.html',
-			meta: {
-				charset: 'utf-8',
-				viewport: 'width=device-width,initial-scale=1.0'
-			}
+			template: './index.html',
+			filename: 'index.html'
 		})
 	]
 }
