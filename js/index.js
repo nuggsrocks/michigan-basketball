@@ -59,8 +59,19 @@ class Main extends React.Component {
 			schedule: [],
 			stats: []
 		};
+		this.sortStats = this.sortStats.bind(this);
+	}
 
-
+	sortStats(statName) {
+		this.setState({
+			stats: this.state.stats.sort((a, b) => {
+					if (statName === 'Name' || statName === 'Position') {
+						return a[statName.toLowerCase()].localeCompare(b[statName.toLowerCase()]);
+					} else {
+						return b.data[statName] - a.data[statName];
+					}
+				})
+		});
 	}
 
 	componentDidMount() {
@@ -82,7 +93,7 @@ class Main extends React.Component {
 				{
 					routes.map(({path, Component}) => 
 						<Route key={path} path={path}>
-							<Component data={this.state}/>
+							<Component data={this.state} sortStats={this.sortStats}/>
 						</Route>
 					)
 				}

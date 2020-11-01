@@ -1,8 +1,5 @@
 import React from 'react';
 
-
-
-
 export const Roster = (props) => {
 	let stats = props.data.stats;
 
@@ -15,11 +12,11 @@ export const Roster = (props) => {
 				<table>
 					<thead>
 						<tr>
-							{
-								headers.map((key, index) => 
-									<th key={index}>{key}</th>
+						{
+							headers.map((key, index) => 
+								<th key={index} onClick={() => props.sortStats(key)}>{key}</th>
 								)
-							}
+						}
 						</tr>
 					</thead>
 					<tbody>
@@ -34,7 +31,7 @@ export const Roster = (props) => {
 										)
 								}
 								</tr>
-							)
+								)
 						}
 					</tbody>
 				</table>
