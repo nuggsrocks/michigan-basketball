@@ -1,27 +1,34 @@
 import React from 'react';
 
 const Standings = (props) => {
-	let standings = props.standings;
+	let standings = [...props.standings];
 
 	return (
 		<article>
 
-			<section>
 				<h2>Big Ten Standings</h2>
 
-				<table className='schedulePage'>
-					<tbody>
-						{
-							standings.sort((a, b) => b.record.split('-')[0] - a.record.split('-')[0]).map(({name, record}, index) => 
-								<tr key={index}>
-									<th>{index + 1}</th>
-									<td>{name}</td>
-									<td>{record}</td>
-								</tr>
-							)
-						}
-					</tbody>
-				</table>
+				{
+					standings.length === 0 && <div className='loadingIcon'/>
+				}
+
+			<section>
+				{
+					standings.length > 0 &&
+					<table className='schedulePage'>
+						<tbody>
+							{
+								standings.sort((a, b) => b.record.split('-')[0] - a.record.split('-')[0]).map(({name, record}, index) => 
+									<tr key={index}>
+										<th>{index + 1}</th>
+										<td>{name}</td>
+										<td>{record}</td>
+									</tr>
+								)
+							}
+						</tbody>
+					</table>
+				}
 			</section>
 			
 		</article>
@@ -40,7 +47,7 @@ const ScheduleList = (props) => {
 };
 
 const StatLeaders = (props) => {
-	let stats = props.stats;
+	let stats = [...props.stats];
 
 	const displayStatLeaders = () => {
 		let statCategories = stats.length > 0 ? Object.keys(stats[0].data) : [];
@@ -73,7 +80,7 @@ const StatLeaders = (props) => {
 
 			const filterCallback = (player) => {
 				if (statName.search(/%/) !== -1) {
-					return player.data[statName.replace('%', 'A')] > 20;
+					return player.data[statName.replace('%', 'A')] > 40;
 				} else {
 					return true;
 				}
@@ -121,6 +128,10 @@ const StatLeaders = (props) => {
 		<article>
 
 			<h2>Stat Leaders</h2>
+
+			{
+				stats.length === 0 && <div className='loadingIcon'/>
+			}
 
 			{
 				stats.length > 0 && displayStatLeaders()

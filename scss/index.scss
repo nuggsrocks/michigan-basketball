@@ -65,6 +65,8 @@ body {
 
 			article {
 				flex: 1;
+				display: flex;
+				flex-flow: column nowrap;
 
 				text-align: center;
 
@@ -144,6 +146,8 @@ div.loadingIcon {
 	border-top: 10px solid $mich-maize;
 
 	animation: spin 1s linear infinite;
+
+	align-self: center;
 
 
 }
