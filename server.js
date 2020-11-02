@@ -98,6 +98,28 @@ function findStats (data) {
 	return stats;
 }
 
+function findSchedule (data) {
+	let dom = new jsdom.JSDOM(data);
+
+	let doc = dom.window.document;
+
+	let tableRows = [...doc.querySelectorAll('div.page-container table tr')];
+
+	let tableHeaders = [...tableRows[1].querySelectorAll('td')];
+
+	let gameRows = tableRows.slice(2).map(row => row.querySelectorAll('td'));
+
+	let schedule = [];
+
+	gameRows.forEach(game => {
+		let opponent = game[1].textContent.replace(' *', '*').trimEnd();
+		let result = game[2].textContent[0].search(/(W|L)/) !== -1 ? `${game[2].textContent[0]} ${game[2].textContent.slice(1).trimEnd()}` : game[2].textContent;
+		schedule.push({date: game[0].textContent, opponent, result});
+	})
+
+	return schedule;
+}
+
 
 app.get('/fetch/standings', (req, res) => {
 	axios.get('https://www.espn.com/mens-college-basketball/standings/_/group/7', {responseType: 'text'})
@@ -111,6 +133,14 @@ app.get('/fetch/stats', (req, res) => {
 	axios.get('https://www.espn.com/mens-college-basketball/team/stats/_/id/130', {responseType: 'text'})
 		.then(response => {
 			res.send(findStats(response.data));
+		})
+		.catch(e => console.error(e));
+});
+
+app.get('/fetch/schedule', (req, res) => {
+	axios.get('https://www.espn.com/mens-college-basketball/team/schedule/_/id/130/season/2020', {responseType: 'text'})
+		.then(response => {
+			res.send(findSchedule(response.data));
 		})
 		.catch(e => console.error(e));
 });

@@ -37,10 +37,40 @@ const Standings = (props) => {
 }
 
 const ScheduleList = (props) => {
+	let schedule = [...props.schedule];
+
 	return (
 		<article>
 			<h1>Schedule</h1>
 			
+			{
+				schedule.length === 0 && <div className='loadingIcon'/>
+			}
+			<section>
+				{
+					schedule.length > 0 &&
+					<table>
+						<thead>
+							<tr>
+								{
+									Object.keys(schedule[0]).map((key, index) => <th key={index}>{key[0].toUpperCase() + key.slice(1)}</th>)
+								}
+							</tr>
+						</thead>
+						<tbody>
+							{
+								schedule.map(({date, opponent, result}, index) =>
+									<tr key={index}>
+										<td>{date}</td>
+										<td>{opponent}</td>
+										<td>{result}</td>
+									</tr>
+								)
+							}
+						</tbody>
+					</table>
+				}
+			</section>
 
 		</article>
 	)
@@ -145,7 +175,7 @@ export const Schedule = (props) => {
 	return (
 		<div>
 			<StatLeaders stats={props.data.stats}/>
-			<ScheduleList />
+			<ScheduleList schedule={props.data.schedule}/>
 			<Standings standings={props.data.standings}/>
 		</div>
 	);

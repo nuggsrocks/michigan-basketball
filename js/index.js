@@ -85,6 +85,11 @@ class Main extends React.Component {
 			.then(stats => this.setState({stats}))
 			.catch(e => console.error(e));
 
+		fetch('http://localhost:8080/fetch/schedule')
+			.then(res => res.json())
+			.then(schedule => this.setState({schedule}))
+			.catch(e => console.error(e));
+
 	}
 
 	render () {
