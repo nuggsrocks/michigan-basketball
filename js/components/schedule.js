@@ -170,7 +170,7 @@ const StatLeaders = (props) => {
 	)
 }
 
-export const Schedule = (props) => {
+const Schedule = (props) => {
 	
 	return (
 		<div>
@@ -179,4 +179,6 @@ export const Schedule = (props) => {
 			<Standings standings={props.data.standings}/>
 		</div>
 	);
-}
+};
+
+export default Schedule;

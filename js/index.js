@@ -1,15 +1,18 @@
-import React from 'react';
+import React, {Suspense, lazy} from 'react';
 import ReactDOM from 'react-dom';
 import {Link, BrowserRouter, Route, Redirect} from 'react-router-dom';
-import {Schedule} from './components/schedule';
-import {Roster} from './components/roster';
 import '../scss/index.scss';
 
 import michLogo from '../img/logo.png';
 
+const Schedule = lazy(() => import('./components/schedule'));
+const Stats = lazy(() => import('./components/stats'));
+const Roster = lazy(() => import('./components/roster'));
+
 const routes = [
     {path: '/schedule', name: 'Schedule', Component: Schedule},
-    {path: '/roster', name: 'Roster', Component: Roster}            
+    {path: '/stats', name: 'Stats', Component: Stats},
+    {path: '/roster', name: 'Roster', Component: Roster}         
 ];
 
 const App = () => {
@@ -95,16 +98,19 @@ class Main extends React.Component {
 	render () {
 	  	return (
 			<main>
-				{
-					routes.map(({path, Component}) => 
-						<Route key={path} path={path}>
-							<Component data={this.state} sortStats={this.sortStats}/>
-						</Route>
-					)
-				}
-				<Route exact path='/'>
-					<Redirect to='/schedule'/>
-				</Route>
+				<Suspense fallback={<div></div>}>
+					{
+						routes.map(({path, Component}) => 
+							<Route key={path} path={path}>
+								<Component data={this.state} sortStats={this.sortStats}/>
+							</Route>
+						)
+					}
+					<Route exact path='/'>
+						<Redirect to='/schedule'/>
+					</Route>
+				</Suspense>
+
 			</main>
 		)
 	}
