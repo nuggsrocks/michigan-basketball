@@ -116,9 +116,22 @@ function findSchedule (doc) {
 }
 
 function findRoster (doc) {
-	let tableRows = doc.querySelectorAll('div.ResponsiveTable.Team.Roster table tr');
+	let table = doc.querySelector('div.ResponsiveTable.Team.Roster table');
+
+	let rosterHeaders = [];
+
+	let tableHeaders = table.querySelectorAll('thead tr th');
+
+	for (let i = 0; i < tableHeaders.length; i++) {
+		if (tableHeaders[i].textContent !== '') {
+			rosterHeaders.push(tableHeaders[i].textContent);
+		}
+	}
+
 
 	let rosterRows = [];
+
+	let tableRows = table.querySelectorAll('tbody tr');
 
 	for (let i = 1; i < tableRows.length; i++) {
 		rosterRows.push(tableRows[i].querySelectorAll('td'));
@@ -129,13 +142,13 @@ function findRoster (doc) {
 	let roster = [];
 
 	for (let i = 0; i < rosterRows.length; i++) {
-		let playerInfo = [];
+		let playerInfo = {};
 
 
-		for (let j = 0; j < rosterRows[i].length; j++) {
-			if (rosterRows[i][j].textContent !== '') {
-				playerInfo.push(rosterRows[i][j].textContent);
-			}
+		for (let j = 1; j < rosterRows[i].length; j++) {
+			
+			playerInfo[rosterHeaders[j - 1]] = rosterRows[i][j].textContent;
+			
 		}
 
 		roster.push(playerInfo);

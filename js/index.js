@@ -60,7 +60,8 @@ class Main extends React.Component {
 		this.state = {
 			standings: [],
 			schedule: [],
-			stats: []
+			stats: [],
+			roster: []
 		};
 		this.sortStats = this.sortStats.bind(this);
 	}
@@ -95,7 +96,7 @@ class Main extends React.Component {
 
 		fetch('http://localhost:8080/fetch/roster')
 			.then(res => res.json())
-			.then(roster => console.log(roster))
+			.then(roster => this.setState({roster}))
 			.catch(e => console.error(e));
 
 	}
