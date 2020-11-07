@@ -13,10 +13,13 @@ app.use(cors());
 
 app.use(express.static(__dirname + '/public'));
 
-function findRecords (data) {
+function constructJsdomDocument (data) {
 	let dom = new jsdom.JSDOM(data);
 
-	let doc = dom.window.document;
+	return dom.window.document;
+}
+
+function findRecords (doc) {
 
 	let tableRows = doc.querySelectorAll('div.standings__table table tbody tr');
 
@@ -36,11 +39,7 @@ function findRecords (data) {
 	return records;
 }
 
-function findStats (data) {
-	let dom = new jsdom.JSDOM(data);
-
-	let doc = dom.window.document;
-
+function findStats (doc) {
 	let tableRows = doc.querySelectorAll('section.Card div.mt5 table tbody tr');
 
 	let tableData = [];
@@ -98,11 +97,7 @@ function findStats (data) {
 	return stats;
 }
 
-function findSchedule (data) {
-	let dom = new jsdom.JSDOM(data);
-
-	let doc = dom.window.document;
-
+function findSchedule (doc) {
 	let tableRows = [...doc.querySelectorAll('div.page-container table tr')];
 
 	let tableHeaders = [...tableRows[1].querySelectorAll('td')];
@@ -120,11 +115,43 @@ function findSchedule (data) {
 	return schedule;
 }
 
+function findRoster (doc) {
+	let tableRows = doc.querySelectorAll('div.ResponsiveTable.Team.Roster table tr');
+
+	let rosterRows = [];
+
+	for (let i = 1; i < tableRows.length; i++) {
+		rosterRows.push(tableRows[i].querySelectorAll('td'));
+	}
+
+
+
+	let roster = [];
+
+	for (let i = 0; i < rosterRows.length; i++) {
+		let playerInfo = [];
+
+
+		for (let j = 0; j < rosterRows[i].length; j++) {
+			if (rosterRows[i][j].textContent !== '') {
+				playerInfo.push(rosterRows[i][j].textContent);
+			}
+		}
+
+		roster.push(playerInfo);
+	}
+
+
+	return roster;
+}
+
 
 app.get('/fetch/standings', (req, res) => {
 	axios.get('https://www.espn.com/mens-college-basketball/standings/_/group/7', {responseType: 'text'})
 			.then(response => {
-				res.send(findRecords(response.data));
+				let doc = constructJsdomDocument(response.data);
+				res.send(findRecords(doc));
+
 			})
 			.catch(e => console.error(e));
 });
@@ -132,7 +159,8 @@ app.get('/fetch/standings', (req, res) => {
 app.get('/fetch/stats', (req, res) => {
 	axios.get('https://www.espn.com/mens-college-basketball/team/stats/_/id/130', {responseType: 'text'})
 		.then(response => {
-			res.send(findStats(response.data));
+			let doc = constructJsdomDocument(response.data);
+			res.send(findStats(doc));
 		})
 		.catch(e => console.error(e));
 });
@@ -140,9 +168,18 @@ app.get('/fetch/stats', (req, res) => {
 app.get('/fetch/schedule', (req, res) => {
 	axios.get('https://www.espn.com/mens-college-basketball/team/schedule/_/id/130/season/2020', {responseType: 'text'})
 		.then(response => {
-			res.send(findSchedule(response.data));
+			let doc = constructJsdomDocument(response.data);
+			res.send(findSchedule(doc));
 		})
 		.catch(e => console.error(e));
+});
+
+app.get('/fetch/roster', (req, res) => {
+	axios.get('https://www.espn.com/mens-college-basketball/team/roster/_/id/130', {responseType: 'text'})
+		.then(response => {
+			let doc = constructJsdomDocument(response.data);
+			res.send(findRoster(doc));
+		})
 });
 
 
