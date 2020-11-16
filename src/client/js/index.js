@@ -104,7 +104,7 @@ class Main extends React.Component {
 	render () {
 	  	return (
 			<main>
-				<Suspense fallback={<div></div>}>
+				<Suspense fallback={<div/>}>
 					{
 						routes.map(({path, Component}) => 
 							<Route key={path} path={path}>

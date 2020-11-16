@@ -1,8 +1,11 @@
 node_modules/
 public/
+build/
 
 .env*
 
 ecosystem.config.js
 
 .DS_Store
+
+.idea/

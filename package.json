@@ -6,9 +6,10 @@
     "node": "12.16.2"
   },
   "scripts": {
-    "build:dev": "rm -rf public; webpack --config webpack.dev.js",
+    "build:dev": "rm -rf public;webpack --config webpack.dev.js",
     "build:prod": "rm -rf public;webpack --config webpack.prod.js",
-    "start:dev": "pm2 start ecosystem.config.js --env=dev",
+    "build:server": "rm server.js;webpack --config webpack.server.js",
+    "start:dev": "pm2 start ecosystem.config.js --env=dev;pm2 logs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -37,5 +38,8 @@
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
     "webpack-merge": "^5.3.0"
+  },
+  "devDependencies": {
+    "webpack-node-externals": "^2.5.2"
   }
 }
