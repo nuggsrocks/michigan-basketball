@@ -21,7 +21,7 @@ const Navigation = () => {
                     routes.map(({path, name}) =>
                         <button key={path}>
                             <Link to={path}>
-                                {name}
+                                {name.toUpperCase()}
                             </Link>
                         </button>
 

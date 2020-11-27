@@ -1,11 +1,9 @@
-import Schedule from "./components/Schedule";
-import Stats from "./components/Stats";
-import Roster from "./components/Roster";
+import {lazy} from 'react';
 
 const routes = [
-    {path: '/schedule', name: 'Schedule', Component: Schedule},
-    {path: '/stats', name: 'Stats', Component: Stats},
-    {path: '/roster', name: 'Roster', Component: Roster}
+    {path: '/schedule', name: 'Schedule', Component: lazy(() => import('./components/Schedule'))},
+    {path: '/stats', name: 'Stats', Component: lazy(() => import('./components/Stats'))},
+    {path: '/roster', name: 'Roster', Component: lazy(() => import('./components/Roster'))}
 ];
 
 export default routes;

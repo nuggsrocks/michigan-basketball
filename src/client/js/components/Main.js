@@ -1,11 +1,10 @@
-import React, {Suspense} from "react";
-import {Redirect, Route} from "react-router-dom";
-import routes from "../routes";
+import React, {Suspense} from 'react';
+import {Redirect, Route} from 'react-router-dom';
+import routes from '../routes';
 
 class Main extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             standings: [],
             schedule: [],

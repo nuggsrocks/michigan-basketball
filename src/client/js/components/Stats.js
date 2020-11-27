@@ -6,6 +6,7 @@ const Stats = (props) => {
 	let headers = stats.length > 0 ? ['Name', 'Position', ...Object.keys(stats[0].data)] : [];
 	return (
 		<article>
+			<h1>Stats</h1>
 
 			<section>
 

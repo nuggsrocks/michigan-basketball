@@ -1,9 +1,8 @@
 function findSchedule (doc) {
     let tableRows = [...doc.querySelectorAll('div.page-container table tr')];
 
-    let tableHeaders = [...tableRows[1].querySelectorAll('td')];
-
-    let gameRows = tableRows.slice(2).map(row => row.querySelectorAll('td'));
+    let gameRows = tableRows.filter(tr => tr.textContent.indexOf('DATE') === -1 && tr.textContent.indexOf('Season') === -1)
+        .map(row => row.querySelectorAll('td'));
 
     let schedule = [];
 

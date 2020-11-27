@@ -3,8 +3,24 @@ import React from 'react';
 const Standings = (props) => {
 	let standings = [...props.standings];
 
+	let michiganTeamObj = standings.find(team => team.name === 'Michigan Wolverines');
+
+	let michRecord;
+
+	if (michiganTeamObj) {
+		michRecord = {
+			conference: michiganTeamObj.record.conference,
+			overall: michiganTeamObj.record.overall
+		};
+	}
+
 	return (
 		<article>
+
+			{
+				michRecord &&
+				<h2>{`${michRecord.overall} (${michRecord.conference} Big Ten)`}</h2>
+			}
 
 				<h2>Big Ten Standings</h2>
 
@@ -18,12 +34,14 @@ const Standings = (props) => {
 					<table className='schedulePage'>
 						<tbody>
 							{
-								standings.sort((a, b) => b.record.split('-')[0] - a.record.split('-')[0]).map(({name, record}, index) => 
-									<tr key={index}>
-										<th>{index + 1}</th>
-										<td>{name}</td>
-										<td>{record}</td>
-									</tr>
+								standings.sort((a, b) => b.record.conference.split('-')[0] - a.record.conference.split('-')[0])
+									.map(({name, record}, index) => {
+										return <tr key={index}>
+											<th>{index + 1}</th>
+											<td>{name}</td>
+											<td>{`${record.conference} (${record.overall})`}</td>
+										</tr>
+									}
 								)
 							}
 						</tbody>
@@ -110,7 +128,7 @@ const StatLeaders = (props) => {
 
 			const filterCallback = (player) => {
 				if (statName.search(/%/) !== -1) {
-					return player.data[statName.replace('%', 'A')] > 40;
+					return player.data[statName.replace('%', 'A')] > 0;
 				} else {
 					return true;
 				}

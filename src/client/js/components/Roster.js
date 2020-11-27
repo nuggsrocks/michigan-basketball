@@ -11,7 +11,7 @@ const Roster = (props) => {
 
 	return (
 		<article>
-			<h2>Roster</h2>
+			<h1>Roster</h1>
 
 			<section>
 				

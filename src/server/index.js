@@ -44,7 +44,7 @@ app.get('/fetch/stats', (req, res) => {
 });
 
 app.get('/fetch/schedule', (req, res) => {
-	axios.get('https://www.espn.com/mens-college-basketball/team/schedule/_/id/130/season/2020', {responseType: 'text'})
+	axios.get('https://www.espn.com/mens-college-basketball/team/schedule/_/id/130', {responseType: 'text'})
 		.then(response => {
 			let doc = constructJsdomDocument(response.data);
 			res.send(findSchedule(doc));
