@@ -1,8 +1,10 @@
+import {getRoutes} from '../routes';
+
 export const getMain = async () => {
     try {
-        const {default: React, Suspense} = await import('react');
+        const {default: React} = await import('react');
         const {Redirect, Route} = await import('react-router-dom');
-        const {default: routes} = await import('../routes');
+        const routes = await getRoutes();
 
 
         return class Main extends React.Component {
@@ -55,18 +57,18 @@ export const getMain = async () => {
             render () {
                 return (
                     <main>
-                        <Suspense fallback={<div/>}>
-                            {
-                                routes.map(({path, Component}) =>
-                                    <Route key={path} path={path}>
-                                        <Component data={this.state} sortStats={this.sortStats}/>
-                                    </Route>
-                                )
-                            }
-                            <Route exact path='/'>
-                                <Redirect to='/schedule'/>
-                            </Route>
-                        </Suspense>
+
+                        {
+                            routes.map(({path, Component}) =>
+                                <Route key={path} path={path}>
+                                    <Component data={this.state} sortStats={this.sortStats}/>
+                                </Route>
+                            )
+                        }
+                        <Route exact path='/'>
+                            <Redirect to='/schedule'/>
+                        </Route>
+
 
                     </main>
                 )
