@@ -1,26 +1,10 @@
 import React from 'react';
 
 const Standings = (props) => {
-	let standings = [...props.standings];
-
-	let michiganTeamObj = standings.find(team => team.name === 'Michigan Wolverines');
-
-	let michRecord;
-
-	if (michiganTeamObj) {
-		michRecord = {
-			conference: michiganTeamObj.record.conference,
-			overall: michiganTeamObj.record.overall
-		};
-	}
+	let standings = props.data.standings;
 
 	return (
 		<article>
-
-			{
-				michRecord &&
-				<h2>{`${michRecord.overall} (${michRecord.conference} Big Ten)`}</h2>
-			}
 
 				<h2>Big Ten Standings</h2>
 
@@ -48,19 +32,37 @@ const Standings = (props) => {
 					</table>
 				}
 			</section>
-			
+
 		</article>
 	)
-	
+
 }
 
 const ScheduleList = (props) => {
-	let schedule = [...props.schedule];
+	let schedule = props.data.schedule;
+
+	let standings = props.data.standings;
+
+	let michiganTeamObj = standings.find(team => team.name === 'Michigan Wolverines');
+
+	let michRecord;
+
+	if (michiganTeamObj) {
+		michRecord = {
+			conference: michiganTeamObj.record.conference,
+			overall: michiganTeamObj.record.overall
+		};
+	}
 
 	return (
 		<article>
 			<h1>Schedule</h1>
-			
+
+			{
+				michRecord &&
+				<h2>{`${michRecord.overall} (${michRecord.conference} Big Ten)`}</h2>
+			}
+
 			{
 				schedule.length === 0 && <div className='loadingIcon'/>
 			}
@@ -95,7 +97,7 @@ const ScheduleList = (props) => {
 };
 
 const StatLeaders = (props) => {
-	let stats = [...props.stats];
+	let stats = props.data.stats;
 
 	const displayStatLeaders = () => {
 		let statCategories = stats.length > 0 ? Object.keys(stats[0].data) : [];
@@ -118,7 +120,17 @@ const StatLeaders = (props) => {
 				} else if (statName.search(/%/) !== -1) {
 					let statMade = statName.replace('%', 'M');
 					let statAtt = statName.replace('%', 'A');
-					result = (b.data[statMade] / b.data[statAtt]) - (a.data[statMade] / a.data[statAtt]);
+
+					const getPercentage = (player) => {
+						if (Number(player.data[statAtt]) === 0) {
+							return 0;
+						}
+
+						return player.data[statMade] / player.data[statAtt];
+					};
+
+
+					result = getPercentage(b) - getPercentage(a);
 				} else {
 					result = (b.data[statName] / b.data['GP']) - (a.data[statName] / a.data['GP']);
 				}
@@ -130,48 +142,51 @@ const StatLeaders = (props) => {
 				if (statName.search(/%/) !== -1) {
 					return player.data[statName.replace('%', 'A')] > 0;
 				} else {
-					return true;
+
+					return player.data[statName] > 0;
 				}
 			};
 
 
 
 
-			statLeaders[statName] = stats.sort(sortCallback).filter(filterCallback).slice(0, 5).map(({name, data}, index) => {
-				let statValue;
+			statLeaders[statName] = stats.sort(sortCallback)
+				.filter(filterCallback).slice(0, 5)
+				.map(({name, data}, index) => {
+					let statValue;
 
-				if (statName === 'GP') {
-					statValue = Math.round(data[statName] * 10) / 10;
-				} else if (statName.search(/%/) !== -1) {
-					let statMade = statName.replace('%', 'M');
-					let statAtt = statName.replace('%', 'A');
-					let percentage = data[statMade] / data[statAtt];
-					statValue = `${Math.round(percentage * 1000) / 10}%`;
-				} else {
-					statValue = Math.round((data[statName] / data['GP']) * 10) / 10;
-				}
-				return <tr key={index}>
-					<td>{name}</td>
-					<td>{statValue}</td>
-				</tr>
+					if (statName === 'GP') {
+						statValue = Math.round(data[statName] * 10) / 10;
+					} else if (statName.search(/%/) !== -1) {
+						let statMade = statName.replace('%', 'M');
+						let statAtt = statName.replace('%', 'A');
+						let percentage = data[statMade] / data[statAtt];
+						statValue = `${Math.round(percentage * 1000) / 10}%`;
+					} else {
+						statValue = Math.round((data[statName] / data['GP']) * 10) / 10;
+					}
+					return <tr key={index}>
+						<td>{name}</td>
+						<td>{statValue}</td>
+					</tr>
+				});
 			});
-		});
 
-		let statKeys = Object.keys(statLeaders);
-		
-		return statKeys.map((key, index) => 
-			<section key={index}>
-				<h3>{key}</h3>
-				<table className='schedulePage'>
-					<tbody>
-						{statLeaders[key]}
-					</tbody>
-				</table>
-			</section>
-		)
+			let statKeys = Object.keys(statLeaders);
+
+			return statKeys.map((key, index) =>
+				<section key={index}>
+					<h3>{key}</h3>
+					<table className='schedulePage'>
+						<tbody>
+							{statLeaders[key]}
+						</tbody>
+					</table>
+				</section>
+			)
 	};
 
-	
+
 	return (
 		<article>
 
@@ -188,15 +203,13 @@ const StatLeaders = (props) => {
 	)
 }
 
-const Schedule = (props) => {
-	
+export const Schedule = (props) => {
+
 	return (
 		<div>
-			<StatLeaders stats={props.data.stats}/>
-			<ScheduleList schedule={props.data.schedule}/>
-			<Standings standings={props.data.standings}/>
+			<StatLeaders data={props.data}/>
+			<ScheduleList data={props.data}/>
+			<Standings data={props.data}/>
 		</div>
 	);
 };
-
-export default Schedule;

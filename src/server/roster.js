@@ -20,6 +20,8 @@ function findRoster (doc) {
         rosterRows.push(tableRows[i].querySelectorAll('td'));
     }
 
+    rosterRows = rosterRows.filter(nodelist => nodelist[1].textContent.search(/[0-9]/) !== -1);
+
 
 
     let roster = [];
@@ -30,7 +32,22 @@ function findRoster (doc) {
 
         for (let j = 1; j < rosterRows[i].length; j++) {
 
-            playerInfo[rosterHeaders[j - 1]] = rosterRows[i][j].textContent;
+            if (rosterHeaders[j - 1] === 'Name') {
+                let nameAndNumString = rosterRows[i][j].textContent;
+
+                let numberIndex = nameAndNumString.search(/[0-9]/);
+
+                if (numberIndex !== -1) {
+                    playerInfo['Number'] = '#' + nameAndNumString.substring(numberIndex);
+
+                    playerInfo['Name'] = nameAndNumString.substring(0, numberIndex);
+
+                }
+
+
+            } else {
+                playerInfo[rosterHeaders[j - 1]] = rosterRows[i][j].textContent;
+            }
 
         }
 

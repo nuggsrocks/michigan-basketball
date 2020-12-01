@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Stats = (props) => {
+export const Stats = (props) => {
 	let stats = [...props.data.stats];
 
 	let headers = stats.length > 0 ? ['Name', 'Position', ...Object.keys(stats[0].data)] : [];
@@ -50,6 +50,4 @@ const Stats = (props) => {
 		</article>
 	)
 };
-
-export default Stats;
 

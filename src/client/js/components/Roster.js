@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Roster = (props) => {
+export const Roster = (props) => {
 	let roster = props.data.roster;
 
 	let rosterKeys = [];
@@ -13,13 +13,18 @@ const Roster = (props) => {
 		<article>
 			<h1>Roster</h1>
 
+			{
+				roster.length === 0 &&
+				<div className='loadingIcon'/>
+			}
+
 			<section>
-				
+
 				<table>
-					
+
 					<thead>
 						<tr>
-							
+
 							{
 								rosterKeys.map((header, index) => <th key={index}>{header}</th>)
 							}
@@ -27,23 +32,21 @@ const Roster = (props) => {
 					</thead>
 					<tbody>
 						{
-							roster.map(({Name, POS, HT, WT, Class, Birthplace}, index) =>
+							roster.map((player, index) =>
 								<tr key={index}>
-									<td>{Name}</td>
-									<td>{POS}</td>
-									<td>{HT}</td>
-									<td>{WT}</td>
-									<td>{Class}</td>
-									<td>{Birthplace}</td>
+									{
+										Object.keys(player).map((key, index) =>
+											<td key={index}>{player[key]}</td>
+										)
+
+									}
 								</tr>
 							)
 						}
 					</tbody>
 				</table>
 			</section>
-			
+
 		</article>
 	)
 };
-
-export default Roster;
