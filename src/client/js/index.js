@@ -3,29 +3,29 @@ import 'regenerator-runtime/runtime';
 
 import '../scss/index.scss';
 
-import {getMain} from './components/Main';
-import {getNav} from "./components/Nav";
+const init = async () => {
+	try {
+	    const {default: React} = await import('react');
+	    const {BrowserRouter} = await import('react-router-dom');
+	    const {default: ReactDOM} = await import('react-dom');
+	    const {Main} = await import('./components/Main');
+	    const {Nav} = await import('./components/Nav');
 
-import('react').then(({default: React}) => {
-	import('react-router-dom').then(({BrowserRouter}) => {
 
-		getMain().then(Main => {
+		const App = () => {
+			return (
+				<BrowserRouter basename='/'>
+					<Nav />
+					<Main />
+				</BrowserRouter>
+			)
+		};
 
-			getNav().then(Nav => {
-				const App = () => {
-					return (
-						<BrowserRouter basename='/'>
-							<Nav />
-							<Main />
-						</BrowserRouter>
-					)
-				};
 
-				import('react-dom').then(({default: ReactDOM}) => {
-					ReactDOM.render(<App/>, document.querySelector('#root'));
-				});
-			})
-		})
+		ReactDOM.render(<App/>, document.querySelector('#root'));
+	} catch(e) {
+	    console.error(e);
+	}
+};
 
-	});
-});
+init().catch(e => document.querySelector('body').innerHTML = 'error: ' + e);
