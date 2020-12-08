@@ -5,9 +5,9 @@ import {Standings} from './Standings';
 export const Schedule = (props) => {
 
 	return (
-		<div>
+		<article className='flex'>
 			<ScheduleList data={props.data}/>
 			<Standings data={props.data}/>
-		</div>
+		</article>
 	);
 };

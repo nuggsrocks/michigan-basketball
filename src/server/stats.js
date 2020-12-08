@@ -19,6 +19,23 @@ function findStats (doc) {
 
     let stats = [];
 
+    let teamTotals = {
+        'FGM': 0,
+        'FGA': 0,
+        'FTM': 0,
+        'FTA': 0,
+        '3PM': 0,
+        '3PA': 0,
+        'PTS': 0,
+        'OR': 0,
+        'DR': 0,
+        'REB': 0,
+        'AST': 0,
+        'TO': 0,
+        'STL': 0,
+        'BLK': 0
+    };
+
 
 
     for (let i = 0; i < tableData.length; i++) {
@@ -46,6 +63,10 @@ function findStats (doc) {
 
             for (let j = 0; j < playerStatColumns.length; j++) {
                 playerStats[statHeaders[j]] = playerStatColumns[j].textContent;
+
+                if (teamTotals.hasOwnProperty(statHeaders[j])) {
+                    teamTotals[statHeaders[j]] += Number(playerStatColumns[j].textContent);
+                }
             }
 
             stats[i - numOfPlayers].data = playerStats;
@@ -53,7 +74,10 @@ function findStats (doc) {
         }
     }
 
-    return stats;
+    return {
+        playerStats: stats,
+        teamStats: teamTotals
+    };
 }
 
 export default findStats;

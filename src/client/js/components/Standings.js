@@ -15,7 +15,7 @@ export const Standings = (props) => {
             <section>
                 {
                     standings.length > 0 &&
-                    <table className='schedulePage'>
+                    <table className='end-column'>
                         <tbody>
                         {
                             standings.sort((a, b) => b.record.conference.split('-')[0] - a.record.conference.split('-')[0])

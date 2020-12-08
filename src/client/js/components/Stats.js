@@ -4,21 +4,23 @@ import {StatLeaders} from './StatLeaders';
 export const Stats = (props) => {
 	let stats = props.data.stats;
 
-	let headers = stats.length > 0 ? ['Name', 'Position', ...Object.keys(stats[0].data)] : [];
+	let {playerStats} = stats;
+
+	let headers = stats.hasOwnProperty('playerStats') ? ['Name', 'Position', ...Object.keys(playerStats[0].data)] : [];
 
 	return (
 		<article>
-			<h1>Stats</h1>
+			<h2>Player Stats</h2>
 
 			<section>
 
 				{
-					stats.length === 0 &&
+					!stats.hasOwnProperty('playerStats') &&
 					<div className='loadingIcon'/>
 				}
 
 				{
-					stats.length > 0 &&
+					stats.hasOwnProperty('playerStats') &&
 					<table>
 						<thead>
 						<tr>
@@ -31,7 +33,7 @@ export const Stats = (props) => {
 						</thead>
 						<tbody>
 						{
-							stats.map(({name, position, data}, index) =>
+							playerStats.map(({name, position, data}, index) =>
 								<tr key={index}>
 									<td>{name}</td>
 									<td>{position}</td>

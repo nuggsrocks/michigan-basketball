@@ -1,18 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Text&family=Source+Sans+Pro&display=swap');
 
-$mich-maize: #FECA04;
-$mich-blue: #00274C;
+$maize: rgb(239, 193, 37);
+$blue: #00274C;
 
 
 body {
-	margin: 0;
-	background-color: $mich-blue;
-	color: $mich-maize;
+	margin: 15px;
+	background-color: $blue;
+	text-align: center;
+
 	font-family: 'Source Sans Pro', sans-serif;
 
-	h1, h2, h3, h4, h5, h6 {
+	h1, h2, h3, h4, h5, h6, th {
 		font-family: 'Crimson Text', serif;
-		margin: 0;
+		margin: 20px;
 	}
 
 	h1 {
@@ -22,135 +23,91 @@ body {
 	h2 {
 		font-size: 2.5rem;
 	}
+}
 
-
-
-
-	div#root {
+div#root {
+	> header {
+		height: 10vh;
 		display: flex;
-		flex-flow: row wrap;
+		align-items: center;
+		background-color: $maize;
 
-		header {
-			height: 10vh;
-			flex: 0 1 100vw;
-
-			background-color: gray;
-
-			display: flex;
-			flex-flow: row nowrap;
-			align-items: center;
-
-			img {
-				height: 80%;
-				margin: 0 20px;
-			}
-
-			button {
-				margin: 0 20px;
-				background-color: transparent;
-				border: none;
-
-				transition: all 200ms;
-				a {
-					text-decoration: none;
-
-					color: $mich-maize;
-					font-family: 'Crimson Text', serif;
-					font-size: 2rem;
-					
-				}
-
-				&:hover {
-					transform: scale(1.2);
-				}
+		img {
+			height: 90%;
+			margin: {
+				left: 20px;
+				right: 10px;
 			}
 		}
 
-
-		main {
-			flex: 0 1 100vw;
-
-			margin: 20px;
-
-			div {
-				display: flex;
-				flex-flow: row nowrap;
-
+		button {
+			background-color: transparent;
+			border: none;
+			margin: {
+				left: 10px;
+				right: 10px;
 			}
 
-			article {
-				flex: 1;
-				display: flex;
-				flex-flow: column nowrap;
-
-				text-align: center;
-
-
-				section {
-					margin: 10px;
-					
-					display: flex;
-					flex-flow: row wrap;
-					justify-content: center;
-
-
-					h3 {
-						font-size: 1.75rem;
-						text-decoration: underline;
-						margin: 10px 0 0 0;
-					}
-					table {
-						flex: 1 0 100%;
-
-						margin-top: 20px;
-						border-collapse: collapse;
-
-						thead {
-							th {
-								cursor: pointer;
-							}
-						}
-
-
-
-						tr {
-							border-bottom: 1px solid darken(white, 50%);
-
-
-							&:nth-last-child(1) {
-								border: none;
-							}
-						}
-
-						td {
-							font-size: 1.25rem;
-
-							
-						}
-
-						th {
-							font-size: 1.75rem;
-							font-family: 'Crimson Text', serif;
-						}
-
-						td, th {
-							padding: 5px;
-						}
-
-						&.schedulePage {
-							td {
-								&:nth-child(1) {
-									text-align: left;
-								}
-
-								&:nth-last-child(1) {
-									text-align: right;
-								}
-							}
-						}
-					}			
+			a {
+				text-decoration: none;
+				color: $blue;
+				font: {
+					family: 'Crimson Text', serif;
+					size: 2rem;
 				}
 			}
+
+			&:hover {
+				transform: scale(1.1);
+
+				a {
+				}
+			}
+		}
+	}
+
+
+	> main {
+		article {
+			color: $maize;
+
+			&.flex {
+				display: flex;
+				flex-flow: row wrap;
+
+				> * {
+					flex: 0 1 50%;
+				}
+
+			}
+		}
+
+		table {
+			width: calc(100% - 100px);
+			margin: 0 50px;
+
+
+			th, td {
+				text-align: start;
+			}
+
+			th {
+				font-size: 2rem;
+				cursor: pointer;
+			}
+
+			td {
+				font-size: 1.5rem;
+			}
+
+			&.end-column {
+				td:last-child {
+					text-align: end;
+				}
+
+			}
+
+
 		}
 	}
 }
@@ -164,8 +121,8 @@ div.loadingIcon {
 	width: 50px;
 
 	border-radius: 50%;
-	border: 10px solid $mich-blue;
-	border-top: 10px solid $mich-maize;
+	border: 10px solid $blue;
+	border-top: 10px solid $maize;
 
 	animation: spin 1s linear infinite;
 

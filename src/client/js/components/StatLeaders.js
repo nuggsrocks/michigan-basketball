@@ -44,7 +44,7 @@ export const StatLeaders = (props) => {
 
             const filterCallback = (player) => {
                 if (statName.search(/%/) !== -1) {
-                    return player.data[statName.replace('%', 'A')] > 0;
+                    return player.data[statName.replace('%', 'A')] > 5;
                 } else {
 
                     return player.data[statName] > 0;
@@ -81,7 +81,7 @@ export const StatLeaders = (props) => {
         return statKeys.map((key, index) =>
             <section key={index}>
                 <h3>{key}</h3>
-                <table className='schedulePage'>
+                <table className='end-column'>
                     <tbody>
                     {statLeaders[key]}
                     </tbody>
@@ -100,9 +100,14 @@ export const StatLeaders = (props) => {
                 stats.length === 0 && <div className='loadingIcon'/>
             }
 
-            {
-                stats.length > 0 && displayStatLeaders()
-            }
+
+            <article className='flex'>
+
+                {
+                    stats.length > 0 && displayStatLeaders()
+                }
+
+            </article>
         </article>
     )
 }
