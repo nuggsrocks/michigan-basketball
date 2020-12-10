@@ -1,10 +1,10 @@
 import React from 'react';
 
 export const StatLeaders = (props) => {
-    let stats = props.data.stats;
+    let playerStats = props.data.playerStats;
 
     const displayStatLeaders = () => {
-        let statCategories = stats.length > 0 ? Object.keys(stats[0].data) : [];
+        let statCategories = playerStats.length > 0 ? Object.keys(playerStats[0].data) : [];
 
         statCategories.splice(statCategories.indexOf('FGM'), 2, 'FG%');
 
@@ -54,7 +54,7 @@ export const StatLeaders = (props) => {
 
 
 
-            statLeaders[statName] = stats.sort(sortCallback)
+            statLeaders[statName] = playerStats.sort(sortCallback)
                 .filter(filterCallback).slice(0, 5)
                 .map(({name, data}, index) => {
                     let statValue;
@@ -97,14 +97,14 @@ export const StatLeaders = (props) => {
             <h2>Stat Leaders</h2>
 
             {
-                stats.length === 0 && <div className='loadingIcon'/>
+                !playerStats && <div className='loadingIcon'/>
             }
 
 
             <article className='flex'>
 
                 {
-                    stats.length > 0 && displayStatLeaders()
+                    playerStats && displayStatLeaders()
                 }
 
             </article>

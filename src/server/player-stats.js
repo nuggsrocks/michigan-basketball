@@ -1,4 +1,4 @@
-function findStats (doc) {
+export const findPlayerStats = (doc) => {
     let tableRows = doc.querySelectorAll('section.Card div.mt5 table tbody tr');
 
     let tableData = [];
@@ -17,24 +17,7 @@ function findStats (doc) {
 
     statHeaders = [statHeaders[1], ...statHeaders.slice(statHeaders.lastIndexOf('Name') + 1)];
 
-    let stats = [];
-
-    let teamTotals = {
-        'FGM': 0,
-        'FGA': 0,
-        'FTM': 0,
-        'FTA': 0,
-        '3PM': 0,
-        '3PA': 0,
-        'PTS': 0,
-        'OR': 0,
-        'DR': 0,
-        'REB': 0,
-        'AST': 0,
-        'TO': 0,
-        'STL': 0,
-        'BLK': 0
-    };
+    let playerStats = [];
 
 
 
@@ -48,7 +31,7 @@ function findStats (doc) {
 
             let position = tableData[i].split(' ').filter(data => data.length === 1)[0];
 
-            stats.push({name, position});
+            playerStats.push({name, position});
 
         } else if (i < numOfPlayers * 2) {
 
@@ -56,28 +39,20 @@ function findStats (doc) {
                 tableRows[i + 1].querySelectorAll('td')[0]
             ];
 
-            tableRows[i + (numOfPlayers * 2) + 3].querySelectorAll('td').forEach(column => playerStatColumns.push(column));
+            tableRows[i + (numOfPlayers * 2) + 3].querySelectorAll('td')
+                .forEach(column => playerStatColumns.push(column));
 
 
-            let playerStats = {};
+            let stats = {};
 
             for (let j = 0; j < playerStatColumns.length; j++) {
-                playerStats[statHeaders[j]] = playerStatColumns[j].textContent;
-
-                if (teamTotals.hasOwnProperty(statHeaders[j])) {
-                    teamTotals[statHeaders[j]] += Number(playerStatColumns[j].textContent);
-                }
+                stats[statHeaders[j]] = playerStatColumns[j].textContent;
             }
 
-            stats[i - numOfPlayers].data = playerStats;
+            playerStats[i - numOfPlayers].data = stats;
 
         }
     }
 
-    return {
-        playerStats: stats,
-        teamStats: teamTotals
-    };
-}
-
-export default findStats;
+    return playerStats;
+};

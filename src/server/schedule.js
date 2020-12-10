@@ -1,4 +1,4 @@
-function findSchedule (doc) {
+export const findSchedule = (doc) => {
     let tableRows = [...doc.querySelectorAll('div.page-container table tr')];
 
     let gameRows = tableRows.filter(tr => tr.textContent.indexOf('DATE') === -1 && tr.textContent.indexOf('Season') === -1)
@@ -13,6 +13,4 @@ function findSchedule (doc) {
     })
 
     return schedule;
-}
-
-export default findSchedule;
+};

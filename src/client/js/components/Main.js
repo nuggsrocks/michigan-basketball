@@ -8,15 +8,16 @@ export class Main extends React.Component {
         this.state = {
             standings: [],
             schedule: [],
-            stats: [],
-            roster: []
+            playerStats: undefined,
+            roster: [],
+            teamStats: undefined
         };
         this.sortStats = this.sortStats.bind(this);
     }
 
     sortStats(statName) {
         this.setState({
-            stats: this.state.stats.sort((a, b) => {
+            playerStats: this.state.playerStats.sort((a, b) => {
                 if (statName === 'Name' || statName === 'Position') {
                     return a[statName.toLowerCase()].localeCompare(b[statName.toLowerCase()]);
                 } else {
@@ -26,27 +27,51 @@ export class Main extends React.Component {
         });
     }
 
-    componentDidMount() {
-        fetch('http://localhost:8080/fetch/standings')
-            .then(res => res.json())
-            .then(standings => this.setState({standings}))
-            .catch(e => console.error(e));
+    async componentDidMount() {
+        try {
+            let standingsRes = await fetch('http://localhost:8080/fetch/standings');
+            let standings = await standingsRes.json();
 
-        fetch('http://localhost:8080/fetch/stats')
-            .then(res => res.json())
-            .then(stats => this.setState({stats}))
-            .catch(e => console.error(e));
+            let playerStatsRes = await fetch('http://localhost:8080/fetch/player-stats');
+            let playerStats = await playerStatsRes.json();
 
-        fetch('http://localhost:8080/fetch/schedule')
-            .then(res => res.json())
-            .then(schedule => this.setState({schedule}))
-            .catch(e => console.error(e));
 
-        fetch('http://localhost:8080/fetch/roster')
-            .then(res => res.json())
-            .then(roster => this.setState({roster}))
-            .catch(e => console.error(e));
+            let scheduleRes = await fetch('http://localhost:8080/fetch/schedule');
+            let schedule = await scheduleRes.json();
 
+
+            let rosterRes = await fetch('http://localhost:8080/fetch/roster');
+            let roster = await rosterRes.json();
+
+            this.setState({
+                standings,
+                playerStats,
+                schedule,
+                roster
+            });
+
+            let teamStats = {};
+
+            let gameResults = schedule.map(game => game.result);
+
+            teamStats.michPoints = 0;
+            teamStats.opponentPoints = 0;
+
+            gameResults.forEach(result => {
+                if (result[0] === 'W' || result[0] === 'L') {
+                    let michTotal = result.split('-')[result[0] === 'W' ? 0 : 1].match(/[0-9]{2,3}/);
+                    let oppTotal = result.split('-')[result[0] === 'W' ? 1 : 0].match(/[0-9]{2,3}/);
+
+                    teamStats.michPoints += Number(michTotal);
+                    teamStats.opponentPoints += Number(oppTotal);
+                }
+            });
+
+            console.log(teamStats);
+
+        } catch(e) {
+            console.error(e);
+        }
     }
 
     render () {

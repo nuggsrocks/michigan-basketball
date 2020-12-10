@@ -1,4 +1,4 @@
-function findRoster (doc) {
+export const findRoster = (doc) => {
     let table = doc.querySelector('div.ResponsiveTable.Team.Roster table');
 
     let rosterHeaders = [];
@@ -56,6 +56,4 @@ function findRoster (doc) {
 
 
     return roster;
-}
-
-export default findRoster;
+};

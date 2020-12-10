@@ -4,8 +4,7 @@ build/
 
 .env*
 
-ecosystem.config.js
-
+server.js
 .DS_Store
 
 .idea/

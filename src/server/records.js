@@ -1,4 +1,4 @@
-function findRecords (doc) {
+export const findRecords = (doc) => {
 
     let tableRows = doc.querySelectorAll('div.standings__table table tbody tr');
 
@@ -20,6 +20,4 @@ function findRecords (doc) {
 
 
     return records;
-}
-
-export default findRecords;
+};

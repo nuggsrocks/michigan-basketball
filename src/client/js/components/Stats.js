@@ -2,11 +2,9 @@ import React from 'react';
 import {StatLeaders} from './StatLeaders';
 
 export const Stats = (props) => {
-	let stats = props.data.stats;
+	let playerStats = props.data.playerStats;
 
-	let {playerStats} = stats;
-
-	let headers = stats.hasOwnProperty('playerStats') ? ['Name', 'Position', ...Object.keys(playerStats[0].data)] : [];
+	let headers = playerStats ? ['Name', 'Position', ...Object.keys(playerStats[0].data)] : [];
 
 	return (
 		<article>
@@ -15,12 +13,12 @@ export const Stats = (props) => {
 			<section>
 
 				{
-					!stats.hasOwnProperty('playerStats') &&
+					!playerStats &&
 					<div className='loadingIcon'/>
 				}
 
 				{
-					stats.hasOwnProperty('playerStats') &&
+					playerStats &&
 					<table>
 						<thead>
 						<tr>

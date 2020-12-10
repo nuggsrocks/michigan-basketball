@@ -5,10 +5,10 @@ import cors from 'cors';
 import axios from 'axios';
 import {JSDOM} from 'jsdom';
 
-import findRecords from './records';
-import findStats from './stats';
-import findSchedule from './schedule';
-import findRoster from './roster';
+import {findRecords} from './records';
+import {findPlayerStats} from './player-stats';
+import {findSchedule} from './schedule';
+import {findRoster} from './roster';
 
 const PORT = process.env.PORT || 8080;
 
@@ -34,11 +34,11 @@ app.get('/fetch/standings', (req, res) => {
 			.catch(e => console.error(e));
 });
 
-app.get('/fetch/stats', (req, res) => {
+app.get('/fetch/player-stats', (req, res) => {
 	axios.get('https://www.espn.com/mens-college-basketball/team/stats/_/id/130', {responseType: 'text'})
 		.then(response => {
 			let doc = constructJsdomDocument(response.data);
-			res.send(findStats(doc));
+			res.send(findPlayerStats(doc));
 		})
 		.catch(e => console.error(e));
 });
