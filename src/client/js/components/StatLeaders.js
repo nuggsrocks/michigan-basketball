@@ -44,7 +44,12 @@ export const StatLeaders = (props) => {
 
             const filterCallback = (player) => {
                 if (statName.search(/%/) !== -1) {
-                    return player.data[statName.replace('%', 'A')] > 5;
+                    let statCategory = statName.replace('%', 'A');
+                    let statArr = playerStats.map(player => player.data).map(data => Number(data[statCategory]));
+
+                    let max = Math.max(...statArr);
+
+                    return player.data[statCategory] > max / 3;
                 } else {
 
                     return player.data[statName] > 0;
