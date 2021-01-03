@@ -3,6 +3,10 @@ import React from 'react';
 export const Standings = (props) => {
     let standings = props.data.standings;
 
+    const calcWinningPercentage = (team) => {
+        return team.record.conference.split('-')[0] / team.record.conference.split('-').reduce((a, b) => Number(a) + Number(b));
+    };
+
     return (
         <article>
 
@@ -18,7 +22,7 @@ export const Standings = (props) => {
                     <table className='end-column'>
                         <tbody>
                         {
-                            standings.sort((a, b) => b.record.conference.split('-')[0] - a.record.conference.split('-')[0])
+                            standings.sort((a, b) => calcWinningPercentage(b) - calcWinningPercentage(a))
                                 .map(({name, record}, index) => {
                                         return <tr key={index}>
                                             <th>{index + 1}</th>
