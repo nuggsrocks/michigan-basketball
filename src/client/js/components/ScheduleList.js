@@ -35,7 +35,7 @@ export const ScheduleList = (props) => {
                         <thead>
                         <tr>
                             {
-                                Object.keys(schedule[0]).map((key, index) => <th key={index}>{key[0].toUpperCase() + key.slice(1)}</th>)
+                                Object.keys(schedule[0]).map((key, index) => key !== 'link' && <th key={index}>{key[0].toUpperCase() + key.slice(1)}</th>)
                             }
                         </tr>
                         </thead>

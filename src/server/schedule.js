@@ -7,9 +7,12 @@ export const findSchedule = (doc) => {
     let schedule = [];
 
     gameRows.forEach(game => {
+        let isCompleted = game[2].textContent[0].search(/([WL])/) !== -1;
         let opponent = game[1].textContent.replace(' *', '*').trimEnd();
-        let result = game[2].textContent[0].search(/(W|L)/) !== -1 ? `${game[2].textContent[0]} ${game[2].textContent.slice(1).trimEnd()}` : game[2].textContent;
-        schedule.push({date: game[0].textContent, opponent, result});
+        let result = isCompleted ? `${game[2].textContent[0]} ${game[2].textContent.slice(1).trimEnd()}` : game[2].textContent;
+        let link = isCompleted && game[2].querySelector('a').href;
+
+        schedule.push({date: game[0].textContent, opponent, result, link});
     })
 
     return schedule;

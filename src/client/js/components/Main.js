@@ -9,8 +9,7 @@ export class Main extends React.Component {
             standings: [],
             schedule: [],
             playerStats: undefined,
-            roster: [],
-            teamStats: undefined
+            roster: []
         };
         this.sortStats = this.sortStats.bind(this);
     }
@@ -40,8 +39,11 @@ export class Main extends React.Component {
             let schedule = await scheduleRes.json();
 
 
+
             let rosterRes = await fetch('http://localhost:8080/fetch/roster');
             let roster = await rosterRes.json();
+
+
 
             this.setState({
                 standings,
@@ -49,25 +51,6 @@ export class Main extends React.Component {
                 schedule,
                 roster
             });
-
-            let teamStats = {};
-
-            let gameResults = schedule.map(game => game.result);
-
-            teamStats.michPoints = 0;
-            teamStats.opponentPoints = 0;
-
-            gameResults.forEach(result => {
-                if (result[0] === 'W' || result[0] === 'L') {
-                    let michTotal = result.split('-')[result[0] === 'W' ? 0 : 1].match(/[0-9]{2,3}/);
-                    let oppTotal = result.split('-')[result[0] === 'W' ? 1 : 0].match(/[0-9]{2,3}/);
-
-                    teamStats.michPoints += Number(michTotal);
-                    teamStats.opponentPoints += Number(oppTotal);
-                }
-            });
-
-            console.log(teamStats);
 
         } catch(e) {
             console.error(e);

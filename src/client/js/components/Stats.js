@@ -1,5 +1,6 @@
 import React from 'react';
 import {StatLeaders} from './StatLeaders';
+import {TeamStats} from './TeamStats';
 
 export const Stats = (props) => {
 	let playerStats = props.data.playerStats;
@@ -8,6 +9,10 @@ export const Stats = (props) => {
 
 	return (
 		<article>
+			<h2>Team Stats</h2>
+
+			<TeamStats/>
+
 			<h2>Player Stats</h2>
 
 			<section>

@@ -1,3 +1,6 @@
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+
 import express from 'express';
 const app = express();
 
@@ -9,6 +12,7 @@ import {findRecords} from './records';
 import {findPlayerStats} from './player-stats';
 import {findSchedule} from './schedule';
 import {findRoster} from './roster';
+import {scrapeTeamStats} from './team-stats';
 
 const PORT = process.env.PORT || 8080;
 
@@ -18,16 +22,13 @@ app.use(cors());
 
 app.use(express.static(__dirname + '/public'));
 
-function constructJsdomDocument (data) {
-	let dom = new JSDOM(data);
-
-	return dom.window.document;
-}
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 
 app.get('/fetch/standings', (req, res) => {
 	axios.get('https://www.espn.com/mens-college-basketball/standings/_/group/7', {responseType: 'text'})
 			.then(response => {
-				let doc = constructJsdomDocument(response.data);
+				let doc = new JSDOM(response.data).window.document;
 				res.send(findRecords(doc));
 
 			})
@@ -37,7 +38,7 @@ app.get('/fetch/standings', (req, res) => {
 app.get('/fetch/player-stats', (req, res) => {
 	axios.get('https://www.espn.com/mens-college-basketball/team/stats/_/id/130', {responseType: 'text'})
 		.then(response => {
-			let doc = constructJsdomDocument(response.data);
+			let doc = new JSDOM(response.data).window.document;
 			res.send(findPlayerStats(doc));
 		})
 		.catch(e => console.error(e));
@@ -46,7 +47,7 @@ app.get('/fetch/player-stats', (req, res) => {
 app.get('/fetch/schedule', (req, res) => {
 	axios.get('https://www.espn.com/mens-college-basketball/team/schedule/_/id/130', {responseType: 'text'})
 		.then(response => {
-			let doc = constructJsdomDocument(response.data);
+			let doc = new JSDOM(response.data).window.document;
 			res.send(findSchedule(doc));
 		})
 		.catch(e => console.error(e));
@@ -55,11 +56,14 @@ app.get('/fetch/schedule', (req, res) => {
 app.get('/fetch/roster', (req, res) => {
 	axios.get('https://www.espn.com/mens-college-basketball/team/roster/_/id/130', {responseType: 'text'})
 		.then(response => {
-			let doc = constructJsdomDocument(response.data);
+			let doc = new JSDOM(response.data).window.document;
 			res.send(findRoster(doc));
 		})
 });
 
+app.get('/fetch/team-stats', (req, res) => {
+	scrapeTeamStats().then(data => res.send(data));
+});
 
 app.get('/*', (req, res) => res.sendFile(__dirname + '/public/index.html'));
 
