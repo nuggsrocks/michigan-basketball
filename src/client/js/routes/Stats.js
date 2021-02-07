@@ -1,8 +1,9 @@
 import React from 'react';
-import {StatLeaders} from './StatLeaders';
-import {TeamStats} from './TeamStats';
+import {StatLeaders} from '../components/StatLeaders';
+import {TeamStats} from '../components/TeamStats';
 
 export const Stats = (props) => {
+
 	let playerStats = props.data.playerStats;
 
 	let headers = playerStats ? ['Name', 'Position', ...Object.keys(playerStats[0].data)] : [];
@@ -11,7 +12,7 @@ export const Stats = (props) => {
 		<article>
 			<h2>Team Stats</h2>
 
-			<TeamStats/>
+			<TeamStats data={props.data}/>
 
 			<h2>Player Stats</h2>
 
@@ -59,5 +60,5 @@ export const Stats = (props) => {
 
 		</article>
 	)
-};
+}
 

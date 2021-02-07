@@ -13,12 +13,12 @@ export const Standings = (props) => {
             <h2>Big Ten Standings</h2>
 
             {
-                standings.length === 0 && <div className='loadingIcon'/>
+                !standings && <div className='loadingIcon'/>
             }
 
             <section>
                 {
-                    standings.length > 0 &&
+                    standings &&
                     <table className='end-column'>
                         <tbody>
                         {

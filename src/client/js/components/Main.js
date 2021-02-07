@@ -6,10 +6,11 @@ export class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            standings: [],
-            schedule: [],
-            playerStats: undefined,
-            roster: []
+            standings: null,
+            schedule: null,
+            playerStats: null,
+            roster: null,
+            teamStats: null
         };
         this.sortStats = this.sortStats.bind(this);
     }
@@ -28,29 +29,25 @@ export class Main extends React.Component {
 
     async componentDidMount() {
         try {
-            let standingsRes = await fetch('http://localhost:8080/fetch/standings');
-            let standings = await standingsRes.json();
+            const {default: axios} = await import('axios');
 
-            let playerStatsRes = await fetch('http://localhost:8080/fetch/player-stats');
-            let playerStats = await playerStatsRes.json();
+            let keys = Object.keys(this.state);
 
+            let requests = keys.map(key => {
+                let url = 'http://localhost:8080/fetch/' + key;
 
-            let scheduleRes = await fetch('http://localhost:8080/fetch/schedule');
-            let schedule = await scheduleRes.json();
-
-
-
-            let rosterRes = await fetch('http://localhost:8080/fetch/roster');
-            let roster = await rosterRes.json();
-
-
-
-            this.setState({
-                standings,
-                playerStats,
-                schedule,
-                roster
+                return axios.get(url);
             });
+
+            let responses = await Promise.all(requests);
+
+            let state = {};
+
+            keys.forEach((key, i) => {
+                state[key] = responses[i].data;
+            })
+
+            this.setState(state);
 
         } catch(e) {
             console.error(e);

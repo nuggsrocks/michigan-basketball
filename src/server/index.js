@@ -35,7 +35,7 @@ app.get('/fetch/standings', (req, res) => {
 			.catch(e => console.error(e));
 });
 
-app.get('/fetch/player-stats', (req, res) => {
+app.get('/fetch/playerStats', (req, res) => {
 	axios.get('https://www.espn.com/mens-college-basketball/team/stats/_/id/130', {responseType: 'text'})
 		.then(response => {
 			let doc = new JSDOM(response.data).window.document;
@@ -61,7 +61,7 @@ app.get('/fetch/roster', (req, res) => {
 		})
 });
 
-app.get('/fetch/team-stats', (req, res) => {
+app.get('/fetch/teamStats', (req, res) => {
 	scrapeTeamStats().then(data => res.send(data));
 });
 

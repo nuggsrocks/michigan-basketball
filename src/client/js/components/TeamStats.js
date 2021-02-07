@@ -1,26 +1,22 @@
 import React from 'react';
 
 export class TeamStats extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			teamStats: null
-		};
-	}
-
-
-	componentDidMount() {
-		fetch('http://localhost:8080/fetch/team-stats')
-			.then(res => res.json())
-			.then(teamStats => this.setState({teamStats}));
-	}
 
 	render() {
-		const {teamStats} = this.state;
+		const {teamStats} = this.props.data;
 
-		let statKeys = teamStats && Object.keys(teamStats[0]['michigan']).concat(['fg%', '3p%', 'ft%']);
+		let statKeys, michiganStats, opponentStats, pointDifferential;
+		if (teamStats) {
+			statKeys = Object.keys(teamStats[0]['michigan']).concat(['fg%', '3p%', 'ft%']);
 
-		let michiganStats = teamStats && teamStats.map(game => game.michigan);
+			michiganStats = teamStats.map(game => game.michigan);
+			opponentStats = teamStats.map(game => game.opponent);
+
+			pointDifferential = michiganStats.map(stat => stat['pts'])
+				.reduce((a, b) => a + b) - opponentStats.map(stat => stat['pts'])
+				.reduce((a, b) => a + b);
+
+		}
 
 		return <section>
 			{
@@ -62,6 +58,22 @@ export class TeamStats extends React.Component {
 								</tr>
 								</tbody>
 							</table>
+						</section>
+
+						<section className='team-stats'>
+							<div>
+								<h3>Point Differential:</h3>
+								<span>
+									{
+										pointDifferential > 0 ? '+' :
+											pointDifferential < 0 ? '-' : ''
+									}
+									{
+										pointDifferential
+									}
+
+								</span>
+							</div>
 						</section>
 					</div>
 					:

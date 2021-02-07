@@ -5,11 +5,13 @@ export const ScheduleList = (props) => {
 
     let standings = props.data.standings;
 
-    let michiganTeamObj = standings.find(team => team.name === 'Michigan Wolverines');
+    let michiganTeamObj;
 
     let michRecord;
 
-    if (michiganTeamObj) {
+    if (standings) {
+
+        michiganTeamObj = standings.find(team => team.name === 'Michigan Wolverines')
         michRecord = {
             conference: michiganTeamObj.record.conference,
             overall: michiganTeamObj.record.overall
@@ -21,16 +23,15 @@ export const ScheduleList = (props) => {
             <h1>Schedule</h1>
 
             {
-                michRecord &&
-                <h2>{`${michRecord.overall} (${michRecord.conference} Big Ten)`}</h2>
+                standings ?
+                <h2>{`${michRecord.overall} (${michRecord.conference} Big Ten)`}</h2> :
+                    <div className='loadingIcon'/>
             }
 
-            {
-                schedule.length === 0 && <div className='loadingIcon'/>
-            }
+
             <section>
                 {
-                    schedule.length > 0 &&
+                    schedule &&
                     <table>
                         <thead>
                         <tr>

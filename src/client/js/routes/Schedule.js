@@ -1,6 +1,6 @@
 import React from 'react';
-import {ScheduleList} from './ScheduleList';
-import {Standings} from './Standings';
+import {ScheduleList} from '../components/ScheduleList';
+import {Standings} from '../components/Standings';
 
 export const Schedule = (props) => {
 
@@ -10,4 +10,4 @@ export const Schedule = (props) => {
 			<Standings data={props.data}/>
 		</article>
 	);
-};
+}

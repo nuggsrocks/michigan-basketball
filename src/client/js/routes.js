@@ -1,6 +1,6 @@
-import {Stats} from './components/Stats';
-import {Roster} from './components/Roster';
-import {Schedule} from './components/Schedule';
+import {Stats} from './routes/Stats';
+import {Roster} from './routes/Roster';
+import {Schedule} from './routes/Schedule';
 
 export const routes = [
     {path: '/schedule', name: 'Schedule', Component: Schedule},
