@@ -1,18 +1,18 @@
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
+require('core-js/stable');
+require('regenerator-runtime/runtime');
 
-import express from 'express';
+const express = require('express');
 const app = express();
 
-import cors from 'cors';
-import axios from 'axios';
-import {JSDOM} from 'jsdom';
+const cors = require('cors');
+const axios = require('axios');
+const {JSDOM} = require('jsdom');
 
-import {findRecords} from './records';
-import {findPlayerStats} from './player-stats';
-import {findSchedule} from './schedule';
-import {findRoster} from './roster';
-import {scrapeTeamStats} from './team-stats';
+const {findRecords} = require('./server/records');
+const {findPlayerStats} = require('./server/player-stats');
+const {findSchedule} = require('./server/schedule');
+const {findRoster} = require('./server/roster');
+const {scrapeTeamStats} = require('./server/team-stats');
 
 const PORT = process.env.PORT || 8080;
 

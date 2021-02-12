@@ -1,4 +1,4 @@
-export const findRoster = (doc) => {
+const findRoster = (doc) => {
     let table = doc.querySelector('div.ResponsiveTable.Team.Roster table');
 
     let rosterHeaders = [];
@@ -57,3 +57,7 @@ export const findRoster = (doc) => {
 
     return roster;
 };
+
+module.exports = {
+    findRoster
+}

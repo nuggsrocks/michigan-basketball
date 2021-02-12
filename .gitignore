@@ -4,7 +4,6 @@ build/
 
 .env*
 
-server.js
 .DS_Store
 
 .idea/

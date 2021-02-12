@@ -1,4 +1,4 @@
-export const findSchedule = (doc) => {
+const findSchedule = (doc) => {
     let tableRows = [...doc.querySelectorAll('div.page-container table tr')];
 
     let gameRows = tableRows.filter(tr => tr.textContent.indexOf('DATE') === -1 && tr.textContent.indexOf('Season') === -1)
@@ -17,3 +17,7 @@ export const findSchedule = (doc) => {
 
     return schedule;
 };
+
+module.exports = {
+    findSchedule
+}

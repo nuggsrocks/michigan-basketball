@@ -1,4 +1,4 @@
-export const findPlayerStats = (doc) => {
+const findPlayerStats = (doc) => {
     let tableRows = doc.querySelectorAll('section.Card div.mt5 table tbody tr');
 
     let tableData = [];
@@ -56,3 +56,7 @@ export const findPlayerStats = (doc) => {
 
     return playerStats;
 };
+
+module.exports = {
+    findPlayerStats
+}

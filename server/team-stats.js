@@ -1,8 +1,8 @@
-import axios from 'axios';
-import {JSDOM} from 'jsdom';
-import {findSchedule} from './schedule';
+const axios = require('axios');
+const {JSDOM} = require('jsdom');
+const {findSchedule} = require('./schedule');
 
-export const scrapeTeamStats = async () => {
+const scrapeTeamStats = async () => {
 	try {
 		let startTime = Date.now();
 
@@ -93,3 +93,7 @@ export const scrapeTeamStats = async () => {
 	    console.error(e);
 	}
 };
+
+module.exports = {
+	scrapeTeamStats
+}

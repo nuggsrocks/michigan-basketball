@@ -1,4 +1,4 @@
-export const findRecords = (doc) => {
+const findRecords = (doc) => {
 
     let tableRows = doc.querySelectorAll('div.standings__table table tbody tr');
 
@@ -21,3 +21,7 @@ export const findRecords = (doc) => {
 
     return records;
 };
+
+module.exports = {
+    findRecords
+}
