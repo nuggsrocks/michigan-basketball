@@ -1,5 +1,6 @@
 const {merge} = require('webpack-merge');
 const commonConfig = require('./webpack.common.js');
+const webpack = require('webpack');
 
 module.exports = merge(commonConfig, {
 	mode: 'development',
@@ -16,5 +17,10 @@ module.exports = merge(commonConfig, {
 				use: ['style-loader', 'css-loader', 'sass-loader']
 			},
 		]
-	}
+	},
+	plugins: [
+		new webpack.DefinePlugin({
+			'process.env.HOST': JSON.stringify('localhost')
+		})
+	]
 });

@@ -2,6 +2,8 @@ import React from 'react';
 import {Route, Redirect} from 'react-router-dom';
 import {routes} from '../routes';
 
+
+
 export class Main extends React.Component {
     constructor(props) {
         super(props);
@@ -34,7 +36,7 @@ export class Main extends React.Component {
             let keys = Object.keys(this.state);
 
             let requests = keys.map(key => {
-                let url = 'http://localhost:8080/fetch/' + key;
+                let url = 'https://' + this.props.host + '/fetch/' + key;
 
                 return axios.get(url);
             });

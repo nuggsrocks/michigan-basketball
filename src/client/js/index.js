@@ -3,6 +3,8 @@ import 'regenerator-runtime/runtime';
 
 import '../scss/index.scss';
 
+const HOST = process.env.HOST || 'localhost';
+
 const init = async () => {
 	try {
 	    const {default: React} = await import('react');
@@ -16,7 +18,7 @@ const init = async () => {
 			return (
 				<BrowserRouter basename='/'>
 					<Nav />
-					<Main />
+					<Main host={HOST}/>
 				</BrowserRouter>
 			)
 		};

@@ -14,7 +14,7 @@ const {findSchedule} = require('./server/schedule');
 const {findRoster} = require('./server/roster');
 const {scrapeTeamStats} = require('./server/team-stats');
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3010;
 
 const HOST = process.env.HOST || 'localhost';
 
