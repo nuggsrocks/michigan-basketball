@@ -1,3 +1,7 @@
+const dotenv = require('dotenv');
+dotenv.config({path: './.env.' + process.env.NODE_ENV});
+
+
 require('core-js/stable');
 require('regenerator-runtime/runtime');
 
@@ -14,7 +18,7 @@ const {findSchedule} = require('./server/schedule');
 const {findRoster} = require('./server/roster');
 const {scrapeTeamStats} = require('./server/team-stats');
 
-const PORT = process.env.PORT || 3010;
+const PORT = process.env.PORT || 8080;
 
 const HOST = process.env.HOST || 'localhost';
 

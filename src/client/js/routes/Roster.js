@@ -5,7 +5,7 @@ export const Roster = (props) => {
 
 	let rosterKeys = [];
 
-	if (roster.length > 0) {
+	if (roster) {
 		rosterKeys = Object.keys(roster[0]);
 	}
 
@@ -14,7 +14,7 @@ export const Roster = (props) => {
 			<h1>Roster</h1>
 
 			{
-				roster.length === 0 &&
+				!roster &&
 				<div className='loadingIcon'/>
 			}
 
@@ -26,13 +26,13 @@ export const Roster = (props) => {
 					<tr>
 
 						{
-							rosterKeys.map((header, index) => <th key={index}>{header}</th>)
+							roster && rosterKeys.map((header, index) => <th key={index}>{header}</th>)
 						}
 					</tr>
 					</thead>
 					<tbody>
 					{
-						roster.map((player, index) =>
+						roster && roster.map((player, index) =>
 							<tr key={index}>
 								{
 									Object.keys(player).map((key, index) =>

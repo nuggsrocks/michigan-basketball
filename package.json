@@ -8,11 +8,12 @@
   "scripts": {
     "build:dev": "rm -rf public;webpack --config webpack.dev.js",
     "build:test": "rm -rf public;webpack --config webpack.test.js",
-    "start:dev": "nodemon -r ./.env.https server.js"
+    "start:dev": "NODE_ENV=https nodemon server.js"
   },
   "dependencies": {
     "axios": "^0.21.1",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
