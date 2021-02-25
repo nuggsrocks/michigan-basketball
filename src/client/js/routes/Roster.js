@@ -1,12 +1,14 @@
 import React from 'react';
 
 export const Roster = (props) => {
-	let roster = props.data.roster;
+	let {roster} = props.data;
 
 	let rosterKeys = [];
 
 	if (roster) {
 		rosterKeys = Object.keys(roster[0]);
+	} else {
+		props.fetchInfo(['roster']);
 	}
 
 	return (

@@ -4,7 +4,6 @@ const {findSchedule} = require('./schedule');
 
 const scrapeTeamStats = async () => {
 	try {
-		let startTime = Date.now();
 
 		let scheduleResponse = await axios.get('https://www.espn.com/mens-college-basketball/team/schedule/_/id/130', {
 			responseType: 'text'
@@ -19,7 +18,7 @@ const scrapeTeamStats = async () => {
 
 		let gameRequests = gameLinks.map(link => axios.get(link, {responseType: 'text'}));
 
-		let gameResponses = await axios.all(gameRequests);
+		let gameResponses = await Promise.all(gameRequests);
 
 		let games = [];
 
@@ -83,9 +82,6 @@ const scrapeTeamStats = async () => {
 			games.push({michigan, opponent});
 		}
 
-		let endTime = Date.now();
-
-		console.log(`The request took ${(endTime - startTime) / 1000} seconds to complete.`);
 
 		return games;
 

@@ -4,15 +4,21 @@ import {TeamStats} from '../components/TeamStats';
 
 export const Stats = (props) => {
 
-	let playerStats = props.data.playerStats;
+	let {playerStats, teamStats} = props.data;
 
-	let headers = playerStats ? ['Name', 'Position', ...Object.keys(playerStats[0].data)] : [];
+	let headers;
+
+	if (playerStats && teamStats) {
+		headers = playerStats ? ['Name', 'Position', ...Object.keys(playerStats[0].data)] : [];
+	} else {
+		props.fetchInfo(['playerStats', 'teamStats']);
+	}
 
 	return (
 		<article>
 			<h2>Team Stats</h2>
 
-			<TeamStats data={props.data}/>
+			<TeamStats teamStats={teamStats}/>
 
 			<h2>Player Stats</h2>
 
@@ -56,7 +62,7 @@ export const Stats = (props) => {
 			</section>
 
 
-			<StatLeaders data={props.data}/>
+			<StatLeaders playerStats={playerStats}/>
 
 		</article>
 	)

@@ -1,9 +1,7 @@
 import React from 'react';
 
 export const ScheduleList = (props) => {
-    let schedule = props.data.schedule;
-
-    let standings = props.data.standings;
+    let {standings, schedule} = props;
 
     let michiganTeamObj;
 

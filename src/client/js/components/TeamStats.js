@@ -3,7 +3,7 @@ import React from 'react';
 export class TeamStats extends React.Component {
 
 	render() {
-		const {teamStats} = this.props.data;
+		const {teamStats} = this.props;
 
 		let statKeys, michiganStats, opponentStats, pointDifferential;
 		if (teamStats) {

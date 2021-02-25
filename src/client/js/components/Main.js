@@ -15,6 +15,7 @@ export class Main extends React.Component {
             teamStats: null
         };
         this.sortStats = this.sortStats.bind(this);
+        this.fetchInfo = this.fetchInfo.bind(this);
     }
 
     sortStats(statName) {
@@ -29,14 +30,12 @@ export class Main extends React.Component {
         });
     }
 
-    async componentDidMount() {
+    async fetchInfo(categories) {
         try {
             const {default: axios} = await import('axios');
 
-            let keys = Object.keys(this.state);
-
-            let requests = keys.map(key => {
-                let url = 'https://' + this.props.host + '/fetch/' + key;
+            let requests = categories.map(category => {
+                let url = 'https://' + this.props.host + '/fetch/' + category;
 
                 return axios.get(url);
             });
@@ -45,8 +44,8 @@ export class Main extends React.Component {
 
             let state = {};
 
-            keys.forEach((key, i) => {
-                state[key] = responses[i].data;
+            categories.forEach((category, i) => {
+                state[category] = responses[i].data;
             })
 
             this.setState(state);
@@ -63,7 +62,7 @@ export class Main extends React.Component {
                 {
                     routes.map(({path, Component}) =>
                         <Route key={path} path={path}>
-                            <Component data={this.state} sortStats={this.sortStats}/>
+                            <Component data={this.state} sortStats={this.sortStats} fetchInfo={this.fetchInfo}/>
                         </Route>
                     )
                 }

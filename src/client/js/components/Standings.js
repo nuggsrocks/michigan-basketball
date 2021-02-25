@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const Standings = (props) => {
-    let standings = props.data.standings;
+    let {standings} = props;
 
     const calcWinningPercentage = (team) => {
         return team.record.conference.split('-')[0] / team.record.conference.split('-').reduce((a, b) => Number(a) + Number(b));

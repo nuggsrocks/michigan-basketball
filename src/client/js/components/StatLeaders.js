@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const StatLeaders = (props) => {
-    let playerStats = props.data.playerStats;
+    let {playerStats} = props;
 
     const displayStatLeaders = () => {
         let statCategories = playerStats.length > 0 ? Object.keys(playerStats[0].data) : [];
