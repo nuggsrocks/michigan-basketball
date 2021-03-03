@@ -8,7 +8,8 @@
   "scripts": {
     "build:dev": "rm -rf public;webpack --config webpack.dev.js",
     "build:test": "rm -rf public;webpack --config webpack.test.js",
-    "start:dev": "NODE_ENV=https nodemon server.js"
+    "start:dev": "NODE_ENV=https nodemon server.js",
+    "start:aws": "NODE_ENV=aws node server.js"
   },
   "dependencies": {
     "axios": "^0.21.1",

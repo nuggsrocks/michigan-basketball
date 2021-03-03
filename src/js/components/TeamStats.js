@@ -5,18 +5,72 @@ export class TeamStats extends React.Component {
 	render() {
 		const {teamStats} = this.props;
 
-		let statKeys, michiganStats, opponentStats, pointDifferential;
+		let statKeys, stats = {};
 		if (teamStats) {
 			statKeys = Object.keys(teamStats[0]['michigan']).concat(['fg%', '3p%', 'ft%']);
 
-			michiganStats = teamStats.map(game => game.michigan);
-			opponentStats = teamStats.map(game => game.opponent);
-
-			pointDifferential = michiganStats.map(stat => stat['pts'])
-				.reduce((a, b) => a + b) - opponentStats.map(stat => stat['pts'])
-				.reduce((a, b) => a + b);
-
+			stats['michigan'] = teamStats.map(game => game.michigan);
+			stats['opponent'] = teamStats.map(game => game.opponent);
 		}
+
+		const displayStatDifferentials = () => {
+			let statKeys = Object.keys(stats['michigan'][0]);
+
+			let differentials = [];
+			statKeys.forEach(key => {
+				let differential = stats['michigan'].map(stat => stat[key])
+					.reduce((a, b) => a + b) - stats['opponent'].map(stat => stat[key])
+					.reduce((a, b) => a + b);
+
+				if (differential > 0) {
+					differential = '+' + differential;
+				}
+
+				differentials.push({key, differential});
+			});
+
+			return <div>
+				<h3>Stat Differentials:</h3>
+				{
+					differentials.map((stat, index) =>
+						<h4 key={index}>
+							{stat.key}: {stat.differential}
+						</h4>
+					)
+				}
+			</div>
+		};
+
+		const displayGameHighs = (team) => {
+
+			let gameHighs = {};
+
+			let keys = Object.keys(stats[team][0]);
+
+			keys.forEach(key => {
+				let highValue = 0;
+
+				stats[team].forEach(game => {
+					if (game[key] > highValue) {
+						highValue = game[key];
+					}
+				});
+
+				gameHighs[key] = highValue;
+			});
+
+			return <div>
+				<h3>{team[0].toUpperCase() + team.substring(1)} Game Highs:</h3>
+				{
+					Object.keys(gameHighs).map((key, index) => {
+						return <h4 key={index}>
+							{key}: {gameHighs[key]}
+						</h4>
+					})
+				}
+			</div>
+		};
+
 
 		return <section>
 			{
@@ -39,12 +93,12 @@ export class TeamStats extends React.Component {
 										statKeys.map((key, index) => {
 											let stat;
 											if (key.search('%') === -1) {
-												stat = michiganStats.map(stat => stat[key]).reduce((a, b) => a + b);
+												stat = stats['michigan'].map(stat => stat[key]).reduce((a, b) => a + b);
 											} else {
-												let made = michiganStats.map(stat => stat[key.replace('%', 'm')])
+												let made = stats['michigan'].map(stat => stat[key.replace('%', 'm')])
 													.reduce((a, b) => a + b);
 
-												let attempted = michiganStats.map(stat => stat[key.replace('%', 'a')])
+												let attempted = stats['michigan'].map(stat => stat[key.replace('%', 'a')])
 													.reduce((a, b) => a + b);
 
 												stat = Math.round(made * 10000 / attempted) / 100;
@@ -60,19 +114,11 @@ export class TeamStats extends React.Component {
 							</table>
 						</section>
 
-						<section className='team-stats'>
-							<div>
-								<h3>Point Differential:</h3>
-								<span>
-									{
-										pointDifferential > 0 ? '+' :
-											pointDifferential < 0 ? '-' : ''
-									}
-									{
-										pointDifferential
-									}
-
-								</span>
+						<section>
+							<div className='flex'>
+								{displayStatDifferentials()}
+								{displayGameHighs('michigan')}
+								{displayGameHighs('opponent')}
 							</div>
 						</section>
 					</div>
