@@ -7,14 +7,17 @@ export class TeamStats extends React.Component {
 
 		let statKeys, stats = {};
 		if (teamStats) {
-			statKeys = Object.keys(teamStats[0]['michigan']).concat(['fg%', '3p%', 'ft%']);
+			statKeys = Object.keys(teamStats[0]['michigan'])
+				.filter(key => key !== 'gameInfo')
+				.concat(['fg%', '3p%', 'ft%']);
 
 			stats['michigan'] = teamStats.map(game => game.michigan);
 			stats['opponent'] = teamStats.map(game => game.opponent);
 		}
 
 		const displayStatDifferentials = () => {
-			let statKeys = Object.keys(stats['michigan'][0]);
+			let statKeys = Object.keys(stats['michigan'][0])
+				.filter(key => key.search('%') === -1 && key !== 'gameInfo');
 
 			let differentials = [];
 			statKeys.forEach(key => {
@@ -22,8 +25,16 @@ export class TeamStats extends React.Component {
 					.reduce((a, b) => a + b) - stats['opponent'].map(stat => stat[key])
 					.reduce((a, b) => a + b);
 
-				if (differential > 0) {
-					differential = '+' + differential;
+				if (key === 'to') {
+					if (differential > 0) {
+						differential = -differential;
+					} else if (differential < 0) {
+						differential = '+' + -differential;
+					}
+				} else {
+					if (differential > 0) {
+						differential = '+' + differential;
+					}
 				}
 
 				differentials.push({key, differential});
@@ -31,40 +42,84 @@ export class TeamStats extends React.Component {
 
 			return <div>
 				<h3>Stat Differentials:</h3>
-				{
-					differentials.map((stat, index) =>
-						<h4 key={index}>
-							{stat.key}: {stat.differential}
-						</h4>
-					)
-				}
+				<table>
+					<thead>
+					<tr>
+						{
+							differentials.map((stat, index) =>
+								<th key={index}>
+									{stat.key}
+								</th>
+							)
+						}
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						{
+							differentials.map((stat, index) =>
+								<td key={index}>
+									{stat.differential}
+								</td>
+							)
+						}
+					</tr>
+					</tbody>
+				</table>
 			</div>
 		};
 
-		const displayGameHighs = (team) => {
 
-			let gameHighs = {};
+		const displayGameHighsOrLows = (team, highsOrLows) => {
 
-			let keys = Object.keys(stats[team][0]);
+			let values = {};
+
+			let keys = Object.keys(stats[team][0]).filter(key => key !== 'gameInfo');
 
 			keys.forEach(key => {
-				let highValue = 0;
+				let extremeValue = {
+					value: 0,
+					game: null
+				};
 
-				stats[team].forEach(game => {
-					if (game[key] > highValue) {
-						highValue = game[key];
+				stats[team].forEach((game, index) => {
+					if (game[key] === extremeValue.value) {
+						extremeValue.game += ', ' + game['gameInfo'];
+					}
+
+					if (highsOrLows === 'highs') {
+
+						if (game[key] > extremeValue.value) {
+							extremeValue.value = game[key];
+							extremeValue.game = game['gameInfo'];
+						}
+					} else {
+						if (index === 0) {
+							extremeValue.value = game[key];
+							extremeValue.game = game['gameInfo'];
+						}
+						if (game[key] < extremeValue.value) {
+							extremeValue.value = game[key];
+							extremeValue.game = game['gameInfo'];
+						}
 					}
 				});
 
-				gameHighs[key] = highValue;
+				values[key] = extremeValue;
 			});
 
 			return <div>
-				<h3>{team[0].toUpperCase() + team.substring(1)} Game Highs:</h3>
+				<h3>
+					{team[0].toUpperCase() + team.substring(1)}
+					&nbsp;
+					Game
+					&nbsp;
+					{highsOrLows[0].toUpperCase() + highsOrLows.substring(1)}:
+				</h3>
 				{
-					Object.keys(gameHighs).map((key, index) => {
+					Object.keys(values).map((key, index) => {
 						return <h4 key={index}>
-							{key}: {gameHighs[key]}
+							{key}: {values[key].value} {'(' + values[key].game + ')'}
 						</h4>
 					})
 				}
@@ -73,6 +128,7 @@ export class TeamStats extends React.Component {
 
 
 		return <section>
+			<h2>Team Stats</h2>
 			{
 				teamStats ?
 					<div>
@@ -115,10 +171,12 @@ export class TeamStats extends React.Component {
 						</section>
 
 						<section>
+							{displayStatDifferentials()}
 							<div className='flex'>
-								{displayStatDifferentials()}
-								{displayGameHighs('michigan')}
-								{displayGameHighs('opponent')}
+								{displayGameHighsOrLows('michigan', 'highs')}
+								{displayGameHighsOrLows('michigan', 'lows')}
+								{displayGameHighsOrLows('opponent', 'highs')}
+								{displayGameHighsOrLows('opponent', 'lows')}
 							</div>
 						</section>
 					</div>

@@ -12,9 +12,9 @@ const scrapeTeamStats = async () => {
 
 		let doc = new JSDOM(scheduleResponse.data).window.document;
 
-		let schedule = findSchedule(doc);
+		let schedule = findSchedule(doc).filter(game => game.link);
 
-		let gameLinks = schedule.filter(game => game.link).map(game => game.link.replace('/game', '/boxscore'));
+		let gameLinks = schedule.map(game => game.link.replace('/game', '/boxscore'));
 
 		let gameRequests = gameLinks.map(link => axios.get(link, {responseType: 'text'}));
 
@@ -22,9 +22,9 @@ const scrapeTeamStats = async () => {
 
 		let games = [];
 
-		for (let res of gameResponses) {
+		for (let i in gameResponses) {
 
-			let doc = new JSDOM(res.data).window.document;
+			let doc = new JSDOM(gameResponses[i].data).window.document;
 
 			let teams = doc.querySelectorAll('div.sub-module');
 
@@ -39,16 +39,22 @@ const scrapeTeamStats = async () => {
 
 				statObj.fgm = Number(fieldGoals[0]);
 				statObj.fga = Number(fieldGoals[1]);
+				statObj['fg%'] = Number(fieldGoals[0]) * 100 / Number(fieldGoals[1]);
+				statObj['fg%'] = Math.round(statObj['fg%'] * 100) / 100;
 
 				let threes = statColumns[3].textContent.split('-');
 
 				statObj['3pm'] = Number(threes[0]);
 				statObj['3pa'] = Number(threes[1]);
+				statObj['3p%'] = Number(threes[0]) * 100 / Number(threes[1]);
+				statObj['3p%'] = Math.round(statObj['3p%'] * 100) / 100;
 
 				let freeThrows = statColumns[4].textContent.split('-');
 
 				statObj['ftm'] = Number(freeThrows[0]);
 				statObj['fta'] = Number(freeThrows[1]);
+				statObj['ft%'] = Number(freeThrows[0]) * 100 / Number(freeThrows[1]);
+				statObj['ft%'] = Math.round(statObj['ft%'] * 100) / 100;
 
 				statObj['oreb'] = Number(statColumns[5].textContent);
 
@@ -68,7 +74,9 @@ const scrapeTeamStats = async () => {
 
 				statObj['pts'] = Number(statColumns[13].textContent);
 
+				let date = schedule[i]['date'].split(', ')[1];
 
+				statObj['gameInfo'] = date + ' ' + schedule[i]['opponent'];
 
 				return statObj;
 			};

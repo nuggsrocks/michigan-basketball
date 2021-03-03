@@ -86,7 +86,7 @@ export const StatLeaders = (props) => {
         return statKeys.map((key, index) =>
             <section key={index}>
                 <h3>{key}</h3>
-                <table className='end-column'>
+                <table id='stat-leaders'>
                     <tbody>
                     {statLeaders[key]}
                     </tbody>

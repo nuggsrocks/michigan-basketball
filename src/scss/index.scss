@@ -108,12 +108,7 @@ div#root {
 				font-size: 1.5rem;
 			}
 
-			&.end-column {
-				td:last-child {
-					text-align: end;
-				}
 
-			}
 
 
 		}
@@ -125,6 +120,17 @@ div#root {
 
 		div {
 			flex: 1;
+		}
+	}
+
+	table#stat-leaders {
+		td {
+			&:first-child {
+				text-align: start;
+			}
+			&:last-child {
+				text-align: end;
+			}
 		}
 	}
 }
