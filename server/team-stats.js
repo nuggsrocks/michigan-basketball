@@ -90,8 +90,128 @@ const scrapeTeamStats = async () => {
 			games.push({michigan, opponent});
 		}
 
+		let statKeys = Object.keys(games[0]['michigan']);
 
-		return games;
+		const calcSeasonTotals = () => {
+			let totals = {
+				michigan: {},
+				opponent: {}
+			};
+
+			let teams = Object.keys(totals);
+
+			statKeys.filter(key => key !== 'gameInfo')
+				.forEach(key => {
+					if (key.includes('%')) {
+						teams.forEach(team => {
+							let basketsMade = games.map(game => game[team][key.replace('%', 'm')])
+								.reduce((a, b) => a + b);
+							let basketsAttempted = games.map(game => game[team][key.replace('%', 'a')])
+								.reduce((a, b) => a + b);
+
+							totals[team][key] = Math.round(basketsMade * 10000 / basketsAttempted) / 100;
+						});
+					} else {
+						teams.forEach(team => {
+							totals[team][key] = games.map(game => game[team][key]).reduce((a, b) => a + b);
+						});
+					}
+				});
+
+			return totals;
+		};
+
+
+		let seasonTotals = calcSeasonTotals();
+
+		const calcSeasonStatMargins = () => {
+			let margins = {};
+
+			statKeys.filter(key => key !== 'gameInfo' && !key.includes('%'))
+				.forEach(key => {
+					let margin;
+
+					if (key === 'to') {
+						// turnover margins are usually represented with the opposite sign
+						margin = (seasonTotals['michigan'][key] - seasonTotals['opponent'][key]) * -1;
+					} else {
+						margin = seasonTotals['michigan'][key] - seasonTotals['opponent'][key];
+					}
+
+					margins[key] = `${margin > 0 ? '+' : ''}${margin}`
+
+				});
+
+			return margins;
+		};
+
+		let statMargins = calcSeasonStatMargins();
+
+		const calcSeasonHighsAndLows = () => {
+			const createTeamObj = () => {
+				return {
+					seasonHighs: {},
+					seasonLows: {}
+				};
+			};
+
+			let result = {
+				michigan: createTeamObj(),
+				opponent: createTeamObj()
+			};
+
+			statKeys.filter(key => key !== 'gameInfo')
+				.forEach(key => {
+
+					Object.keys(result).forEach(team => {
+						let seasonHigh, seasonLow;
+						games.forEach(game => {
+
+							let gameInfo = game[team]['gameInfo'];
+							let statValue = game[team][key];
+							if (!seasonHigh || !seasonLow) {
+								seasonHigh = {
+									value: statValue,
+									info: gameInfo
+								};
+								seasonLow = {
+									value: statValue,
+									info: gameInfo
+								};
+							} else {
+								if (statValue > seasonHigh.value) {
+									seasonHigh = {
+										value: statValue,
+										info: gameInfo
+									};
+								} else if (statValue === seasonHigh.value) {
+									seasonHigh.info += ', ' + gameInfo;
+								}
+
+								if (statValue < seasonLow.value) {
+									seasonLow = {
+										value: statValue,
+										info: gameInfo
+									};
+								} else if (statValue === seasonLow.value) {
+									seasonLow.info += ', ' + gameInfo;
+								}
+							}
+						});
+
+						result[team].seasonHighs[key] = `${seasonHigh.value} (${seasonHigh.info})`;
+						result[team].seasonLows[key] = `${seasonLow.value} (${seasonLow.info})`;
+
+
+					});
+				});
+
+			return result;
+		};
+
+		let seasonHighsAndLows = calcSeasonHighsAndLows();
+
+		return {games, seasonTotals, statMargins, seasonHighsAndLows};
 
 	} catch(e) {
 	    console.error(e);
