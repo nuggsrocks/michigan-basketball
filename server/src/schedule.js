@@ -1,23 +1,34 @@
 const findSchedule = (doc) => {
-    let tableRows = [...doc.querySelectorAll('div.page-container table tr')];
+  let scheduleTable = doc.querySelector('table');
 
-    let gameRows = tableRows.filter(tr => tr.textContent.indexOf('DATE') === -1 && tr.textContent.indexOf('Season') === -1)
-        .map(row => row.querySelectorAll('td'));
+  const tableRows = scheduleTable.querySelectorAll('tr');
 
-    let schedule = [];
+  let gameRows = [];
 
-    gameRows.forEach(game => {
-        let isCompleted = game[2].textContent[0].search(/([WL])/) !== -1;
-        let opponent = game[1].textContent.replace(' *', '*').trimEnd();
-        let result = isCompleted ? `${game[2].textContent[0]} ${game[2].textContent.slice(1).trimEnd()}` : game[2].textContent;
-        let link = isCompleted && game[2].querySelector('a').href;
+  tableRows.forEach(tr => {
+    if (tr.className.includes('filled')) {
+      gameRows.push(tr);
+    }
+  });
 
-        schedule.push({date: game[0].textContent, opponent, result, link});
-    })
+  const schedule = [];
 
-    return schedule;
+  gameRows.forEach((row) => {
+    let columns = row.querySelectorAll('td');
+    const isCompleted = columns[2].textContent[0].search(/([WL])/) !== -1;
+    const opponent = columns[1].textContent.replace(' *', '*').trimEnd();
+    const result = isCompleted ?
+        `${columns[2].textContent[0]} ${columns[2].textContent.slice(1).trimEnd()}` :
+        columns[2].textContent;
+    const link = isCompleted && columns[2].querySelector('a').href;
+
+    schedule.push({date: columns[0].textContent, opponent, result, link});
+  });
+
+  console.log(schedule);
+  return schedule;
 };
 
 module.exports = {
-    findSchedule
-}
+  findSchedule,
+};

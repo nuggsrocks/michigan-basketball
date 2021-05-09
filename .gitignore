@@ -1,9 +1,7 @@
-node_modules/
-public/
-build/
-
-.env.https
+**/node_modules/**
+**/public/**
+**.env*
 
 .DS_Store
 
-.idea/
+.idea/**
