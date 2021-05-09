@@ -4,9 +4,9 @@ const webpack = require('webpack');
 
 
 module.exports = merge(productionConfig, {
-    plugins: [
-        new webpack.DefinePlugin({
-            'process.env.HOST': JSON.stringify('localhost')
-        })
-    ]
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.HOST': JSON.stringify('localhost'),
+    }),
+  ],
 });
