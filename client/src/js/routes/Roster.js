@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 export const Roster = (props) => {
   const {roster} = props.data;
 
-  let rosterKeys = [];
+  let playerInfoKeys = [];
 
   if (roster) {
-    rosterKeys = Object.keys(roster[0]);
+    playerInfoKeys = Object.keys(roster[0]);
   } else {
     props.fetchInfo(['roster']);
   }
@@ -21,36 +21,41 @@ export const Roster = (props) => {
 				<div className='loadingIcon'/>
       }
 
-      <section>
 
-        <table>
+      {
+        roster &&
+        <section>
 
-          <thead>
+          <table>
+
+            <thead>
             <tr>
 
               {
-                roster && rosterKeys.map((header, index) => {
+                playerInfoKeys.map((header, index) => {
                   return <th key={index}>{header}</th>;
                 })
               }
             </tr>
-          </thead>
-          <tbody>
+            </thead>
+            <tbody>
             {
-              roster && roster.map((player, index) =>
-                <tr key={index}>
-                  {
-                    Object.keys(player).map((key, index) =>
-                      <td key={index}>{player[key]}</td>,
-                    )
+              roster.map((player, index) =>
+                  <tr key={index}>
+                    {
+                      Object.keys(player).map((key, index) =>
+                          <td key={index}>{player[key]}</td>,
+                      )
 
-                  }
-                </tr>,
+                    }
+                  </tr>,
               )
             }
-          </tbody>
-        </table>
-      </section>
+            </tbody>
+          </table>
+        </section>
+      }
+
 
     </article>
   );

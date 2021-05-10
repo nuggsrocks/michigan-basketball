@@ -12,7 +12,6 @@ export class TeamStats extends React.Component {
       teams = Object.keys(teamStats.seasonTotals);
     }
 
-    console.log(teamStats);
     return <section>
       <h2>Team Stats</h2>
       {
@@ -89,5 +88,5 @@ export class TeamStats extends React.Component {
 }
 
 TeamStats.propTypes = {
-  teamStats: PropTypes.array.isRequired,
+  teamStats: PropTypes.array,
 };

@@ -1,7 +1,5 @@
 import React from 'react';
 import {StatLeaders} from '../components/StatLeaders';
-import {TeamStats} from '../components/TeamStats';
-import {PlayerStats} from '../components/PlayerStats';
 import PropTypes from 'prop-types';
 
 export const Stats = (props) => {
@@ -14,9 +12,7 @@ export const Stats = (props) => {
 
   return (
     <article>
-      <TeamStats teamStats={teamStats}/>
-
-      <PlayerStats sortStats={props.sortStats} playerStats={playerStats}/>
+      
 
       <StatLeaders playerStats={playerStats}/>
 
@@ -27,5 +23,6 @@ export const Stats = (props) => {
 Stats.propTypes = {
   data: PropTypes.object.isRequired,
   fetchInfo: PropTypes.func.isRequired,
+  sortStats: PropTypes.func.isRequired,
 };
 

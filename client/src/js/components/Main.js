@@ -21,7 +21,7 @@ export class Main extends React.Component {
       playerStats: this.state.playerStats.sort((a, b) => {
         if (statName === 'Name' || statName === 'Position') {
           return a[statName.toLowerCase()]
-          .localeCompare(b[statName.toLowerCase()]);
+            .localeCompare(b[statName.toLowerCase()]);
         } else {
           return b.data[statName] - a.data[statName];
         }
@@ -41,7 +41,7 @@ export class Main extends React.Component {
 
       const responses = await Promise.all(requests);
 
-      const state = {};
+      let state = {};
 
       categories.forEach((category, i) => {
         state[category] = responses[i].data;

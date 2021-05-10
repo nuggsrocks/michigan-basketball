@@ -122,5 +122,5 @@ export const StatLeaders = (props) => {
 
 
 StatLeaders.propTypes = {
-  playerStats: PropTypes.array.isRequired,
+  playerStats: PropTypes.array,
 };

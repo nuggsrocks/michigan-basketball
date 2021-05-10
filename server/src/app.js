@@ -12,7 +12,7 @@ const {findRecords} = require('./records');
 const {findPlayerStats} = require('./player-stats');
 const {findSchedule} = require('./schedule');
 const {findRoster} = require('./roster');
-const {scrapeTeamStats} = require('./team-stats');
+const {scrapeStats} = require('./scrapeStats');
 
 app.use(cors());
 
@@ -27,7 +27,7 @@ app.get('/fetch/standings', (req, res) => {
       .catch((e) => console.error(e));
 });
 
-app.get('/fetch/playerStats', (req, res) => {
+app.get('/fetch/player-stats', (req, res) => {
   axios.get('https://www.espn.com/mens-college-basketball/team/stats/_/id/130', {responseType: 'text'})
       .then((response) => {
         const doc = new JSDOM(response.data).window.document;
@@ -53,8 +53,8 @@ app.get('/fetch/roster', (req, res) => {
       });
 });
 
-app.get('/fetch/teamStats', (req, res) => {
-  scrapeTeamStats().then((data) => res.send(data));
+app.get('/fetch/team-stats', (req, res) => {
+  scrapeStats().then((data) => res.send(data));
 });
 
 app.get('/*', (req, res) => {

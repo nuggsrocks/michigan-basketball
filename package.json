@@ -1,10 +1,14 @@
 {
   "name": "michigan-basketball",
-  "version": "1.0.0",
-  "description": "michigan basketball app",
+  "version": "2.0.0",
+  "description": "boilerplate react and express app",
   "scripts": {
-    "server:dev": "cd server && npm run lint:fix && npm run start:dev",
-    "client:dev": "cd client && npm run lint:fix && rm -rf public && npm run build:dev"
+    "server:start-dev": "cd server && npm run lint:fix && npm run start:dev",
+    "server:lint": "cd server && npm run lint:fix",
+    "server:test": "cd server && npm test",
+    "client:build-dev": "cd client && npm run lint:fix && rm -rf public && npm run build:dev",
+    "client:lint": "cd client && npm run lint:fix",
+    "env:dev": "npm run server:start-dev & npm run client:build-dev"
   },
   "author": "nuggsrocks <nuggsrocks@yahoo.com> (https://github.com/nuggsrocks/)",
   "license": "ISC"

@@ -56,6 +56,6 @@ export const PlayerStats = (props) => {
 };
 
 PlayerStats.propTypes = {
-  playerStats: PropTypes.array.isRequired,
+  playerStats: PropTypes.array,
   sortStats: PropTypes.func.isRequired
 };

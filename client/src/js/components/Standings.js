@@ -47,5 +47,5 @@ export const Standings = (props) => {
 };
 
 Standings.propTypes = {
-  standings: PropTypes.array.isRequired,
+  standings: PropTypes.array,
 };

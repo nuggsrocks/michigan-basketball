@@ -78,16 +78,6 @@ div#root {
 	> main {
 		article {
 			color: $maize;
-
-			&.flex {
-				display: flex;
-				flex-flow: row wrap;
-
-				> * {
-					flex: 0 1 50%;
-				}
-
-			}
 		}
 
 		table {
