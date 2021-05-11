@@ -1,5 +1,7 @@
 const axios = require('axios');
 const fetchHtmlAsText = require('../src/functions/fetchHtmlAsText');
+const scrapeForPlayerStatsTableRows = require('../src/functions/scrapeForPlayerStatsTableRows');
+const organizePlayerStats = require('../src/functions/organizePlayerStats');
 
 jest.mock('axios');
 
@@ -34,3 +36,53 @@ describe('fetchHtmlAsText()', () => {
     });
   });
 });
+
+const fakeHtmlData = `
+     <!DOCTYPE html>
+     <div class='sub-module'>
+     <div class='team-name'>Michigan</div>
+     <table>
+        <tbody>
+        <tr>stat</tr>
+        </tbody>
+        <tbody>
+        <tr>stat</tr>
+        <tr class='highlight'>totals</tr>
+        </tbody>
+    </table>
+    </div>
+    <div class='sub-module'>
+    <div class='team-name'>Some Other Team</div>
+    <table>
+      <tbody>
+      <tr>stat</tr>
+      </tbody>
+      <tbody>
+      <tr>stat</tr>
+      <tr class='highlight'>totals</tr>
+      </tbody>
+    </table>
+    </div>
+    `;
+
+describe('scrapeForPlayerStatsTableRows()', () => {
+  test('should return object with an array of table row elements for each team', () => {
+    const obj = scrapeForPlayerStatsTableRows(fakeHtmlData);
+
+    expect(obj).toBeInstanceOf(Object);
+    expect(Object.keys(obj)).toStrictEqual(['michigan', 'opponent']);
+    expect(obj['michigan']).toBeInstanceOf(Array);
+    expect(obj['michigan'].find((row) => row.className.match(/highlight/))).toBeUndefined();
+  });
+});
+
+describe('organizePlayerStats()', () => {
+  test('should return object with stats for each team and each game', () => {
+    jest.mock('../src/functions/scrapeForPlayerStatsTableRows');
+
+    const stats = organizePlayerStats(scrapeForPlayerStatsTableRows());
+
+    expect(stats).toBeTruthy();
+  });
+});
+
