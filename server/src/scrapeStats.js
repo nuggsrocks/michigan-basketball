@@ -1,42 +1,25 @@
-const axios = require('axios');
-
 const {JSDOM} = require('jsdom');
 
 const {findSchedule} = require('./schedule');
 
 const fetchHtmlAsText = require('./functions/fetchHtmlAsText');
 
-const constructVirtualDocument = async (url) => {
-  try {
-    let htmlData = await fetchHtmlAsText(url);
-
-    return new JSDOM(htmlData).window.document;
-  } catch(e) {
-    console.error(e);
-    return null;
-  }
-};
-
 const scrapeStats = async () => {
   try {
+    const scheduleUrl = 'https://www.espn.com/mens-college-basketball/team/schedule/_/id/130';
+    const schedulePageHtml = await fetchHtmlAsText(scheduleUrl)
+        .then((html) => html);
 
-    const schedulePageHtml = await fetchHtmlAsText(
-        'https://www.espn.com/mens-college-basketball/team/schedule/_/id/130'
-    ).then(html => html);
-
-    const doc = new JSDOM(schedulePageHtml.data).window.document;
+    const doc = new JSDOM(schedulePageHtml).window.document;
 
     const schedule = findSchedule(doc).filter((game) => game.link);
+
 
     const gameLinks = schedule.map((game) => {
       return game.link.replace('/game', '/boxscore');
     });
 
-    const gameRequests = gameLinks.map((link) => {
-      return axios.get(link, {responseType: 'text'});
-    });
-
-    const gameResponses = await Promise.all(gameRequests);
+    const gameResponses = await fetchHtmlAsText(gameLinks);
 
     const games = {michigan: [], opponent: []};
 
@@ -103,6 +86,5 @@ const scrapeStats = async () => {
 };
 
 module.exports = {
-  constructVirtualDocument,
   scrapeStats,
-}
+};

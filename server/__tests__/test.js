@@ -1,15 +1,36 @@
-jest.mock('../src/functions/fetchHtmlAsText.js');
+const axios = require('axios');
+const fetchHtmlAsText = require('../src/functions/fetchHtmlAsText');
 
-const {constructVirtualDocument} = require('../src/scrapeStats');
+jest.mock('axios');
 
-describe('constructVirtualDocument()', () => {
-  test('should return new jsdom document object if promise is successful', async () => {
-    let document = await constructVirtualDocument('/resolved');
-    expect(document.querySelector('h1').textContent).toEqual('Hello world');
+console.error = jest.fn();
+
+describe('fetchHtmlAsText()', () => {
+  axios.get.mockImplementation(async (url, options) => {
+    return await new Promise((resolve, reject) => {
+      if (url === '/reject') {
+        reject(new Error('request failed'));
+        return;
+      }
+
+      const htmlString = '<!DOCTYPE html><h1>Hello world</h1>';
+
+      resolve({data: htmlString});
+    });
   });
-  test('should return null and log error if promise is rejected ', async () => {
-    console.error = jest.fn();
-    expect(await constructVirtualDocument('/rejected')).toBeNull();
-    expect(console.error).toHaveBeenCalled();
+
+  describe('passed url string', () => {
+    test('should fetch and return valid html string or array of strings on success', async () => {
+      expect(await fetchHtmlAsText('/resolve')).toMatch(/!DOCTYPE/);
+      expect(await fetchHtmlAsText(['/resolve', '/success']))
+          .toBeInstanceOf(Array);
+    });
+
+    test('should return null and log error on failure', async () => {
+      expect(await fetchHtmlAsText('/reject')).toBeNull();
+      expect(await fetchHtmlAsText(['/reject', '/failure'])).toBeNull();
+      expect(await fetchHtmlAsText({'not': 'allowed'})).toBeNull();
+      expect(console.error).toHaveBeenCalledTimes(3);
+    });
   });
 });

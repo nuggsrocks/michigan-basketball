@@ -37,20 +37,13 @@ app.get('/fetch/player-stats', (req, res) => {
 });
 
 app.get('/fetch/schedule', (req, res) => {
-  axios.get('https://www.espn.com/mens-college-basketball/team/schedule/_/id/130', {responseType: 'text'})
-      .then((response) => {
-        const doc = new JSDOM(response.data).window.document;
-        res.send(findSchedule(doc));
-      })
-      .catch((e) => console.error(e));
+  findSchedule('https://www.espn.com/mens-college-basketball/team/schedule/_/id/130')
+      .then((schedule) => res.send(schedule));
 });
 
 app.get('/fetch/roster', (req, res) => {
-  axios.get('https://www.espn.com/mens-college-basketball/team/roster/_/id/130', {responseType: 'text'})
-      .then((response) => {
-        const doc = new JSDOM(response.data).window.document;
-        res.send(findRoster(doc));
-      });
+  findRoster('https://www.espn.com/mens-college-basketball/team/roster/_/id/130')
+      .then((roster) => res.send(roster));
 });
 
 app.get('/fetch/team-stats', (req, res) => {

@@ -2,6 +2,7 @@ module.exports = {
   'env': {
     'node': true,
     'es2021': true,
+    'jest': true,
   },
   'extends': [
     'eslint:recommended',
@@ -14,6 +15,7 @@ module.exports = {
   'rules': {
     'max-len': [
       2,
+      100,
       {
         'ignoreUrls': true,
         'ignoreComments': true,
