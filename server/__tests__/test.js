@@ -2,6 +2,7 @@ const axios = require('axios')
 const fetchHtmlAsText = require('../src/functions/fetchHtmlAsText')
 const organizePlayerStats = require('../src/functions/organizePlayerStats')
 const { findSchedule } = require('../src/schedule')
+const { findRoster } = require('../src/roster')
 
 jest.mock('axios')
 
@@ -24,7 +25,7 @@ describe('fetchHtmlAsText()', () => {
     expect(data[1]).toEqual(htmlString)
   })
 
-  test('should return html string whe passed string', async () => {
+  test('should return html string when passed string', async () => {
     const data = await fetchHtmlAsText('/success')
 
     expect(data).toEqual(htmlString)
@@ -140,19 +141,19 @@ describe('findSchedule()', () => {
 <td>Postseason</td>
 </tr>
 <tr>
-<td>Wed, Jan 1</td><td>vs Opponent 4 </td><td>W <a href='/espn'>92-90</a> </td>
+<td>Wed, Jan 1</td><td>vs Opponent 4 </td><td>W <a href='#'>92-90</a> </td>
 </tr>
 <tr>
-<td>Thu, Jan 2</td><td>vs Opponent 5 </td><td>W <a href='/espn'>92-90</a> </td>
+<td>Thu, Jan 2</td><td>vs Opponent 5 </td><td>W <a href='#'>92-90</a> </td>
 </tr>
 <tr>
 <td>Regular Season</td>
 </tr>
 <tr>
-<td>Sun, Dec 29</td><td>vs Opponent 1 </td><td>W <a href='/espn'>92-90</a> </td>
+<td>Sun, Dec 29</td><td>vs Opponent 1 </td><td>W <a href='#'>92-90</a> </td>
 </tr>
 <tr>
-<td>Mon, Dec 30</td><td>vs Opponent 2 </td><td>L <a href='/espn'>92-90</a> </td>
+<td>Mon, Dec 30</td><td>vs Opponent 2 </td><td>L <a href='#'>92-90</a> </td>
 </tr>
 <tr>
 <td>Tue, Dec 31</td><td>vs Opponent 3 </td><td>Canceled </td>
@@ -162,12 +163,46 @@ describe('findSchedule()', () => {
   `
 
   const mockScheduleObj = [
-    { date: 'Wed, Jan 1', opponent: 'vs Opponent 4', result: 'W 92-90', link: '/espn' },
-    { date: 'Thu, Jan 2', opponent: 'vs Opponent 5', result: 'W 92-90', link: '/espn' },
-    { date: 'Sun, Dec 29', opponent: 'vs Opponent 1', result: 'W 92-90', link: '/espn' },
-    { date: 'Mon, Dec 30', opponent: 'vs Opponent 2', result: 'L 92-90', link: '/espn' },
+    { date: 'Wed, Jan 1', opponent: 'vs Opponent 4', result: 'W 92-90', link: 'about:blank#' },
+    { date: 'Thu, Jan 2', opponent: 'vs Opponent 5', result: 'W 92-90', link: 'about:blank#' },
+    { date: 'Sun, Dec 29', opponent: 'vs Opponent 1', result: 'W 92-90', link: 'about:blank#' },
+    { date: 'Mon, Dec 30', opponent: 'vs Opponent 2', result: 'L 92-90', link: 'about:blank#' },
     { date: 'Tue, Dec 31', opponent: 'vs Opponent 3', result: 'Canceled', link: null }
   ]
 
   expect(findSchedule(mockHtml)).toStrictEqual(mockScheduleObj)
+})
+
+describe('findRoster()', () => {
+  const mockHtml = `
+  <!DOCTYPE html>
+  <table>
+  <thead>
+  <tr>
+  <th></th>
+  <th>Name</th>
+  <th>Pos</th>
+  <th>HEIGHT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>
+<a>Eli Brooks</a>
+<span>55</span>
+</td>
+<td>G</td>
+<td>5'11"</td>
+</tr>
+</tbody>
+</table>
+  `
+
+  const mockRosterObj = [
+    { name: 'Eli Brooks', number: '55', pos: 'G', height: '5\'11"' }
+  ]
+  test('should return roster object that matches spec', () => {
+    expect(findRoster(mockHtml)).toStrictEqual(mockRosterObj)
+  })
 })
