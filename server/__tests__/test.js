@@ -1,6 +1,7 @@
 const axios = require('axios')
 const fetchHtmlAsText = require('../src/functions/fetchHtmlAsText')
 const organizePlayerStats = require('../src/functions/organizePlayerStats')
+const { findSchedule } = require('../src/schedule')
 
 jest.mock('axios')
 
@@ -126,4 +127,47 @@ describe('organizePlayerStats()', () => {
     expect(stats.michigan).toStrictEqual([fakeStatObj, fakeStatObj])
     expect(stats.opponent).toStrictEqual([fakeStatObj, fakeStatObj])
   })
+})
+
+describe('findSchedule()', () => {
+  const mockHtml = `
+   <table>
+   <tbody>
+   <tr>
+   <td>DATE</td><td>OPPONENT</td><td>RESULT</td>
+</tr>
+<tr>
+<td>Postseason</td>
+</tr>
+<tr>
+<td>Wed, Jan 1</td><td>vs Opponent 4 </td><td>W <a href='/espn'>92-90</a> </td>
+</tr>
+<tr>
+<td>Thu, Jan 2</td><td>vs Opponent 5 </td><td>W <a href='/espn'>92-90</a> </td>
+</tr>
+<tr>
+<td>Regular Season</td>
+</tr>
+<tr>
+<td>Sun, Dec 29</td><td>vs Opponent 1 </td><td>W <a href='/espn'>92-90</a> </td>
+</tr>
+<tr>
+<td>Mon, Dec 30</td><td>vs Opponent 2 </td><td>L <a href='/espn'>92-90</a> </td>
+</tr>
+<tr>
+<td>Tue, Dec 31</td><td>vs Opponent 3 </td><td>Canceled </td>
+</tr>
+</tbody>
+</table>
+  `
+
+  const mockScheduleObj = [
+    { date: 'Wed, Jan 1', opponent: 'vs Opponent 4', result: 'W 92-90', link: '/espn' },
+    { date: 'Thu, Jan 2', opponent: 'vs Opponent 5', result: 'W 92-90', link: '/espn' },
+    { date: 'Sun, Dec 29', opponent: 'vs Opponent 1', result: 'W 92-90', link: '/espn' },
+    { date: 'Mon, Dec 30', opponent: 'vs Opponent 2', result: 'L 92-90', link: '/espn' },
+    { date: 'Tue, Dec 31', opponent: 'vs Opponent 3', result: 'Canceled', link: null }
+  ]
+
+  expect(findSchedule(mockHtml)).toStrictEqual(mockScheduleObj)
 })

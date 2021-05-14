@@ -1,43 +1,38 @@
-const fetchHtmlAsText = require('./functions/fetchHtmlAsText')
 const { JSDOM } = require('jsdom')
 
-const findSchedule = async (url) => {
-  try {
-    const doc = new JSDOM(await fetchHtmlAsText(url)).window.document
+const findSchedule = (htmlString) => {
+  const doc = new JSDOM(htmlString).window.document
 
-    const scheduleTable = doc.querySelector('table')
+  const scheduleTable = doc.querySelector('table')
 
-    const tableRows = scheduleTable.querySelectorAll('tr')
+  const tableRows = scheduleTable.querySelectorAll('tr')
 
-    const gameRows = []
+  const gameRows = []
 
-    tableRows.forEach((row) => {
-      if (row.querySelectorAll('td').length > 1 &&
-          !row.textContent.match(/date/i)) {
-        gameRows.push(row)
-      }
-    })
+  tableRows.forEach((row) => {
+    if (row.querySelectorAll('td').length > 1 &&
+        !row.textContent.match(/date/i)) {
+      gameRows.push(row)
+    }
+  })
 
-    const schedule = []
+  const schedule = []
 
-    gameRows.forEach((row) => {
-      const columns = row.querySelectorAll('td')
-      const isCompleted = columns[2].textContent[0].search(/([WL])/) !== -1
-      const opponent = columns[1].textContent.replace(' *', '*').trimEnd()
-      const result = isCompleted
-        ? columns[2].textContent[0] + ' ' +
-          columns[2].textContent.slice(1).trimEnd()
-        : columns[2].textContent
-      const link = isCompleted ? columns[2].querySelector('a').href : null
+  gameRows.forEach((row) => {
+    const columns = row.querySelectorAll('td')
+    const resultString = columns[2].textContent
 
-      schedule.push({ date: columns[0].textContent, opponent, result, link })
-    })
+    const result = resultString.split(' ').filter(string => string !== '').join(' ')
 
-    return schedule
-  } catch (e) {
-    console.error(e)
-    return null
-  }
+    const isCompleted = columns[2].textContent[0].match(/[WL]/)
+
+    const link = isCompleted ? columns[2].querySelector('a').href : null
+
+    const opponent = columns[1].textContent.replace(' *', '*').trimEnd()
+
+    schedule.push({ date: columns[0].textContent, opponent, result, link })
+  })
+  return schedule
 }
 
 module.exports = {
