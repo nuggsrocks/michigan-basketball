@@ -1,25 +1,17 @@
 module.exports = {
-  'env': {
-    'node': true,
-    'es2021': true,
-    'jest': true,
+  env: {
+    jest: true,
+    commonjs: true,
+    es2021: true,
+    node: true
   },
-  'extends': [
-    'eslint:recommended',
-    'google',
+  extends: [
+    'standard',
+    'eslint:recommended'
   ],
-  'parserOptions': {
-    'ecmaVersion': 12,
+  parserOptions: {
+    ecmaVersion: 12
   },
-  'ignorePatterns': ['**/node_modules/*'],
-  'rules': {
-    'max-len': [
-      2,
-      100,
-      {
-        'ignoreUrls': true,
-        'ignoreComments': true,
-      },
-    ],
-  },
-};
+  rules: {
+  }
+}

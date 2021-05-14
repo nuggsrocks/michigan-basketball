@@ -1,30 +1,62 @@
-const organizePlayerStats = (playerStatRows) => {
-  const playerStats = {};
+const { JSDOM } = require('jsdom')
 
-  const teamKeys = Object.keys(playerStatRows);
+const organizePlayerStats = (htmlData) => {
+  const document = new JSDOM(htmlData).window.document
 
-  teamKeys.forEach((teamKey) => {
-    const columns = playerStatRows[teamKey].querySelectorAll('td');
+  const teamDivs = document.querySelectorAll('div.sub-module')
 
-    const stats = {};
+  const playerStatRows = {}
 
-    columns.forEach((col) => {
-      if (col.className.match(/(fg|3pt|ft)/)) {
-        const made = col.className + 'm';
-        const attempted = col.className + 'a';
+  let i = 0
 
-        const statArray = col.textContent.split('-');
+  while (i < teamDivs.length) {
+    let teamName = teamDivs[i].querySelector('div.team-name').textContent
 
-        stats[made] = statArray[0];
-        stats[attempted] = statArray[1];
-      } else {
-        stats[col.className] = col.textContent;
-      }
-    });
+    if (teamName.match(/michigan/i)) {
+      teamName = 'michigan'
+    } else {
+      teamName = 'opponent'
+    }
+    let statsRows = teamDivs[i].querySelectorAll('table tbody tr')
 
-    playerStats[teamKey] = stats;
-  });
-  return playerStats;
-};
+    statsRows = [...statsRows].filter((row) => !row.className.match(/highlight/))
 
-module.exports = organizePlayerStats;
+    playerStatRows[teamName] = statsRows
+
+    i++
+  }
+
+  const stats = {
+    michigan: [],
+    opponent: []
+  }
+
+  for (const teamKey in stats) {
+    playerStatRows[teamKey].forEach(row => {
+      const columns = row.querySelectorAll('td')
+
+      const playerStats = {}
+
+      columns.forEach(col => {
+        if (col.className.match(/name/)) {
+          playerStats.name = col.querySelector('span.abbr').textContent
+        } else if (col.className.match(/fg|3pt|ft/)) {
+          const made = col.className + 'm'
+          const attempted = col.className + 'a'
+
+          const statValues = col.textContent.split('-')
+
+          playerStats[made] = Number(statValues[0])
+          playerStats[attempted] = Number(statValues[1])
+        } else {
+          playerStats[col.className] = Number(col.textContent)
+        }
+      })
+
+      stats[teamKey].push(playerStats)
+    })
+  }
+  return stats
+}
+
+module.exports = organizePlayerStats

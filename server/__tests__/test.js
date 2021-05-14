@@ -1,88 +1,129 @@
-const axios = require('axios');
-const fetchHtmlAsText = require('../src/functions/fetchHtmlAsText');
-const scrapeForPlayerStatsTableRows = require('../src/functions/scrapeForPlayerStatsTableRows');
-const organizePlayerStats = require('../src/functions/organizePlayerStats');
+const axios = require('axios')
+const fetchHtmlAsText = require('../src/functions/fetchHtmlAsText')
+const organizePlayerStats = require('../src/functions/organizePlayerStats')
 
-jest.mock('axios');
+jest.mock('axios')
 
-console.error = jest.fn();
+console.error = jest.fn()
 
 describe('fetchHtmlAsText()', () => {
-  axios.get.mockImplementation(async (url, options) => {
-    return await new Promise((resolve, reject) => {
-      if (url === '/reject') {
-        reject(new Error('request failed'));
-        return;
-      }
+  const htmlString = '<!DOCTYPE html><h1>Hello World</h1>'
+  axios.get.mockImplementation((url) => new Promise((resolve, reject) => {
+    if (url === '/reject') {
+      reject(new Error('promise rejected'))
+      return null
+    }
 
-      const htmlString = '<!DOCTYPE html><h1>Hello world</h1>';
+    resolve({ data: htmlString })
+  }))
+  test('should return array of html strings when passed array', async () => {
+    const data = await fetchHtmlAsText(['/success', '/good'])
 
-      resolve({data: htmlString});
-    });
-  });
+    expect(data[0]).toEqual(htmlString)
+    expect(data[1]).toEqual(htmlString)
+  })
 
-  describe('passed url string', () => {
-    test('should fetch and return valid html string or array of strings on success', async () => {
-      expect(await fetchHtmlAsText('/resolve')).toMatch(/!DOCTYPE/);
-      expect(await fetchHtmlAsText(['/resolve', '/success']))
-          .toBeInstanceOf(Array);
-    });
+  test('should return html string whe passed string', async () => {
+    const data = await fetchHtmlAsText('/success')
 
-    test('should return null and log error on failure', async () => {
-      expect(await fetchHtmlAsText('/reject')).toBeNull();
-      expect(await fetchHtmlAsText(['/reject', '/failure'])).toBeNull();
-      expect(await fetchHtmlAsText({'not': 'allowed'})).toBeNull();
-      expect(console.error).toHaveBeenCalledTimes(3);
-    });
-  });
-});
+    expect(data).toEqual(htmlString)
+  })
 
-const fakeHtmlData = `
-     <!DOCTYPE html>
-     <div class='sub-module'>
-     <div class='team-name'>Michigan</div>
-     <table>
-        <tbody>
-        <tr>stat</tr>
-        </tbody>
-        <tbody>
-        <tr>stat</tr>
-        <tr class='highlight'>totals</tr>
-        </tbody>
-    </table>
-    </div>
-    <div class='sub-module'>
-    <div class='team-name'>Some Other Team</div>
-    <table>
-      <tbody>
-      <tr>stat</tr>
-      </tbody>
-      <tbody>
-      <tr>stat</tr>
-      <tr class='highlight'>totals</tr>
-      </tbody>
-    </table>
-    </div>
-    `;
+  test('should return null and log error on promise rejection', async () => {
+    const data = await fetchHtmlAsText(['/reject'])
 
-describe('scrapeForPlayerStatsTableRows()', () => {
-  test('should return object with an array of table row elements for each team', () => {
-    const obj = scrapeForPlayerStatsTableRows(fakeHtmlData);
+    expect(data).toBeNull()
+    expect(console.error).toHaveBeenCalledTimes(1)
+  })
+  test('should return null and log error on wrong parameter type', async () => {
+    const data = await fetchHtmlAsText({ url: '/not-allowed' })
 
-    expect(obj).toBeInstanceOf(Object);
-    expect(Object.keys(obj)).toStrictEqual(['michigan', 'opponent']);
-    expect(obj['michigan']).toBeInstanceOf(Array);
-    expect(obj['michigan'].find((row) => row.className.match(/highlight/))).toBeUndefined();
-  });
-});
+    expect(data).toBeNull()
+    expect(console.error).toHaveBeenCalledTimes(1)
+  })
+})
 
 describe('organizePlayerStats()', () => {
-  test('should return object with stats for each team and each game', () => {
-    jest.mock('../src/functions/scrapeForPlayerStatsTableRows');
+  const fakeHtml = `
+  <!DOCTYPE html>
+  <div class='sub-module'>
+  <div class='team-name'>Michigan</div>
+  <table>
+  <tbody>
+  <tr class='highlight'></tr>
+  <tr>
+  <td class='name'>
+  <a href='#'>
+  <span>L. James</span>
+  <span class='abbr'>L. James</span>
+</a>
+  <span class='position'>SF</span>
+</td>
+  <td class='fg'>1-2</td>
+  <td class='reb'>5</td>
+  <td class='pts'>10</td>
+</tr>
+</tbody>
+<tbody>
+  <tr class='highlight'></tr>
+  <tr>
+  <td class='name'>
+  <a href='#'>
+  <span>L. James</span>
+  <span class='abbr'>L. James</span>
+</a>
+  <span class='position'>SF</span>
+</td>
+  <td class='fg'>1-2</td>
+  <td class='reb'>5</td>
+  <td class='pts'>10</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class='sub-module'>
+  <div class='team-name'>Other</div>
+  <table>
+  <tbody>
+  <tr class='highlight'></tr>
+  <tr>
+  <td class='name'>
+  <a href='#'>
+  <span>L. James</span>
+  <span class='abbr'>L. James</span>
+</a>
+  <span class='position'>SF</span>
+</td>
+  <td class='fg'>1-2</td>
+  <td class='reb'>5</td>
+  <td class='pts'>10</td>
+</tr>
+</tbody>
+<tbody>
+  <tr class='highlight'></tr>
+  <tr>
+  <td class='name'>
+  <a href='#'>
+  <span>L. James</span>
+  <span class='abbr'>L. James</span>
+</a>
+  <span class='position'>SF</span>
+</td>
+  <td class='fg'>1-2</td>
+  <td class='reb'>5</td>
+  <td class='pts'>10</td>
+</tr>
+</tbody>
+</table>
+</div>
+  `
 
-    const stats = organizePlayerStats(scrapeForPlayerStatsTableRows());
+  test('should return array of parsed stats for each team', () => {
+    const stats = organizePlayerStats(fakeHtml)
 
-    expect(stats).toBeTruthy();
-  });
-});
+    const fakeStatObj = { name: 'L. James', fgm: 1, fga: 2, reb: 5, pts: 10 }
 
+    expect(stats.michigan).toStrictEqual([fakeStatObj, fakeStatObj])
+    expect(stats.opponent).toStrictEqual([fakeStatObj, fakeStatObj])
+  })
+})
